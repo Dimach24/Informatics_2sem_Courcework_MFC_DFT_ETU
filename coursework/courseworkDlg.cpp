@@ -76,7 +76,7 @@ END_MESSAGE_MAP()
 BOOL CcourseworkDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-	SetWindowText(_T("Курсовая - Чаминов Д. А. гр. 1183" __COURSE__VERSION));
+	SetWindowText(_T("Курсовая - Чаминов Д. А. гр. 1183 " __COURSE__VERSION));
 	// Добавление пункта "О программе..." в системное меню.
 
 	// IDM_ABOUTBOX должен быть в пределах системной команды.
