@@ -54,7 +54,7 @@ END_MESSAGE_MAP()
 CcourseworkDlg::CcourseworkDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_COURSEWORK_DIALOG, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(ID_LOGO_ICO);
 }
 
 void CcourseworkDlg::DoDataExchange(CDataExchange* pDX)
