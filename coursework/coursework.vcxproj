@@ -183,6 +183,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CMyGraph.h" />
     <ClInclude Include="coursework.h" />
     <ClInclude Include="courseworkDlg.h" />
     <ClInclude Include="framework.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CMyGraph.cpp" />
     <ClCompile Include="coursework.cpp" />
     <ClCompile Include="courseworkDlg.cpp" />
     <ClCompile Include="pch.cpp">
