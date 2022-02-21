@@ -212,7 +212,6 @@
   <ItemGroup>
     <Image Include="logo.ico" />
     <Image Include="res\coursework.ico" />
-    <Image Include="res\icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

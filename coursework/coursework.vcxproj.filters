@@ -68,9 +68,6 @@
     <Image Include="res\coursework.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="res\icon1.ico">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
     <Image Include="logo.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
