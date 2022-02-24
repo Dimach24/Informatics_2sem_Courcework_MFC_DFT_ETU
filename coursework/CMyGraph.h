@@ -17,18 +17,15 @@ public:
 		struct { uint8_t r, g, b; } rgb;
 	};
 	struct {
-		double from, to;//scale
-	}scale;
+		double from, to;
+	}scale_x, scale_y;
+	bool is_log;
 	std::vector<MathFunction> functions;
 	CMyGraph();
 	virtual ~CMyGraph();
 
 protected:
-	/// <summary>
-	/// Draws the function from this->functions[local_function_id]
-	/// </summary>
-	/// <param name="local_fuction_id"> - index in this graph functions vector</param>
-	void drawTheFunction(size_t local_fuction_id);
+	std::pair<double,double> CalculateDot(double x, double y,double width, double heigth);
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnPaint();
