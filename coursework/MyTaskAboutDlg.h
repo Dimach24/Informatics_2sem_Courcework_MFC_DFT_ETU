@@ -20,7 +20,4 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CString about_string;
-	// элемент управления richedit taskabout
-	CRichEditCtrl TaskAboutCtrl;
 };

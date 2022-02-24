@@ -181,7 +181,6 @@ void CcourseworkDlg::OnBnClickedCancel()
 void CcourseworkDlg::OnBnClickedTaskAboutBn()
 {
 	MyTaskAboutDlg dlg(this);
-	//dlg.TaskAboutCtrl.SetTextMode(TM_RICHTEXT | TM_MULTICODEPAGE);
 	dlg.DoModal();
 	// TODO: добавьте свой код обработчика уведомлений
 }

@@ -20,7 +20,7 @@ CMyGraph::~CMyGraph()
 }
 
 //todo
-std::pair<double, double> CMyGraph::CalculateDot(double x, double y, double width, double heigth)
+std::pair<double, double> CMyGraph::CalculateDot(double x, double y, long width, long heigth)
 {
 	
 	return std::pair<double, double>();
