@@ -25,7 +25,7 @@ public:
 	virtual ~CMyGraph();
 
 protected:
-	std::pair<double,double> CalculateDot(double x, double y, long width, long heigth);
+	std::pair<long, long> CalculateDot(double x, double y, long width, long heigth);
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnPaint();

@@ -20,10 +20,11 @@ CMyGraph::~CMyGraph()
 }
 
 //todo
-std::pair<double, double> CMyGraph::CalculateDot(double x, double y, long width, long heigth)
+std::pair<long, long> CMyGraph::CalculateDot(double x, double y, long width, long heigth)
 {
-	
-	return std::pair<double, double>();
+	long _x = x * width / (scale_x.to - scale_x.from);
+	long _y = -y*heigth/ (scale_y.to - scale_y.from)+heigth/2;
+	return std::make_pair(_x,_y);
 }
 
 
