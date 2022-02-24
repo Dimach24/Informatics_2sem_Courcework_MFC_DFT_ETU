@@ -1,2 +1,2 @@
 #pragma once
-#define __COURSE__VERSION "v. 0.0.02"
+#define __COURSE__VERSION "v. 0.0.03"
