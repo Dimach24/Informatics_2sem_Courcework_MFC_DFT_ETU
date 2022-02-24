@@ -8,6 +8,7 @@
 #include "courseworkDlg.h"
 #include "afxdialogex.h"
 
+#include "MyTaskAboutDlg.h"
 #include "SomeDefinitions.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -53,6 +54,7 @@ END_MESSAGE_MAP()
 
 CcourseworkDlg::CcourseworkDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_COURSEWORK_DIALOG, pParent)
+	, theTask(_T("Для сигнала заданного вида вычислить дискретное преобразование Фурье(ДПФ), нарисовать график сигнальной функции и график модуля  ее ДПФ, предоставить возможность изменять масштаб графика по Х и по У, выбор линейного или логарифмического масштаба по У для графика ДПФ, интерактивный режим изменения параметров сигнала, запись в файл графиков сигнала и ДПФ в формате BMP."))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(ID_LOGO_ICO);
 }
@@ -60,6 +62,7 @@ CcourseworkDlg::CcourseworkDlg(CWnd* pParent /*=nullptr*/)
 void CcourseworkDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_STATIC_TASK, theTask);
 }
 
 BEGIN_MESSAGE_MAP(CcourseworkDlg, CDialogEx)
@@ -68,6 +71,7 @@ BEGIN_MESSAGE_MAP(CcourseworkDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CcourseworkDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CcourseworkDlg::OnBnClickedCancel)
+	ON_BN_CLICKED(IDC_Task_About_Bn, &CcourseworkDlg::OnBnClickedTaskAboutBn)
 END_MESSAGE_MAP()
 
 
@@ -77,6 +81,7 @@ BOOL CcourseworkDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	SetWindowText(_T("Курсовая - Чаминов Д. А. гр. 1183 " __COURSE__VERSION));
+	
 	// Добавление пункта "О программе..." в системное меню.
 
 	// IDM_ABOUTBOX должен быть в пределах системной команды.
@@ -171,3 +176,12 @@ void CcourseworkDlg::OnBnClickedCancel()
 	CDialogEx::OnCancel();
 }
 
+
+
+void CcourseworkDlg::OnBnClickedTaskAboutBn()
+{
+	MyTaskAboutDlg dlg(this);
+	//dlg.TaskAboutCtrl.SetTextMode(TM_RICHTEXT | TM_MULTICODEPAGE);
+	dlg.DoModal();
+	// TODO: добавьте свой код обработчика уведомлений
+}

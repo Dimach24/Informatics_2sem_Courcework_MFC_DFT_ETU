@@ -40,10 +40,11 @@ CcourseworkApp theApp;
 
 BOOL CcourseworkApp::InitInstance()
 {
-	// InitCommonControlsEx() требуется для Windows XP, если манифест
+// TODO: вызовите AfxInitRichEdit2(), чтобы инициализировать библиотеку richedit2.\n"	// InitCommonControlsEx() требуется для Windows XP, если манифест
 	// приложения использует ComCtl32.dll версии 6 или более поздней версии для включения
 	// стилей отображения.  В противном случае будет возникать сбой при создании любого окна.
 	INITCOMMONCONTROLSEX InitCtrls;
+	AfxInitRichEdit2();
 	InitCtrls.dwSize = sizeof(InitCtrls);
 	// Выберите этот параметр для включения всех общих классов управления, которые необходимо использовать
 	// в вашем приложении.

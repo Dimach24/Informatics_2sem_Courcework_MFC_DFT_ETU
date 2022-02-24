@@ -19,6 +19,10 @@ CMyGraph::~CMyGraph()
 {
 }
 
+void CMyGraph::drawTheFunction(size_t local_fuction_id)
+{
+}
+
 
 BEGIN_MESSAGE_MAP(CMyGraph, CStatic)
 	ON_WM_PAINT()
@@ -36,4 +40,5 @@ void CMyGraph::OnPaint()
 	CPaintDC dc(this); // device context for painting
 					   // TODO: добавьте свой код обработчика сообщений
 					   // Не вызывать CStatic::OnPaint() для сообщений рисования
+	
 }
