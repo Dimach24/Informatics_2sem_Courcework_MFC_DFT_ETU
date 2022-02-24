@@ -22,6 +22,7 @@ CMyGraph::~CMyGraph()
 //todo
 std::pair<double, double> CMyGraph::CalculateDot(double x, double y, double width, double heigth)
 {
+	
 	return std::pair<double, double>();
 }
 
@@ -45,13 +46,16 @@ void CMyGraph::OnPaint()
 					   // TODO: добавьте свой код обработчика сообщений
 					   // Не вызывать CStatic::OnPaint() для сообщений рисования
 
-	LPRECT wind_size;
+	LPRECT wind_size=nullptr;
 	GetWindowRect(wind_size);
-	for (auto function : functions) {
+	for (const MathFunction& function : functions) {
 		double from = max(scale_x.from, function.definition_scope.from);
 		double to = min(scale_x.to, function.definition_scope.to);
 		for (double x = from; x <= to; x += function.step) {
-			CalculateDot(x, function.f(x),wind_size->left-wind_size->right,wind_size->top-wind_size->bottom);
+			double y = function.f(x);
+			if (y > scale_y.to || y < scale_y.from) { continue; }
+			// x checked at the max, min
+			CalculateDot(x, y,(wind_size->left)-(wind_size->right),(wind_size->top)-(wind_size->bottom));
 		}
 	}
 }
