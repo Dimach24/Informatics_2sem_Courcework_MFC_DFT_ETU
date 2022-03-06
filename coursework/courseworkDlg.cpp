@@ -9,6 +9,7 @@
 #include "afxdialogex.h"
 
 #include "MyTaskAboutDlg.h"
+#include "Calculator.h"
 #include "SomeDefinitions.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -72,6 +73,7 @@ BEGIN_MESSAGE_MAP(CcourseworkDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CcourseworkDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CcourseworkDlg::OnBnClickedCancel)
 	ON_BN_CLICKED(IDC_Task_About_Bn, &CcourseworkDlg::OnBnClickedTaskAboutBn)
+	ON_BN_CLICKED(IDC_CALCULATE_BUTTON, &CcourseworkDlg::OnBnClickedCalculateButton)
 END_MESSAGE_MAP()
 
 
@@ -183,4 +185,11 @@ void CcourseworkDlg::OnBnClickedTaskAboutBn()
 	MyTaskAboutDlg dlg(this);
 	dlg.DoModal();
 	// TODO: добавьте свой код обработчика уведомлений
+}
+
+
+void CcourseworkDlg::OnBnClickedCalculateButton()
+{
+	Calculator dlg;
+	dlg.DoModal();
 }

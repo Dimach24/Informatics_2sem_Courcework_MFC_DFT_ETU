@@ -10,21 +10,15 @@
 
 IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 
-CMyGraph::CMyGraph()
+CMyGraph::CMyGraph() :CStatic()
 {
-
 }
 
 CMyGraph::~CMyGraph()
 {
 }
 
-//todo
-std::pair<double, double> CMyGraph::CalculateDot(double x, double y, long width, long heigth)
-{
-	
-	return std::pair<double, double>();
-}
+
 
 
 
@@ -40,22 +34,56 @@ END_MESSAGE_MAP()
 
 
 
+
 void CMyGraph::OnPaint()
 {
-	CPaintDC dc(this); // device context for painting
-					   // TODO: добавьте свой код обработчика сообщений
-					   // Не вызывать CStatic::OnPaint() для сообщений рисования
+	CPaintDC dc(this);
+	//dc.LineTo({ 255,255 });
 
-	LPRECT wind_size=nullptr;
-	GetWindowRect(wind_size);
-	for (const MathFunction& function : functions) {
-		double from = max(scale_x.from, function.definition_scope.from);
-		double to = min(scale_x.to, function.definition_scope.to);
-		for (double x = from; x <= to; x += function.step) {
-			double y = function.f(x);
-			if (y > scale_y.to || y < scale_y.from) { continue; }
-			// x checked at the max, min
-			CalculateDot(x, y,(wind_size->left)-(wind_size->right),(wind_size->top)-(wind_size->bottom));
+	for (MathFunction& f : functions) {
+		//dc.LineTo({ 0,128 });
+		bool is_first = true;
+		RECT r;;
+		for (POINT dot : f.points) {
+			if (is_first) { dc.LineTo(dot); is_first = false; }
+			else { dc.LineTo(dot); }
+
 		}
+	}
+	//dc.LineTo({ 128, 0 });
+}
+
+void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to)
+{
+	for (MathFunction& f : functions) {
+		f.set_scale(x_from, x_to, y_from, y_to);
+	}
+}
+
+void CMyGraph::setStep(double step)
+{
+	for (MathFunction& f : functions) {
+		f.set_step(step);
+	}
+}
+
+void CMyGraph::setRect(RECT r)
+{
+	for (MathFunction& f : functions) {
+		f.set_rect(r);
+	}
+}
+
+void CMyGraph::setLog(bool b)
+{
+	for (MathFunction& f : functions) {
+		f.set_log(b);
+	}
+}
+
+void CMyGraph::setNotCalculated()
+{
+	for (MathFunction& f : functions) {
+		f.set_not_calculated();
 	}
 }

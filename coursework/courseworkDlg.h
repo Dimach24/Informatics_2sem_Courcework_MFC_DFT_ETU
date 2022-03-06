@@ -36,4 +36,5 @@ public:
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedTaskAboutBn();
 	CString theTask;
+	afx_msg void OnBnClickedCalculateButton();
 };
