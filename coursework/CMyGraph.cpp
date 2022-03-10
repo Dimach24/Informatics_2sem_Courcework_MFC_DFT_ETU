@@ -34,9 +34,6 @@ END_MESSAGE_MAP()
 // Обработчики сообщений CMyGraph
 
 
-
-
-
 void CMyGraph::OnPaint()
 {
 	CPaintDC dc(this);
@@ -48,7 +45,10 @@ void CMyGraph::OnPaint()
 		bool is_first = true;
 		for (POINT dot : f.get_points()) {
 			if (is_first) { dc.MoveTo(dot); is_first = false; }
-			else {dc.LineTo(dot); }
+			else {
+				if (dot.y > r.bottom) { dot.y = r.bottom; }
+				dc.LineTo(dot);
+			}
 
 		}
 	}
