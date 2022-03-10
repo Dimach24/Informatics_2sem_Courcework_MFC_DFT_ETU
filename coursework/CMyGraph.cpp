@@ -39,6 +39,10 @@ void CMyGraph::OnPaint()
 {
 	CPaintDC dc(this);
 	//dc.LineTo({ 255,255 });
+	RECT r;
+	GetWindowRect(&r);
+	r = {0,0,r.right-r.left,r.bottom-r.top};
+	dc.FillSolidRect(&r, RGB(250,250,250));
 
 	for (MathFunction& f : functions) {
 		//dc.LineTo({ 0,128 });
