@@ -10,7 +10,9 @@
 
 IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 
-CMyGraph::CMyGraph() :CStatic()
+CMyGraph::CMyGraph() 
+	:CStatic(),
+	scale_x(), scale_y()
 {
 }
 
@@ -38,6 +40,11 @@ END_MESSAGE_MAP()
 void CMyGraph::OnPaint()
 {
 	CPaintDC dc(this);
+	RECT r;
+	GetWindowRect(&r);
+	r = { 0,0,r.right - r.left,r.bottom - r.top };
+	dc.FillSolidRect(&r, RGB(rand(), rand(), rand()));
+	/*
 	//dc.LineTo({ 255,255 });
 	RECT r;
 	GetWindowRect(&r);
@@ -54,6 +61,7 @@ void CMyGraph::OnPaint()
 		}
 	}
 	//dc.LineTo({ 128, 0 });
+	*/
 }
 
 void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to)

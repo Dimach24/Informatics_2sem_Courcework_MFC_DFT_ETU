@@ -1,6 +1,5 @@
 ﻿// Calculator.cpp: файл реализации
 //
-#define USE_MATH_DEFINES
 #include <cmath>
 #include "pch.h"
 #include "coursework.h"
@@ -61,7 +60,7 @@ BOOL Calculator::OnInitDialog()
 	assert(P);\
 	CStringW NAME##_s;\
 	P->GetWindowTextW(NAME##_s);\
-	float NAME = _wtof(NAME##_s)
+	double NAME = _wtof(NAME##_s)
 
 void Calculator::UpdateCalculatorParams()
 {
