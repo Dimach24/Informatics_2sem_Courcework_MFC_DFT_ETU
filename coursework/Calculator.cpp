@@ -128,5 +128,5 @@ END_MESSAGE_MAP()
 void Calculator::OnBnClickedButtonUpdate()
 {
 	UpdateCalculatorParams();
-	Cgraph.OnPaint();
+	Cgraph.RedrawWindow();
 }

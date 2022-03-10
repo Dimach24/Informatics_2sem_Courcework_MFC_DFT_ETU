@@ -42,17 +42,9 @@ void CMyGraph::OnPaint()
 	CPaintDC dc(this);
 	RECT r;
 	GetWindowRect(&r);
-	r = { 0,0,r.right - r.left,r.bottom - r.top };
-	dc.FillSolidRect(&r, RGB(rand(), rand(), rand()));
-	/*
-	//dc.LineTo({ 255,255 });
-	RECT r;
-	GetWindowRect(&r);
 	r = {0,0,r.right-r.left,r.bottom-r.top};
 	dc.FillSolidRect(&r, RGB(250,250,250));
-
 	for (MathFunction& f : functions) {
-		//dc.LineTo({ 0,128 });
 		bool is_first = true;
 		for (POINT dot : f.get_points()) {
 			if (is_first) { dc.LineTo(dot); is_first = false; }
@@ -60,8 +52,6 @@ void CMyGraph::OnPaint()
 
 		}
 	}
-	//dc.LineTo({ 128, 0 });
-	*/
 }
 
 void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to)
