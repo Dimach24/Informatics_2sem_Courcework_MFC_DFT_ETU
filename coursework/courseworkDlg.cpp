@@ -22,7 +22,7 @@ class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
-
+	BOOL OnInitDialog();
 // Данные диалогового окна
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
@@ -38,6 +38,12 @@ protected:
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 {
+}
+
+BOOL CAboutDlg::OnInitDialog()
+{
+	SetWindowText(_T("О программе. Номер версии: "__COURSE_LAST_COMMIT_INDEX));
+	return 0;
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
