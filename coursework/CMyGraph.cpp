@@ -47,8 +47,8 @@ void CMyGraph::OnPaint()
 	for (MathFunction& f : functions) {
 		bool is_first = true;
 		for (POINT dot : f.get_points()) {
-			if (is_first) { dc.LineTo(dot); is_first = false; }
-			else { dc.LineTo(dot); }
+			if (is_first) { dc.MoveTo(dot); is_first = false; }
+			else {dc.LineTo(dot); }
 
 		}
 	}
