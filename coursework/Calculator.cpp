@@ -107,6 +107,8 @@ void Calculator::UpdateCalculatorParams()
 	}
 }
 #undef MY_PARAM_HELPER
+
+
 void Calculator::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
