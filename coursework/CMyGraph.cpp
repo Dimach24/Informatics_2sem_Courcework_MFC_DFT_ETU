@@ -39,38 +39,43 @@ void CMyGraph::OnPaint()
 	CPaintDC dc(this);
 	CPen gr(BS_SOLID, 1, RGB(0, 0, 0));
 	HGDIOBJ oldpen = dc.SelectObject(gr);
+
 	RECT r;
 	GetWindowRect(&r);
-	r = {0,0,r.right-r.left,r.bottom-r.top};
+	r = { 0,0,r.right - r.left,r.bottom - r.top };
 	dc.IntersectClipRect(&r);
-	dc.FillSolidRect(&r, RGB(250,250,250));
+	dc.FillSolidRect(&r, bg_color);
+
+
+	CPen axespen(BS_SOLID, 2, axes_color);
+	dc.SelectObject(axespen);
+	if (scale_x.from * scale_x.to < 0) {
+		long x;
+		x = r.right / (scale_x.to - scale_x.from) * (-scale_x.from);
+		dc.MoveTo(x, r.top);
+		dc.LineTo(x, r.bottom);
+	}
+	if (scale_y.from * scale_y.to < 0) {
+		long y;
+		y = r.bottom / (scale_y.to - scale_y.from) * (-scale_y.from);
+		dc.MoveTo(r.left, y);
+		dc.LineTo(r.right, y);
+	}
+
 	for (MathFunction& f : functions) {
 		bool is_first = true;
 		CPen gr(BS_SOLID, 1,f.color);
+		dc.SelectObject(gr);
+		dc.MoveTo({ r.right / 2, r.bottom / 2 });
 		for (POINT dot : f.get_points()) {
 			if (is_first) { dc.MoveTo(dot); is_first = false; }
 			else {
-				if (dot.y > r.bottom) { dot.y = r.bottom; }
 				dc.LineTo(dot);
 			}
 
 		}
 	}
-	CPen axespen(BS_SOLID, 3, axes_color);
-	dc.SelectObject(axespen);
 
-	if (scale_x.from * scale_x.to <= 0) {
-		long x;
-		x = r.right/(scale_x.to-scale_x.from)*(-scale_x.from);
-		dc.MoveTo(x, r.top);
-		dc.LineTo(x, r.bottom);
-	}
-	if (scale_y.from * scale_y.to <= 0) {
-		long y;
-		y = r.bottom / (scale_y.to - scale_y.from) * (-scale_y.from);
-		dc.MoveTo(r.left, y);
-		dc.LineTo(r.right,y);
-	}
 	dc.SelectObject(oldpen);
 }
 

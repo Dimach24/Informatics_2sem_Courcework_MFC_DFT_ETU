@@ -25,6 +25,10 @@ Calculator::~Calculator()
 BOOL Calculator::OnInitDialog()
 {
 	Cgraph.SubclassDlgItem(IDC_STATIC_graph, this);
+	axes_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_AXES, this);
+	bg_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_BG, this);
+	signal_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_SIGNAL, this);
+	dcf_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
 	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
 
@@ -46,8 +50,12 @@ BOOL Calculator::OnInitDialog()
 	if (p) { p->SetWindowTextW(L"-1.5"); }
 	p = GetDlgItem(IDC_EDIT_yscale_to);
 	if (p) { p->SetWindowTextW(L"1.5"); }
-
 	
+	bg_cp.SetColor(RGB(0xff, 0xfb, 0xf0));
+	signal_cp.SetColor(RGB(0x80, 0, 0));
+	axes_cp.SetColor(RGB(0, 0, 0));
+	dcf_cp.SetColor(RGB(0, 0, 0x80));
+
 	MathFunction f;
 	f.set_function(&signal);
 	f.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
@@ -89,8 +97,10 @@ void Calculator::UpdateCalculatorParams()
 		Cgraph.setStep(step);
 		Cgraph.setRect(r);
 		Cgraph.setLog(cb_is_log.GetCheck() == 1);
+		Cgraph.axes_color = axes_cp.GetColor();
+		Cgraph.bg_color = bg_cp.GetColor();
+		Cgraph.functions[0].color = signal_cp.GetColor();
 		p = GetDlgItem(IDC_STATIC_signal);
-
 		if (p) {
 			CString signal;
 			signal.Format(L"x(t) = %.2F*sin(2π(%.2F + %.2Ft)*t)", a, f, m);

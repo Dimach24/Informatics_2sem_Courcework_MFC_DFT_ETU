@@ -33,14 +33,19 @@
 #define IDC_BUTTON_SAVE_GR              1040
 #define IDC_BUTTON_SETTINGS_GR          1041
 #define IDC_STATIC_grad                 1042
+#define IDC_MFCCOLORBUTTON_BG           1043
+#define IDC_MFCCOLORBUTTON_AXES         1044
+#define IDC_MFCCOLORBUTTON_SIGNAL       1045
+#define IDC_MFCCOLORBUTTON4             1046
+#define IDC_MFCCOLORBUTTON_DCF          1046
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        137
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1043
+#define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

@@ -26,4 +26,8 @@ public:
 	CSliderCtrl slider_step;
 	CButton cb_is_log;
 	SignalFunction signal;
+	CMFCColorButton axes_cp;
+	CMFCColorButton bg_cp;
+	CMFCColorButton signal_cp;
+	CMFCColorButton dcf_cp;
 };

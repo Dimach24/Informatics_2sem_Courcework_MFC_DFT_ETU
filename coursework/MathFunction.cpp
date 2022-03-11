@@ -65,11 +65,18 @@ const std::vector<POINT>& MathFunction::get_points()
 void MathFunction::calculate() {
 	double start = max(scale.x_from, from);
 	double stop = min(scale.x_to, to);
-	points.resize(floor((stop - start) / step));
+	points.resize(ceil((stop - start) / step));
 	for (size_t i = 0; i < points.size(); i++) {
 		double x = start + step * i;	// calculating x of the point
 		double y = funct->calc(x);				// calculating y of the point
-		if (is_log) { y = log(y); }
+		if (is_log) {
+			if (y < 0) {
+				y = -log(abs(y));
+			}
+			else {
+				y = log(y);
+			}
+		}
 		points[i] = to_the_new_coords_system(x, y);
 	}
 	is_calculated = true;
