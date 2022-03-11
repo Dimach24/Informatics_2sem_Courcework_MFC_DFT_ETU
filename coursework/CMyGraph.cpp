@@ -40,9 +40,11 @@ void CMyGraph::OnPaint()
 	RECT r;
 	GetWindowRect(&r);
 	r = {0,0,r.right-r.left,r.bottom-r.top};
+	dc.IntersectClipRect(&r);
 	dc.FillSolidRect(&r, RGB(250,250,250));
 	for (MathFunction& f : functions) {
 		bool is_first = true;
+		dc.SetBkColor(f.color);
 		for (POINT dot : f.get_points()) {
 			if (is_first) { dc.MoveTo(dot); is_first = false; }
 			else {
@@ -52,10 +54,25 @@ void CMyGraph::OnPaint()
 
 		}
 	}
+	dc.SetBkColor(RGB(255, 0, 0));
+	if (scale_x.from * scale_x.to <= 0) {
+		long x;
+		x = r.right/(scale_x.to-scale_x.from)*(-scale_x.from);
+		dc.MoveTo(x, r.top);
+		dc.LineTo(x, r.bottom);
+	}
+	if (scale_y.from * scale_y.to <= 0) {
+		long y;
+		y = r.bottom / (scale_y.to - scale_y.from) * (-scale_y.from);
+		dc.MoveTo(r.left, y);
+		dc.LineTo(r.right,y);
+	}
 }
 
 void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to)
 {
+	this->scale_x = { x_from,x_to };
+	this->scale_y = { y_from,y_to };
 	for (MathFunction& f : functions) {
 		f.set_scale(x_from, x_to, y_from, y_to);
 	}
