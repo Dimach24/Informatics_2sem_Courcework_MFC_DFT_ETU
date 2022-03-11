@@ -21,7 +21,7 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
-
+	COLORREF axes_color=RGB(255,0,0);
 	afx_msg void OnPaint();
 	void setScale(double x_from, double x_to, double y_from, double y_to);
 	void setStep(double step);

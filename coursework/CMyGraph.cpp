@@ -37,6 +37,8 @@ END_MESSAGE_MAP()
 void CMyGraph::OnPaint()
 {
 	CPaintDC dc(this);
+	CPen gr(BS_SOLID, 1, RGB(0, 0, 0));
+	HGDIOBJ oldpen = dc.SelectObject(gr);
 	RECT r;
 	GetWindowRect(&r);
 	r = {0,0,r.right-r.left,r.bottom-r.top};
@@ -44,7 +46,7 @@ void CMyGraph::OnPaint()
 	dc.FillSolidRect(&r, RGB(250,250,250));
 	for (MathFunction& f : functions) {
 		bool is_first = true;
-		dc.SetBkColor(f.color);
+		CPen gr(BS_SOLID, 1,f.color);
 		for (POINT dot : f.get_points()) {
 			if (is_first) { dc.MoveTo(dot); is_first = false; }
 			else {
@@ -54,7 +56,9 @@ void CMyGraph::OnPaint()
 
 		}
 	}
-	dc.SetBkColor(RGB(255, 0, 0));
+	CPen axespen(BS_SOLID, 3, axes_color);
+	dc.SelectObject(axespen);
+
 	if (scale_x.from * scale_x.to <= 0) {
 		long x;
 		x = r.right/(scale_x.to-scale_x.from)*(-scale_x.from);
@@ -67,6 +71,7 @@ void CMyGraph::OnPaint()
 		dc.MoveTo(r.left, y);
 		dc.LineTo(r.right,y);
 	}
+	dc.SelectObject(oldpen);
 }
 
 void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to)
