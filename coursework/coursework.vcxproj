@@ -217,6 +217,7 @@
     <ResourceCompile Include="coursework.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="res\coursework.rc2" />
   </ItemGroup>
   <ItemGroup>
