@@ -8,7 +8,7 @@ protected:
 	double step;
 
 	bool is_log;
-	bool save_data=false;
+	
 	struct {
 		double x_from, x_to;
 		double y_from, y_to;
@@ -18,6 +18,7 @@ protected:
 public:
 	std::vector<POINT> points;
 	std::vector<double>data; 
+	bool save_data = false; 
 	COLORREF color;
 public:
 	void set_scale(double x_from, double x_to, double y_from, double y_to);
