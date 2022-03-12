@@ -1,13 +1,13 @@
 #pragma once
 #include <vector>
-#include "PureFunction.h"
+#define PI 3.141592653589793238463
 class MathFunction {
 protected:
-	PureFunction* funct;
+	virtual  double f(double x) = 0;
 	double from, to;
 	double step;
 
-	bool is_log;		
+	bool is_log;
 	struct {
 		double x_from, x_to;
 		double y_from, y_to;
@@ -20,7 +20,6 @@ public:
 public:
 	void set_scale(double x_from, double x_to, double y_from, double y_to);
 	void set_definition_scope(double from, double to);
-	void set_function(PureFunction* funct);
 	void set_step(double s);
 	void set_rect(CRect r);
 	void set_log(bool b);
@@ -28,7 +27,18 @@ public:
 	void set_not_calculated();
 	const std::vector<POINT>& get_points();
 protected:
-	void calculate();
+	virtual void calculate();
 	POINT to_the_new_coords_system(double x, double y) const;
 };
 
+class SignalFunction :MathFunction {
+public:
+	std::vector<double> data;
+protected:
+	double f(double x);
+public:
+	void set_a(double a);
+	void set_m(double m);
+	void set_f(double f);
+	void calculate();
+};
