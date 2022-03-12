@@ -57,9 +57,6 @@
     <ClInclude Include="DataErrorDlg.h">
       <Filter>Файлы заголовков\+-готово</Filter>
     </ClInclude>
-    <ClInclude Include="PureFunction.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMyGraph.cpp">
@@ -85,9 +82,6 @@
     </ClCompile>
     <ClCompile Include="DataErrorDlg.cpp">
       <Filter>Исходные файлы\+-готово</Filter>
-    </ClCompile>
-    <ClCompile Include="PureFunction.cpp">
-      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
