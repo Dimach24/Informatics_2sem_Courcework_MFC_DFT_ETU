@@ -31,7 +31,7 @@ protected:
 	POINT to_the_new_coords_system(double x, double y) const;
 };
 
-class SignalFunction :MathFunction {
+class SignalFunction : public MathFunction {
 protected:
 	double a, m, f;
 public:
@@ -44,7 +44,7 @@ public:
 	void set_f(double f);
 	void calculate();
 };
-class DFTFunction :MathFunction {
+class DFTFunction : public MathFunction {
 protected:
 	double f(double x);
 	SignalFunction* signal;
