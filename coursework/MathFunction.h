@@ -32,6 +32,8 @@ protected:
 };
 
 class SignalFunction :MathFunction {
+protected:
+	double a, m, f;
 public:
 	std::vector<double> data;
 protected:
@@ -41,4 +43,9 @@ public:
 	void set_m(double m);
 	void set_f(double f);
 	void calculate();
+};
+class DFTFunction :MathFunction {
+protected:
+	double f(double x);
+	SignalFunction* signal;
 };

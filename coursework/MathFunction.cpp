@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MathFunction.h"
+#include <cmath>
 
 void MathFunction::set_not_calculated()
 {
@@ -130,4 +131,16 @@ void SignalFunction::calculate() {
 		points[i] = to_the_new_coords_system(x, y);
 	}
 	is_calculated = true;
+}
+
+double DFTFunction::f(double x)
+{
+	size_t m = round((x + scale.x_from)/step);
+	size_t N = signal->data.size();
+	double re = 0, im = 0;
+	for (size_t n = 0; n < N; n++) {
+		re += signal->data[n] * cos(2 * PI * m * n / N);
+		im += signal->data[n] * sin(-2 * PI * m * n / N);
+	}
+	return sqrt(re*re+im*im);
 }
