@@ -28,7 +28,7 @@ BOOL Calculator::OnInitDialog()
 	axes_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_AXES, this);
 	bg_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_BG, this);
 	signal_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_SIGNAL, this);
-	dcf_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
+	dft_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_dft, this);
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
 	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
 
@@ -54,7 +54,7 @@ BOOL Calculator::OnInitDialog()
 	bg_cp.SetColor(RGB(0xff, 0xfb, 0xf0));
 	signal_cp.SetColor(RGB(0x80, 0, 0));
 	axes_cp.SetColor(RGB(0, 0, 0));
-	dcf_cp.SetColor(RGB(0, 0, 0x80));
+	dft_cp.SetColor(RGB(0, 0, 0x80));
 
 	MathFunction f;
 	f.set_function(&signal);

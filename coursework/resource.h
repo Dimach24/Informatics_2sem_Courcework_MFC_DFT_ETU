@@ -36,8 +36,8 @@
 #define IDC_MFCCOLORBUTTON_BG           1043
 #define IDC_MFCCOLORBUTTON_AXES         1044
 #define IDC_MFCCOLORBUTTON_SIGNAL       1045
-#define IDC_MFCCOLORBUTTON4             1046
 #define IDC_MFCCOLORBUTTON_DCF          1046
+#define IDC_MFCCOLORBUTTON_dft          1046
 
 // Next default values for new objects
 // 

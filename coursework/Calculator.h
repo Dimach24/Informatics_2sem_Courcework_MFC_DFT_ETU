@@ -29,5 +29,5 @@ public:
 	CMFCColorButton axes_cp;
 	CMFCColorButton bg_cp;
 	CMFCColorButton signal_cp;
-	CMFCColorButton dcf_cp;
+	CMFCColorButton dft_cp;
 };
