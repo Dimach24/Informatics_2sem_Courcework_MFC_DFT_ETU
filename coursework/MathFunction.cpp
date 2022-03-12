@@ -73,12 +73,7 @@ void MathFunction::calculate() {
 		double x = start + step * i;	// calculating x of the point
 		double y = f(x);				// calculating y of the point
 		if (is_log) {
-			if (y < 0) {
-				y = -log(abs(y));
-			}
-			else {
-				y = log(y);
-			}
+			y = log(abs(y));
 		}
 		points[i] = to_the_new_coords_system(x, y);
 	}
@@ -87,7 +82,7 @@ void MathFunction::calculate() {
 
 double SignalFunction::f(double x)
 {
-	return a * sin(2 * PI * (f + m * x) * x);
+	return a * sin(2 * PI * (f_ + m * x) * x);
 }
 
 void SignalFunction::set_a(double a)
@@ -106,9 +101,9 @@ void SignalFunction::set_m(double m)
 
 void SignalFunction::set_f(double f)
 {
-	if (f == this->f) { return; }
+	if (f == this->f_) { return; }
 	set_not_calculated();
-	this->f = f;
+	this->f_ = f;
 }
 
 void SignalFunction::calculate() {
@@ -121,26 +116,47 @@ void SignalFunction::calculate() {
 		double y = f(x);				// calculating y of the point
 		data[i] = y;
 		if (is_log) {
-			if (y < 0) {
-				y = -log(abs(y));
-			}
-			else {
-				y = log(y);
-			}
+			y = log(abs(y));
 		}
 		points[i] = to_the_new_coords_system(x, y);
 	}
 	is_calculated = true;
 }
 
+DFTFunction::DFTFunction(SignalFunction* s)
+{
+	signal - s;
+}
+
 double DFTFunction::f(double x)
 {
-	size_t m = round((x + scale.x_from)/step);
+	size_t m = x;
 	size_t N = signal->data.size();
 	double re = 0, im = 0;
 	for (size_t n = 0; n < N; n++) {
 		re += signal->data[n] * cos(2 * PI * m * n / N);
 		im += signal->data[n] * sin(-2 * PI * m * n / N);
 	}
-	return sqrt(re*re+im*im);
+	return sqrt(re * re + im * im);
+}
+
+void DFTFunction::calculate()
+{
+	double start = max(scale.x_from, from);
+	double stop = min(scale.x_to, to);
+	points.resize(ceil((stop - start) / step));
+	for (size_t i = 0; i < points.size(); i++) {
+		double x = start + step * i;	// calculating x of the point
+		double y = f(i);				// calculating y of the point
+		if (is_log) {
+				y = log(abs(y));
+		}
+		points[i] = to_the_new_coords_system(x, y);
+	}
+	is_calculated = true;
+}
+
+void DFTFunction::set_signal(SignalFunction* s)
+{
+	signal = s;
 }
