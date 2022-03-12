@@ -32,7 +32,6 @@
 #define IDC_BUTTON1                     1040
 #define IDC_BUTTON_SAVE_GR              1040
 #define IDC_BUTTON_SETTINGS_GR          1041
-#define IDC_BUTTON_reset                1041
 #define IDC_STATIC_grad                 1042
 #define IDC_MFCCOLORBUTTON_BG           1043
 #define IDC_MFCCOLORBUTTON_AXES         1044

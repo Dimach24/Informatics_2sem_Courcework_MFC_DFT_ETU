@@ -1,3 +1,3 @@
 #pragma once
-#define __COURSE__VERSION "v. 0.2.01"
-#define __COURSE_LAST_COMMIT_INDEX "eb850a2219823886496a274c22943b18b0ab06a2"
+#define __COURSE__VERSION "v. 0.1.02"
+#define __COURSE_LAST_COMMIT_INDEX "fb1498d4eb89ff60b7a8cebb46db89184ad07afc"

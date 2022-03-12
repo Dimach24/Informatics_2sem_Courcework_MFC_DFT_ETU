@@ -14,7 +14,7 @@ public:
 		double from, to;
 	}scale_x, scale_y;
 	
-	std::vector<MathFunction*> functions;
+	std::vector<MathFunction> functions;
 	CMyGraph();
 	virtual ~CMyGraph();
 
