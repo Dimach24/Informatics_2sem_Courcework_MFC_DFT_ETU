@@ -62,12 +62,12 @@ void CMyGraph::OnPaint()
 		dc.LineTo(r.right, y);
 	}
 
-	for (MathFunction* f : functions) {
+	for (MathFunction& f : functions) {
 		bool is_first = true;
-		CPen gr(BS_SOLID, 1,f->color);
+		CPen gr(BS_SOLID, 1,f.color);
 		dc.SelectObject(gr);
 		dc.MoveTo({ r.right / 2, r.bottom / 2 });
-		for (POINT dot : f->get_points()) {
+		for (POINT dot : f.get_points()) {
 			if (is_first) { dc.MoveTo(dot); is_first = false; }
 			else {
 				dc.LineTo(dot);
@@ -83,35 +83,35 @@ void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to)
 {
 	this->scale_x = { x_from,x_to };
 	this->scale_y = { y_from,y_to };
-	for (MathFunction* f : functions) {
-		f->set_scale(x_from, x_to, y_from, y_to);
+	for (MathFunction& f : functions) {
+		f.set_scale(x_from, x_to, y_from, y_to);
 	}
 }
 
 void CMyGraph::setStep(double step)
 {
-	for (MathFunction* f : functions) {
-		f->set_step(step);
+	for (MathFunction& f : functions) {
+		f.set_step(step);
 	}
 }
 
 void CMyGraph::setRect(RECT r)
 {
-	for (MathFunction* f : functions) {
-		f->set_rect(r);
+	for (MathFunction& f : functions) {
+		f.set_rect(r);
 	}
 }
 
 void CMyGraph::setLog(bool b)
 {
-	for (MathFunction* f : functions) {
-		f->set_log(b);
+	for (MathFunction& f : functions) {
+		f.set_log(b);
 	}
 }
 
 void CMyGraph::setNotCalculated()
 {
-	for (MathFunction* f : functions) {
-		f->set_not_calculated();
+	for (MathFunction& f : functions) {
+		f.set_not_calculated();
 	}
 }
