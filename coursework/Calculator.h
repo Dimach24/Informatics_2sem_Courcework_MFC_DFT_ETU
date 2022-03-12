@@ -12,6 +12,9 @@ public:
 	virtual ~Calculator();
 	BOOL OnInitDialog();
 	void UpdateCalculatorParams();
+protected:
+	SignalFunction signal;
+	DFTFunction dft;
 // Данные диалогового окна
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_Calculator };
@@ -25,9 +28,12 @@ public:
 	afx_msg void OnBnClickedButtonUpdate();
 	CSliderCtrl slider_step;
 	CButton cb_is_log;
-	SignalFunction signal;
 	CMFCColorButton axes_cp;
 	CMFCColorButton bg_cp;
 	CMFCColorButton signal_cp;
-	CMFCColorButton dcf_cp;
+	CMFCColorButton dft_cp;
+	afx_msg void OnBnClickedButtonreset();
+protected:
+	void ResetColorPickers();
+	void ResetInputData();
 };
