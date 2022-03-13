@@ -120,6 +120,7 @@ void Calculator::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_UPDATE_graph, &Calculator::OnBnClickedButtonUpdate)
 	ON_BN_CLICKED(IDC_BUTTON_reset, &Calculator::OnBnClickedButtonreset)
+	ON_BN_CLICKED(IDC_BUTTON_SAVE_GR, &Calculator::OnBnClickedButtonSaveGr)
 END_MESSAGE_MAP()
 
 
@@ -172,4 +173,22 @@ void Calculator::ResetInputData()
 	p = nullptr;
 	p = GetDlgItem(IDC_EDIT_yscale_to);
 	if (p) { p->SetWindowTextW(L"1.5"); }
+}
+
+
+void Calculator::OnBnClickedButtonSaveGr()
+{
+	CWnd* p = GetDlgItem(IDC_STATIC_graph);
+	if (p) {
+		CRect rect;
+		p->GetClientRect(rect);
+		CWindowDC wdc(p);
+		CDC bmdc;
+		bmdc.CreateCompatibleDC(&wdc);
+		CBitmap bmp;
+		bmp.CreateCompatibleBitmap(&bmdc, rect.Width(), rect.Height());
+		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
+		bmdc.BitBlt(0, 0, rect.Width(), rect.Height(), &wdc, 0, 0, SRCCOPY);
+		bmdc.SelectObject(olddc);
+	}
 }

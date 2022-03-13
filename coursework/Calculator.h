@@ -36,4 +36,6 @@ public:
 protected:
 	void ResetColorPickers();
 	void ResetInputData();
+public:
+	afx_msg void OnBnClickedButtonSaveGr();
 };
