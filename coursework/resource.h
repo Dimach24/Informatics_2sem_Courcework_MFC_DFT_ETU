@@ -9,7 +9,6 @@
 #define IDS_STRING102                   102
 #define IDD_MyTaskAboutDlg              103
 #define IDD_Calculator                  104
-#define IDD_DataErrorDlg                105
 #define IDD_ColorSettingsDLG            106
 #define IDR_MAINFRAME                   128
 #define ID_LOGO_ICO                     133
