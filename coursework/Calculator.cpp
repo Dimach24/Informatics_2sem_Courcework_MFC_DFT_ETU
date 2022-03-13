@@ -6,6 +6,15 @@
 #include "Calculator.h"
 #include "afxdialogex.h"
 #include "DataErrorDlg.h"
+#include <initguid.h>
+DEFINE_GUID(ImageFormatBMP, 0xb96b3cab, 0x0728, 0x11d3, 0x9d,
+	0x7b, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e);
+DEFINE_GUID(ImageFormatJPEG, 0xb96b3cae, 0x0728, 0x11d3, 0x9d,
+	0x7b, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e);
+DEFINE_GUID(ImageFormatPNG, 0xb96b3caf, 0x0728, 0x11d3, 0x9d,
+	0x7b, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e);
+DEFINE_GUID(ImageFormatGIF, 0xb96b3cb0, 0x0728, 0x11d3, 0x9d,
+	0x7b, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e);
 
 // Диалоговое окно Calculator
 
@@ -14,17 +23,14 @@ IMPLEMENT_DYNAMIC(Calculator, CDialogEx)
 Calculator::Calculator(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_Calculator, pParent),
 	signal(),
-	dft(nullptr)
-{
+	dft(nullptr) {
 	dft.set_signal(&signal);
 }
 
-Calculator::~Calculator()
-{
+Calculator::~Calculator() {
 }
 
-BOOL Calculator::OnInitDialog()
-{
+BOOL Calculator::OnInitDialog() {
 	Cgraph.SubclassDlgItem(IDC_STATIC_graph, this);
 	axes_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_AXES, this);
 	bg_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_BG, this);
@@ -48,13 +54,15 @@ BOOL Calculator::OnInitDialog()
 
 	signal.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	Cgraph.functions.push_back(&signal);
-	
+
 	dft.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	Cgraph.functions.push_back(&dft);
 
 
 	return 0;
 }
+
+
 #define MY_PARAM_HELPER(P,ID,NAME)\
 	P=GetDlgItem(ID);\
 	assert(P);\
@@ -62,8 +70,7 @@ BOOL Calculator::OnInitDialog()
 	P->GetWindowTextW(NAME##_s);\
 	double NAME = _wtof(NAME##_s)
 
-void Calculator::UpdateCalculatorParams()
-{
+void Calculator::UpdateCalculatorParams() {
 	CWnd* p = nullptr;
 	MY_PARAM_HELPER(p, IDC_EDIT_param_a, a);
 	MY_PARAM_HELPER(p, IDC_EDIT_param_m, m);
@@ -97,8 +104,7 @@ void Calculator::UpdateCalculatorParams()
 			p->SetWindowTextW(signal);
 		}
 
-	}
-	else {
+	} else {
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
 		AfxMessageBox(_T("Недостаточно параметров"), MB_OK | MB_ICONERROR);
@@ -107,8 +113,7 @@ void Calculator::UpdateCalculatorParams()
 #undef MY_PARAM_HELPER
 
 
-void Calculator::DoDataExchange(CDataExchange* pDX)
-{
+void Calculator::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_STATIC_graph, Cgraph);
 	DDX_Control(pDX, IDC_SLIDER_STEP, slider_step);
@@ -126,30 +131,26 @@ END_MESSAGE_MAP()
 // Обработчики сообщений Calculator
 
 
-void Calculator::OnBnClickedButtonUpdate()
-{
+void Calculator::OnBnClickedButtonUpdate() {
 	UpdateCalculatorParams();
 	Cgraph.RedrawWindow();
 }
 
 
-void Calculator::OnBnClickedButtonreset()
-{
+void Calculator::OnBnClickedButtonreset() {
 	ResetInputData();
 
 	ResetColorPickers();
 }
 
-void Calculator::ResetColorPickers()
-{
+void Calculator::ResetColorPickers() {
 	bg_cp.SetColor(RGB(0xff, 0xfb, 0xf0));
 	signal_cp.SetColor(RGB(0x80, 0, 0));
 	axes_cp.SetColor(RGB(0, 0, 0));
 	dft_cp.SetColor(RGB(0, 0, 0x80));
 }
 
-void Calculator::ResetInputData()
-{
+void Calculator::ResetInputData() {
 	CWnd* p;
 	p = nullptr;
 	p = GetDlgItem(IDC_EDIT_param_a);
@@ -175,8 +176,7 @@ void Calculator::ResetInputData()
 }
 
 
-void Calculator::OnBnClickedButtonSaveGr()
-{
+void Calculator::OnBnClickedButtonSaveGr() {
 	CWnd* p = GetDlgItem(IDC_STATIC_graph);
 	if (p) {
 		CRect rect;
@@ -185,16 +185,45 @@ void Calculator::OnBnClickedButtonSaveGr()
 		CDC bmdc;
 		bmdc.CreateCompatibleDC(&wdc);
 		CBitmap bmp;
-		bmp.CreateCompatibleBitmap(&bmdc, rect.Width(), rect.Height());
+		bmp.CreateCompatibleBitmap(&wdc, rect.Width(), rect.Height());
 		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
 		bmdc.BitBlt(0, 0, rect.Width(), rect.Height(), &wdc, 0, 0, SRCCOPY);
 		bmdc.SelectObject(olddc);
-		
+
 		/*...*/
 
-		CFileDialog dlg(FALSE,_T(".bmp"),_T("График ДПФ"), OFN_OVERWRITEPROMPT, 
+		CFileDialog dlg(FALSE, _T(".bmp"), _T("График ДПФ"), OFN_OVERWRITEPROMPT,
 			_T("BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif) \
 | *.gif | JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||"));
 		dlg.DoModal();
+		CString path = dlg.GetOFN().lpstrFile;
+		short i = path.ReverseFind(L'.');
+		CString extension;
+		if (i == -1) {
+			path += ".bmp";
+			extension = _T(".bmp");
+		} else {
+			i = path.GetLength() - i;
+			extension = path.Right(i);
+			extension.MakeLower();
+		}
+		CImage img;
+		img.Attach(HBITMAP(bmp));
+		HRESULT saving;
+		if (extension == _T(".jpg")) {
+			saving = img.Save(path, ImageFormatJPEG);
+		} else if (extension == _T(".png")) {
+			saving = img.Save(path, ImageFormatPNG);
+		} else if (extension == _T(".gif")) {
+			saving = img.Save(path, ImageFormatGIF);
+		} else if (extension == _T(".bmp")) {
+			saving = img.Save(path, ImageFormatBMP);
+		} else {
+			path += ".bmp";
+			saving = img.Save(path, ImageFormatBMP);
+		}
+		if (FAILED(saving)) {
+			AfxMessageBox(_T("При сохранении файла что-то пошло не так"));
+		}
 	}
 }
