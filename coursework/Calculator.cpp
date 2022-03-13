@@ -190,5 +190,12 @@ void Calculator::OnBnClickedButtonSaveGr()
 		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
 		bmdc.BitBlt(0, 0, rect.Width(), rect.Height(), &wdc, 0, 0, SRCCOPY);
 		bmdc.SelectObject(olddc);
+		
+		/*...*/
+
+		CFileDialog dlg(FALSE,_T(".bmp"),_T("График ДПФ"), OFN_OVERWRITEPROMPT, 
+			_T("BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif) \
+| *.gif | JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||"));
+		dlg.DoModal();
 	}
 }
