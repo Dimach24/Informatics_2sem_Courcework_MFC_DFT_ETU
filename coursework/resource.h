@@ -9,7 +9,6 @@
 #define IDS_STRING102                   102
 #define IDD_MyTaskAboutDlg              103
 #define IDD_Calculator                  104
-#define IDD_ColorSettingsDLG            106
 #define IDR_MAINFRAME                   128
 #define ID_LOGO_ICO                     133
 #define IDC_STATIC_TASK                 1000
@@ -32,7 +31,6 @@
 #define IDC_BUTTON_SAVE_GR              1040
 #define IDC_BUTTON_SETTINGS_GR          1041
 #define IDC_BUTTON_reset                1041
-#define IDC_STATIC_grad                 1042
 #define IDC_MFCCOLORBUTTON_BG           1043
 #define IDC_MFCCOLORBUTTON_AXES         1044
 #define IDC_MFCCOLORBUTTON_SIGNAL       1045
