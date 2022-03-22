@@ -125,7 +125,7 @@ void SignalFunction::calculate() {
 
 DFTFunction::DFTFunction(SignalFunction* s)
 {
-	signal - s;
+	signal = s;
 }
 
 double DFTFunction::f(double x)
