@@ -12,7 +12,6 @@
 IMPLEMENT_DYNAMIC(DataErrorDlg, CDialogEx)
 
 DataErrorDlg::DataErrorDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_DataErrorDlg, pParent)
 {
 
 }
