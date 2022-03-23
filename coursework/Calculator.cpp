@@ -72,14 +72,34 @@ BOOL Calculator::OnInitDialog() {
 	double NAME = _wtof(NAME##_s)
 
 void Calculator::UpdateCalculatorParams() {
-	CWnd* p = nullptr;
-	MY_PARAM_HELPER(p, IDC_EDIT_param_a, a);
-	MY_PARAM_HELPER(p, IDC_EDIT_param_m, m);
-	MY_PARAM_HELPER(p, IDC_EDIT_param_f, f);
-	MY_PARAM_HELPER(p, IDC_EDIT_xscale_from, x_from);
-	MY_PARAM_HELPER(p, IDC_EDIT_xscale_to, x_to);
-	MY_PARAM_HELPER(p, IDC_EDIT_yscale_from, y_from);
-	MY_PARAM_HELPER(p, IDC_EDIT_yscale_to, y_to);
+	CString a_s;
+	edit_a.GetWindowTextW(a_s);
+	double a = _wtof(a_s);
+
+	CString m_s;
+	edit_m.GetWindowTextW(m_s);
+	double m = _wtof(m_s);
+
+	CString f_s;
+	edit_f.GetWindowTextW(f_s);
+	double f = _wtof(f_s);
+
+	CString x_from_s;
+	edit_x_f.GetWindowTextW(x_from_s);
+	double x_from = _wtof(a_s);
+
+	CString x_to_s;
+	edit_x_t.GetWindowTextW(x_to_s);
+	double x_to = _wtof(x_to_s);
+
+	CString y_from_s;
+	edit_y_f.GetWindowTextW(y_from_s);
+	double y_from = _wtof(y_from_s);
+
+	CString y_to_s;
+	edit_y_t.GetWindowTextW(y_to_s);
+	double y_to = _wtof(y_to_s);
+
 	if (x_from >= x_to || y_from > y_to) {
 		AfxMessageBox(_T("Невозможный масштаб"), MB_OK | MB_ICONERROR);
 		return;
@@ -130,6 +150,13 @@ void Calculator::DoDataExchange(CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_STATIC_graph, Cgraph);
 	DDX_Control(pDX, IDC_SLIDER_STEP, slider_step);
 	DDX_Control(pDX, IDC_CHECK_is_log_scale, cb_is_log);
+	DDX_Control(pDX, IDC_EDIT_param_a, edit_a);
+	DDX_Control(pDX, IDC_EDIT_param_m, edit_m);
+	DDX_Control(pDX, IDC_EDIT_param_f, edit_f);
+	DDX_Control(pDX, IDC_EDIT_xscale_from, edit_x_f);
+	DDX_Control(pDX, IDC_EDIT_xscale_to, edit_x_t);
+	DDX_Control(pDX, IDC_EDIT_yscale_from, edit_y_f);
+	DDX_Control(pDX, IDC_EDIT_yscale_to, edit_y_t);
 }
 
 
