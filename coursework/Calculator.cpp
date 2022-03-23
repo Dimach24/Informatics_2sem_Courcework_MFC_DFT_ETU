@@ -197,6 +197,7 @@ void Calculator::ResetInputData() {
 	edit_x_t.SetWindowTextW(_T("6.2832"));
 	edit_y_f.SetWindowTextW(_T("-1.5"));
 	edit_y_t.SetWindowTextW(_T("1.5"));
+	cb_is_log.SetCheck(0);
 }
 
 
