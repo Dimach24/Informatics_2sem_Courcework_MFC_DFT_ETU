@@ -129,6 +129,7 @@ void Calculator::UpdateCalculatorParams() {
 		Cgraph.bg_color = bg_cp.GetColor();
 		Cgraph.functions[0]->color = signal_cp.GetColor();
 		Cgraph.functions[1]->color = dft_cp.GetColor();
+		CWnd* p;
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) {
 			CString signal;
