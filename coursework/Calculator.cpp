@@ -39,7 +39,16 @@ BOOL Calculator::OnInitDialog() {
 	dft_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
 	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
-
+	edit_a.SubclassDlgItem(IDC_EDIT_param_a, this);
+	edit_m.SubclassDlgItem(IDC_EDIT_param_m, this);
+	edit_f.SubclassDlgItem(IDC_EDIT_param_f, this);
+	edit_x_f.SubclassDlgItem(IDC_EDIT_xscale_from, this);
+	edit_x_t.SubclassDlgItem(IDC_EDIT_xscale_to, this);
+	edit_y_f.SubclassDlgItem(IDC_EDIT_yscale_from, this);
+	edit_y_t.SubclassDlgItem(IDC_EDIT_yscale_to, this);
+	
+	
+	
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
 	slider_step.SetPos(3);
@@ -47,8 +56,7 @@ BOOL Calculator::OnInitDialog() {
 	CWnd* p = GetDlgItem(IDC_STATIC_signal);
 	if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
 	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_param_a);
-	if (p) { p->SetFocus(); }
+	edit_a.SetFocus();
 
 	ResetInputData();
 	ResetColorPickers();
@@ -64,22 +72,35 @@ BOOL Calculator::OnInitDialog() {
 }
 
 
-#define MY_PARAM_HELPER(P,ID,NAME)\
-	P=GetDlgItem(ID);\
-	assert(P);\
-	CStringW NAME##_s;\
-	P->GetWindowTextW(NAME##_s);\
-	double NAME = _wtof(NAME##_s)
-
 void Calculator::UpdateCalculatorParams() {
-	CWnd* p = nullptr;
-	MY_PARAM_HELPER(p, IDC_EDIT_param_a, a);
-	MY_PARAM_HELPER(p, IDC_EDIT_param_m, m);
-	MY_PARAM_HELPER(p, IDC_EDIT_param_f, f);
-	MY_PARAM_HELPER(p, IDC_EDIT_xscale_from, x_from);
-	MY_PARAM_HELPER(p, IDC_EDIT_xscale_to, x_to);
-	MY_PARAM_HELPER(p, IDC_EDIT_yscale_from, y_from);
-	MY_PARAM_HELPER(p, IDC_EDIT_yscale_to, y_to);
+	CString a_s;
+	edit_a.GetWindowTextW(a_s);
+	double a = _wtof(a_s);
+
+	CString m_s;
+	edit_m.GetWindowTextW(m_s);
+	double m = _wtof(m_s);
+
+	CString f_s;
+	edit_f.GetWindowTextW(f_s);
+	double f = _wtof(f_s);
+
+	CString x_from_s;
+	edit_x_f.GetWindowTextW(x_from_s);
+	double x_from = _wtof(x_from_s);
+
+	CString x_to_s;
+	edit_x_t.GetWindowTextW(x_to_s);
+	double x_to = _wtof(x_to_s);
+
+	CString y_from_s;
+	edit_y_f.GetWindowTextW(y_from_s);
+	double y_from = _wtof(y_from_s);
+
+	CString y_to_s;
+	edit_y_t.GetWindowTextW(y_to_s);
+	double y_to = _wtof(y_to_s);
+
 	if (x_from >= x_to || y_from > y_to) {
 		AfxMessageBox(_T("Невозможный масштаб"), MB_OK | MB_ICONERROR);
 		return;
@@ -109,6 +130,7 @@ void Calculator::UpdateCalculatorParams() {
 		Cgraph.bg_color = bg_cp.GetColor();
 		Cgraph.functions[0]->color = signal_cp.GetColor();
 		Cgraph.functions[1]->color = dft_cp.GetColor();
+		CWnd* p;
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) {
 			CString signal;
@@ -117,19 +139,24 @@ void Calculator::UpdateCalculatorParams() {
 		}
 
 	} else {
-		p = GetDlgItem(IDC_STATIC_signal);
+		CWnd* p = GetDlgItem(IDC_STATIC_signal);
 		if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
 		AfxMessageBox(_T("Недостаточно параметров"), MB_OK | MB_ICONERROR);
 	}
 }
-#undef MY_PARAM_HELPER
-
 
 void Calculator::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_STATIC_graph, Cgraph);
 	DDX_Control(pDX, IDC_SLIDER_STEP, slider_step);
 	DDX_Control(pDX, IDC_CHECK_is_log_scale, cb_is_log);
+	DDX_Control(pDX, IDC_EDIT_param_a, edit_a);
+	DDX_Control(pDX, IDC_EDIT_param_m, edit_m);
+	DDX_Control(pDX, IDC_EDIT_param_f, edit_f);
+	DDX_Control(pDX, IDC_EDIT_xscale_from, edit_x_f);
+	DDX_Control(pDX, IDC_EDIT_xscale_to, edit_x_t);
+	DDX_Control(pDX, IDC_EDIT_yscale_from, edit_y_f);
+	DDX_Control(pDX, IDC_EDIT_yscale_to, edit_y_t);
 }
 
 
@@ -163,28 +190,13 @@ void Calculator::ResetColorPickers() {
 }
 
 void Calculator::ResetInputData() {
-	CWnd* p;
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_param_a);
-	if (p) { p->SetWindowTextW(L"1"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_param_m);
-	if (p) { p->SetWindowTextW(L"0"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_param_f);
-	if (p) { p->SetWindowTextW(L"0.1592"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_xscale_from);
-	if (p) { p->SetWindowTextW(L"-6.2832"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_xscale_to);
-	if (p) { p->SetWindowTextW(L"6.2832"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_yscale_from);
-	if (p) { p->SetWindowTextW(L"-1.5"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_yscale_to);
-	if (p) { p->SetWindowTextW(L"1.5"); }
+	edit_a.SetWindowTextW(_T("1"));
+	edit_m.SetWindowTextW(_T("0"));
+	edit_f.SetWindowTextW(_T("0.1592"));
+	edit_x_f.SetWindowTextW(_T("-6.2832"));
+	edit_x_t.SetWindowTextW(_T("6.2832"));
+	edit_y_f.SetWindowTextW(_T("-1.5"));
+	edit_y_t.SetWindowTextW(_T("1.5"));
 }
 
 
@@ -242,14 +254,9 @@ void Calculator::OnBnClickedButtonSaveGr() {
 
 
 void Calculator::OnBnClickedCheckislogscale() {
-	CWnd* y_from, * y_to;
-	y_from	= GetDlgItem(IDC_EDIT_yscale_from);
-	y_to	= GetDlgItem(IDC_EDIT_yscale_to);
-	assert(y_from);
-	assert(y_to);
 	CString fromStr, toStr;
-	y_from->GetWindowTextW(fromStr);
-	y_to->GetWindowTextW(toStr);
+	edit_y_f.GetWindowTextW(fromStr);
+	edit_y_t.GetWindowTextW(toStr);
 	double
 		from = _wtof(fromStr),
 		to = _wtof(toStr);
@@ -257,13 +264,13 @@ void Calculator::OnBnClickedCheckislogscale() {
 	if (cb_is_log.GetCheck() == 1) { //turned to log
 		// exponentiating
 		fromStr.Format(L"%f", pow(10, from));
-		y_from->SetWindowTextW(fromStr);
+		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", pow(10, to));
-		y_to->SetWindowTextW(toStr);
+		edit_y_t.SetWindowTextW(toStr);
 	} else {						//turned to the normal
 		fromStr.Format(L"%f", log10( from));
-		y_from->SetWindowTextW(fromStr);
+		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", log10(to));
-		y_to->SetWindowTextW(toStr);
+		edit_y_t.SetWindowTextW(toStr);
 	}
 }

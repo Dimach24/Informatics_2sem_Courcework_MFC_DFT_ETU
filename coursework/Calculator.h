@@ -38,4 +38,11 @@ protected:
 public:
 	afx_msg void OnBnClickedButtonSaveGr();
 	afx_msg void OnBnClickedCheckislogscale();
+	CEdit edit_a;
+	CEdit edit_m;
+	CEdit edit_f;
+	CEdit edit_x_f;
+	CEdit edit_x_t;
+	CEdit edit_y_f;
+	CEdit edit_y_t;
 };
