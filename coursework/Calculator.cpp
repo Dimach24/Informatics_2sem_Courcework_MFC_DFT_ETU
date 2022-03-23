@@ -34,7 +34,6 @@ Calculator::~Calculator() {
 
 BOOL Calculator::OnInitDialog() {
 	Cgraph.SubclassDlgItem(IDC_STATIC_graph, this);
-	axes_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_AXES, this);
 	bg_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_BG, this);
 	signal_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_SIGNAL, this);
 	dft_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
@@ -95,7 +94,6 @@ void Calculator::UpdateCalculatorParams() {
 		Cgraph.setStep(step);
 		Cgraph.setRect(r);
 		Cgraph.setLog(cb_is_log.GetCheck() == 1);
-		Cgraph.axes_color = axes_cp.GetColor();
 		Cgraph.bg_color = bg_cp.GetColor();
 		Cgraph.functions[0]->color = signal_cp.GetColor();
 		Cgraph.functions[1]->color = dft_cp.GetColor();
@@ -148,7 +146,6 @@ void Calculator::OnBnClickedButtonreset() {
 void Calculator::ResetColorPickers() {
 	bg_cp.SetColor(RGB(0xff, 0xfb, 0xf0));
 	signal_cp.SetColor(RGB(0x80, 0, 0));
-	axes_cp.SetColor(RGB(0, 0, 0));
 	dft_cp.SetColor(RGB(0, 0, 0x80));
 }
 

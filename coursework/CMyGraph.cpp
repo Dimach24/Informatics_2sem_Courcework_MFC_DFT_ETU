@@ -44,7 +44,7 @@ void CMyGraph::OnPaint() {
 	dc.FillSolidRect(&r, bg_color);
 
 
-	CPen axespen(BS_SOLID, 2, axes_color);
+	CPen axespen(BS_SOLID, 2, RGB(0,0,0));
 	dc.SelectObject(axespen);
 
 	dc.MoveTo(2, 0);
@@ -70,6 +70,7 @@ void CMyGraph::OnPaint() {
 		dc.MoveTo(0, y);
 		dc.LineTo(10, y);
 		double l = i * step + scale_y.from;
+
 		CString str;
 		str.Format(L"%5.2f", l);
 		dc.TextOutW(20, y-10, str);

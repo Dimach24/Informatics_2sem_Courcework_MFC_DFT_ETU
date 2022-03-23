@@ -28,7 +28,6 @@ public:
 	afx_msg void OnBnClickedButtonUpdate();
 	CSliderCtrl slider_step;
 	CButton cb_is_log;
-	CMFCColorButton axes_cp;
 	CMFCColorButton bg_cp;
 	CMFCColorButton signal_cp;
 	CMFCColorButton dft_cp;
