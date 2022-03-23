@@ -56,8 +56,7 @@ BOOL Calculator::OnInitDialog() {
 	CWnd* p = GetDlgItem(IDC_STATIC_signal);
 	if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
 	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_param_a);
-	if (p) { p->SetFocus(); }
+	edit_a.SetFocus();
 
 	ResetInputData();
 	ResetColorPickers();
@@ -191,28 +190,13 @@ void Calculator::ResetColorPickers() {
 }
 
 void Calculator::ResetInputData() {
-	CWnd* p;
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_param_a);
-	if (p) { p->SetWindowTextW(L"1"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_param_m);
-	if (p) { p->SetWindowTextW(L"0"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_param_f);
-	if (p) { p->SetWindowTextW(L"0.1592"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_xscale_from);
-	if (p) { p->SetWindowTextW(L"-6.2832"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_xscale_to);
-	if (p) { p->SetWindowTextW(L"6.2832"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_yscale_from);
-	if (p) { p->SetWindowTextW(L"-1.5"); }
-	p = nullptr;
-	p = GetDlgItem(IDC_EDIT_yscale_to);
-	if (p) { p->SetWindowTextW(L"1.5"); }
+	edit_a.SetWindowTextW(_T("1"));
+	edit_m.SetWindowTextW(_T("0"));
+	edit_f.SetWindowTextW(_T("0.1592"));
+	edit_x_f.SetWindowTextW(_T("-6.2832"));
+	edit_x_t.SetWindowTextW(_T("6.2832"));
+	edit_y_f.SetWindowTextW(_T("-1.5"));
+	edit_y_t.SetWindowTextW(_T("1.5"));
 }
 
 
