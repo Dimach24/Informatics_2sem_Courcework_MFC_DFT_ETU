@@ -73,13 +73,6 @@ BOOL Calculator::OnInitDialog() {
 }
 
 
-#define MY_PARAM_HELPER(P,ID,NAME)\
-	P=GetDlgItem(ID);\
-	assert(P);\
-	CStringW NAME##_s;\
-	P->GetWindowTextW(NAME##_s);\
-	double NAME = _wtof(NAME##_s)
-
 void Calculator::UpdateCalculatorParams() {
 	CString a_s;
 	edit_a.GetWindowTextW(a_s);
