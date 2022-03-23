@@ -142,8 +142,6 @@ void Calculator::UpdateCalculatorParams() {
 		AfxMessageBox(_T("Недостаточно параметров"), MB_OK | MB_ICONERROR);
 	}
 }
-#undef MY_PARAM_HELPER
-
 
 void Calculator::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);
