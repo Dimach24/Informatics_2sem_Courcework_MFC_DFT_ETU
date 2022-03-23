@@ -39,7 +39,16 @@ BOOL Calculator::OnInitDialog() {
 	dft_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
 	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
-
+	edit_a.SubclassDlgItem(IDC_EDIT_param_a, this);
+	edit_m.SubclassDlgItem(IDC_EDIT_param_m, this);
+	edit_f.SubclassDlgItem(IDC_EDIT_param_f, this);
+	edit_x_f.SubclassDlgItem(IDC_EDIT_xscale_from, this);
+	edit_x_t.SubclassDlgItem(IDC_EDIT_xscale_to, this);
+	edit_y_f.SubclassDlgItem(IDC_EDIT_yscale_from, this);
+	edit_y_t.SubclassDlgItem(IDC_EDIT_yscale_to, this);
+	
+	
+	
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
 	slider_step.SetPos(3);
@@ -86,7 +95,7 @@ void Calculator::UpdateCalculatorParams() {
 
 	CString x_from_s;
 	edit_x_f.GetWindowTextW(x_from_s);
-	double x_from = _wtof(a_s);
+	double x_from = _wtof(x_from_s);
 
 	CString x_to_s;
 	edit_x_t.GetWindowTextW(x_to_s);
