@@ -81,6 +81,10 @@ void Calculator::UpdateCalculatorParams() {
 	MY_PARAM_HELPER(p, IDC_EDIT_xscale_to, x_to);
 	MY_PARAM_HELPER(p, IDC_EDIT_yscale_from, y_from);
 	MY_PARAM_HELPER(p, IDC_EDIT_yscale_to, y_to);
+	if (x_from >= x_to || y_from > y_to) {
+		AfxMessageBox(_T("Невозможный масштаб"), MB_OK | MB_ICONERROR);
+		return;
+	}
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
 		signal.set_a(a);
 		signal.set_f(f);
