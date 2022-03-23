@@ -37,4 +37,5 @@ protected:
 	void ResetInputData();
 public:
 	afx_msg void OnBnClickedButtonSaveGr();
+	afx_msg void OnBnClickedCheckislogscale();
 };

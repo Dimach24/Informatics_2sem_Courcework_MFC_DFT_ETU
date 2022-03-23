@@ -73,7 +73,7 @@ void MathFunction::calculate() {
 		double x = start + step * i;	// calculating x of the point
 		double y = f(x);				// calculating y of the point
 		if (is_log) {
-			y = log(abs(y));
+			y = log10(abs(y));
 		}
 		points[i] = to_the_new_coords_system(x, y);
 	}
@@ -116,7 +116,7 @@ void SignalFunction::calculate() {
 		double y = f(x);				// calculating y of the point
 		data[i] = y;
 		if (is_log) {
-			y = log(abs(y));
+			y = log10(abs(y));
 		}
 		points[i] = to_the_new_coords_system(x, y);
 	}
@@ -149,7 +149,7 @@ void DFTFunction::calculate()
 		double x = start + step * i;	// calculating x of the point
 		double y = f(i);				// calculating y of the point
 		if (is_log) {
-				y = log(abs(y));
+				y = log10(abs(y));
 		}
 		points[i] = to_the_new_coords_system(x, y);
 	}
