@@ -50,20 +50,29 @@ void CMyGraph::OnPaint() {
 	dc.MoveTo(2, 0);
 	dc.LineTo(2, r.bottom - 2);
 	dc.LineTo(r.right, r.bottom - 2);
-	const int axis_serifs = 5;
+	int axis_serifs;
+	axis_serifs= 5;
 	double step;
 	step = (scale_x.to - scale_x.from) / (axis_serifs + 1);
 	for (int i = 1; i * step < scale_x.to - scale_x.from; i++) {
 		long x = i * step / (scale_x.to - scale_x.from) * r.right;
 		dc.MoveTo(x, r.bottom);
 		dc.LineTo(x, r.bottom - 10);
+		double l = i * step + scale_x.from;
+		CString str;
+		str.Format(L"%5.2f", l);
+		dc.TextOutW(x - 20, r.bottom - 40, str);
 	}
-
+	axis_serifs = 7;
 	step = (scale_y.to - scale_y.from) / (axis_serifs + 1);
 	for (int i = 1; i * step < scale_y.to - scale_y.from; i++) {
 		long y = r.bottom - i * step / (scale_y.to - scale_y.from) * r.bottom;
 		dc.MoveTo(0, y);
 		dc.LineTo(10, y);
+		double l = i * step + scale_y.from;
+		CString str;
+		str.Format(L"%5.2f", l);
+		dc.TextOutW(20, y-10, str);
 	}
 	/*
 	if (scale_x.from * scale_x.to < 0) {
