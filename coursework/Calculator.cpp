@@ -84,7 +84,15 @@ void Calculator::UpdateCalculatorParams() {
 		signal.set_a(a);
 		signal.set_f(f);
 		signal.set_m(m);
-		Cgraph.setScale(x_from, x_to, y_from, y_to);
+		if (cb_is_log.GetCheck() == 1) {
+			if (y_from <= 0) {
+				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
+				return;
+			}
+			Cgraph.setScale(x_from, x_to, log(y_from), log(y_to));
+		} else {
+			Cgraph.setScale(x_from, x_to, y_from, y_to);
+		}
 		RECT r;
 		Cgraph.GetWindowRect(&r);
 		r.right = r.right - r.left;
