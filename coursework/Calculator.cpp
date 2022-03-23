@@ -138,7 +138,7 @@ void Calculator::UpdateCalculatorParams() {
 		}
 
 	} else {
-		p = GetDlgItem(IDC_STATIC_signal);
+		CWnd* p = GetDlgItem(IDC_STATIC_signal);
 		if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
 		AfxMessageBox(_T("Недостаточно параметров"), MB_OK | MB_ICONERROR);
 	}
