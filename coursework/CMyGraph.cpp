@@ -44,54 +44,6 @@ void CMyGraph::OnPaint() {
 	dc.FillSolidRect(&r, bg_color);
 
 
-	CPen axespen(BS_SOLID, 2, RGB(0,0,0));
-	dc.SelectObject(axespen);
-
-	dc.MoveTo(2, 0);
-	dc.LineTo(2, r.bottom - 2);
-	dc.LineTo(r.right, r.bottom - 2);
-	int axis_serifs;
-	axis_serifs= 5;
-	double step;
-	step = (scale_x.to - scale_x.from) / (axis_serifs + 1);
-	for (int i = 1; i * step < scale_x.to - scale_x.from; i++) {
-		long x = i * step / (scale_x.to - scale_x.from) * r.right;
-		dc.MoveTo(x, r.bottom);
-		dc.LineTo(x, r.bottom - 10);
-		double l = i * step + scale_x.from;
-		CString str;
-		str.Format(L"%5.2f", l);
-		dc.TextOutW(x - 20, r.bottom - 40, str);
-	}
-	axis_serifs = 7;
-	step = (scale_y.to - scale_y.from) / (axis_serifs + 1);
-	for (int i = 1; i * step < scale_y.to - scale_y.from; i++) {
-		long y = r.bottom - i * step / (scale_y.to - scale_y.from) * r.bottom;
-		dc.MoveTo(0, y);
-		dc.LineTo(10, y);
-		double l = i * step + scale_y.from;
-		if (is_log) { l *= pow(10, l); }
-		CString str;
-		str.Format(L"%5.2f", l);
-		dc.TextOutW(20, y-10, str);
-	}
-	/*
-	if (scale_x.from * scale_x.to < 0) {
-		long x;
-		x = r.right / (scale_x.to - scale_x.from) * (-scale_x.from);
-		dc.MoveTo(x, r.top);
-		dc.LineTo(x, r.bottom);
-	}
-	if (scale_y.from * scale_y.to < 0) {
-		long y;
-		y = r.bottom / (scale_y.to - scale_y.from) * (-scale_y.from);
-		dc.MoveTo(r.left, y);
-		dc.LineTo(r.right, y);
-	}
-	*/
-
-
-
 	for (MathFunction* f : functions) {
 		bool is_first = true;
 		CPen gr(BS_SOLID, 1, f->color);
@@ -103,6 +55,38 @@ void CMyGraph::OnPaint() {
 			}
 
 		}
+	}
+
+	CPen axespen(BS_SOLID, 2, RGB(0, 0, 0));
+	dc.SelectObject(axespen);
+
+	dc.MoveTo(2, 0);
+	dc.LineTo(2, r.bottom - 2);
+	dc.LineTo(r.right, r.bottom - 2);
+	int axis_serifs;
+	axis_serifs = 5;
+	double step;
+	step = (scale_x.to - scale_x.from) / (axis_serifs + 1);
+	for (int i = 1; i * step < scale_x.to - scale_x.from; i++) {
+		long x = i * step / (scale_x.to - scale_x.from) * r.right;
+		dc.MoveTo(x, r.bottom);
+		dc.LineTo(x, r.bottom - 10);
+		double l = i * step + scale_x.from;
+		CString str;
+		str.Format(L"%5.2f", l);
+		dc.TextOutW(x - 20, r.bottom - 30, str);
+	}
+	axis_serifs = 7;
+	step = (scale_y.to - scale_y.from) / (axis_serifs + 1);
+	for (int i = 1; i * step < scale_y.to - scale_y.from; i++) {
+		long y = r.bottom - i * step / (scale_y.to - scale_y.from) * r.bottom;
+		dc.MoveTo(0, y);
+		dc.LineTo(10, y);
+		double l = i * step + scale_y.from;
+		if (is_log) { l *= pow(10, l); }
+		CString str;
+		str.Format(L"%5.2f", l);
+		dc.TextOutW(15, y - 10, str);
 	}
 
 	dc.SelectObject(oldpen);
