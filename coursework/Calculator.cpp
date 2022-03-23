@@ -34,7 +34,6 @@ Calculator::~Calculator() {
 
 BOOL Calculator::OnInitDialog() {
 	Cgraph.SubclassDlgItem(IDC_STATIC_graph, this);
-	axes_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_AXES, this);
 	bg_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_BG, this);
 	signal_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_SIGNAL, this);
 	dft_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
@@ -89,7 +88,15 @@ void Calculator::UpdateCalculatorParams() {
 		signal.set_a(a);
 		signal.set_f(f);
 		signal.set_m(m);
-		Cgraph.setScale(x_from, x_to, y_from, y_to);
+		if (cb_is_log.GetCheck() == 1) {
+			if (y_from <= 0) {
+				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
+				return;
+			}
+			Cgraph.setScale(x_from, x_to, log10(y_from), log10(y_to));
+		} else {
+			Cgraph.setScale(x_from, x_to, y_from, y_to);
+		}
 		RECT r;
 		Cgraph.GetWindowRect(&r);
 		r.right = r.right - r.left;
@@ -99,7 +106,6 @@ void Calculator::UpdateCalculatorParams() {
 		Cgraph.setStep(step);
 		Cgraph.setRect(r);
 		Cgraph.setLog(cb_is_log.GetCheck() == 1);
-		Cgraph.axes_color = axes_cp.GetColor();
 		Cgraph.bg_color = bg_cp.GetColor();
 		Cgraph.functions[0]->color = signal_cp.GetColor();
 		Cgraph.functions[1]->color = dft_cp.GetColor();
@@ -131,6 +137,7 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_UPDATE_graph, &Calculator::OnBnClickedButtonUpdate)
 	ON_BN_CLICKED(IDC_BUTTON_reset, &Calculator::OnBnClickedButtonreset)
 	ON_BN_CLICKED(IDC_BUTTON_SAVE_GR, &Calculator::OnBnClickedButtonSaveGr)
+	ON_BN_CLICKED(IDC_CHECK_is_log_scale, &Calculator::OnBnClickedCheckislogscale)
 END_MESSAGE_MAP()
 
 
@@ -152,7 +159,6 @@ void Calculator::OnBnClickedButtonreset() {
 void Calculator::ResetColorPickers() {
 	bg_cp.SetColor(RGB(0xff, 0xfb, 0xf0));
 	signal_cp.SetColor(RGB(0x80, 0, 0));
-	axes_cp.SetColor(RGB(0, 0, 0));
 	dft_cp.SetColor(RGB(0, 0, 0x80));
 }
 
@@ -231,5 +237,33 @@ void Calculator::OnBnClickedButtonSaveGr() {
 		if (FAILED(saving)) {
 			AfxMessageBox(_T("При сохранении файла что-то пошло не так"));
 		}
+	}
+}
+
+
+void Calculator::OnBnClickedCheckislogscale() {
+	CWnd* y_from, * y_to;
+	y_from	= GetDlgItem(IDC_EDIT_yscale_from);
+	y_to	= GetDlgItem(IDC_EDIT_yscale_to);
+	assert(y_from);
+	assert(y_to);
+	CString fromStr, toStr;
+	y_from->GetWindowTextW(fromStr);
+	y_to->GetWindowTextW(toStr);
+	double
+		from = _wtof(fromStr),
+		to = _wtof(toStr);
+	if (from <= 0 || to <= 0) { return; }
+	if (cb_is_log.GetCheck() == 1) { //turned to log
+		// exponentiating
+		fromStr.Format(L"%f", pow(10, from));
+		y_from->SetWindowTextW(fromStr);
+		toStr.Format(L"%f", pow(10, to));
+		y_to->SetWindowTextW(toStr);
+	} else {						//turned to the normal
+		fromStr.Format(L"%f", log10( from));
+		y_from->SetWindowTextW(fromStr);
+		toStr.Format(L"%f", log10(to));
+		y_to->SetWindowTextW(toStr);
 	}
 }
