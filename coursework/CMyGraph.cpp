@@ -49,6 +49,7 @@ void CMyGraph::OnPaint()
 
 	CPen axespen(BS_SOLID, 2, axes_color);
 	dc.SelectObject(axespen);
+	/*
 	if (scale_x.from * scale_x.to < 0) {
 		long x;
 		x = r.right / (scale_x.to - scale_x.from) * (-scale_x.from);
@@ -61,6 +62,7 @@ void CMyGraph::OnPaint()
 		dc.MoveTo(r.left, y);
 		dc.LineTo(r.right, y);
 	}
+	*/
 
 	for (MathFunction* f : functions) {
 		bool is_first = true;
