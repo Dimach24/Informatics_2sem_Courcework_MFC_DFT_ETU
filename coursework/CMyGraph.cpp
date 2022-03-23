@@ -70,7 +70,7 @@ void CMyGraph::OnPaint() {
 		dc.MoveTo(0, y);
 		dc.LineTo(10, y);
 		double l = i * step + scale_y.from;
-
+		if (is_log) { l *= pow(10, l); }
 		CString str;
 		str.Format(L"%5.2f", l);
 		dc.TextOutW(20, y-10, str);
@@ -129,6 +129,7 @@ void CMyGraph::setRect(RECT r) {
 }
 
 void CMyGraph::setLog(bool b) {
+	this->is_log = b;
 	for (MathFunction* f : functions) {
 		f->set_log(b);
 	}
