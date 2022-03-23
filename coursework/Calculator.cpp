@@ -254,14 +254,9 @@ void Calculator::OnBnClickedButtonSaveGr() {
 
 
 void Calculator::OnBnClickedCheckislogscale() {
-	CWnd* y_from, * y_to;
-	y_from	= GetDlgItem(IDC_EDIT_yscale_from);
-	y_to	= GetDlgItem(IDC_EDIT_yscale_to);
-	assert(y_from);
-	assert(y_to);
 	CString fromStr, toStr;
-	y_from->GetWindowTextW(fromStr);
-	y_to->GetWindowTextW(toStr);
+	edit_y_f.GetWindowTextW(fromStr);
+	edit_y_t.GetWindowTextW(toStr);
 	double
 		from = _wtof(fromStr),
 		to = _wtof(toStr);
@@ -269,13 +264,13 @@ void Calculator::OnBnClickedCheckislogscale() {
 	if (cb_is_log.GetCheck() == 1) { //turned to log
 		// exponentiating
 		fromStr.Format(L"%f", pow(10, from));
-		y_from->SetWindowTextW(fromStr);
+		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", pow(10, to));
-		y_to->SetWindowTextW(toStr);
+		edit_y_t.SetWindowTextW(toStr);
 	} else {						//turned to the normal
 		fromStr.Format(L"%f", log10( from));
-		y_from->SetWindowTextW(fromStr);
+		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", log10(to));
-		y_to->SetWindowTextW(toStr);
+		edit_y_t.SetWindowTextW(toStr);
 	}
 }
