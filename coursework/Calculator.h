@@ -45,4 +45,8 @@ public:
 	CEdit edit_x_t;
 	CEdit edit_y_f;
 	CEdit edit_y_t;
+	CMyGraph DFTgraph;
+	CButton cb_is_dft_log;
+	CEdit edit_y_dft_f;
+	CEdit edit_y_dft_t;
 };
