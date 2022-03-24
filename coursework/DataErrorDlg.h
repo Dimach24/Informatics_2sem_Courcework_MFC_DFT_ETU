@@ -11,7 +11,7 @@ public:
 	DataErrorDlg(CWnd* pParent = nullptr);   // стандартный конструктор
 	virtual ~DataErrorDlg();
 	BOOL OnInitDialog();
-// Данные диалогового окна
+	// Данные диалогового окна
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_DataErrorDlg };
 #endif

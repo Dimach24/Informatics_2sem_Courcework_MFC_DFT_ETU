@@ -46,9 +46,9 @@ BOOL Calculator::OnInitDialog() {
 	edit_x_t.SubclassDlgItem(IDC_EDIT_xscale_to, this);
 	edit_y_f.SubclassDlgItem(IDC_EDIT_yscale_from, this);
 	edit_y_t.SubclassDlgItem(IDC_EDIT_yscale_to, this);
-	
-	
-	
+
+
+
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
 	slider_step.SetPos(3);
@@ -269,7 +269,7 @@ void Calculator::OnBnClickedCheckislogscale() {
 		edit_y_t.SetWindowTextW(toStr);
 	} else {						//turned to the normal
 		if (from <= 0 || to <= 0) { return; }
-		fromStr.Format(L"%f", log10( from));
+		fromStr.Format(L"%f", log10(from));
 		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", log10(to));
 		edit_y_t.SetWindowTextW(toStr);

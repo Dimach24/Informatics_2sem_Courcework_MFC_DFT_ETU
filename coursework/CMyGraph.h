@@ -9,12 +9,13 @@ class CMyGraph : public CStatic
 
 protected:
 public:
-	
-	struct {
+
+	struct
+	{
 		double from, to;
 	}scale_x, scale_y;
 	COLORREF bg_color = RGB(255, 255, 255);
-	bool is_log=false;
+	bool is_log = false;
 	std::vector<MathFunction*> functions;
 	CMyGraph();
 	virtual ~CMyGraph();

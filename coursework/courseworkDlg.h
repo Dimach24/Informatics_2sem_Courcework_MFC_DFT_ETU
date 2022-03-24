@@ -8,7 +8,7 @@
 // Диалоговое окно CcourseworkDlg
 class CcourseworkDlg : public CDialogEx
 {
-// Создание
+	// Создание
 public:
 	CcourseworkDlg(CWnd* pParent = nullptr);	// стандартный конструктор
 
@@ -17,7 +17,7 @@ public:
 	enum { IDD = IDD_COURSEWORK_DIALOG };
 #endif
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// поддержка DDX/DDV
 
 

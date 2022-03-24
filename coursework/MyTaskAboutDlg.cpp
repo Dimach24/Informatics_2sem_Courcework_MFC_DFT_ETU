@@ -12,15 +12,13 @@
 IMPLEMENT_DYNAMIC(MyTaskAboutDlg, CDialogEx)
 
 MyTaskAboutDlg::MyTaskAboutDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_MyTaskAboutDlg, pParent)
-{
+	: CDialogEx(IDD_MyTaskAboutDlg, pParent) {
 
 }
 
-BOOL MyTaskAboutDlg::OnInitDialog()
-{
+BOOL MyTaskAboutDlg::OnInitDialog() {
 	SetWindowText(_T("О задании"));
-	CWnd* p=GetDlgItem(IDC_TaskAbout);
+	CWnd* p = GetDlgItem(IDC_TaskAbout);
 	if (p) {
 		p->SetWindowText(
 			L"Дискретное преобразование Фурье является линейным преобразованием, \
@@ -38,13 +36,11 @@ BOOL MyTaskAboutDlg::OnInitDialog()
 }
 
 
-MyTaskAboutDlg::~MyTaskAboutDlg()
-{
+MyTaskAboutDlg::~MyTaskAboutDlg() {
 }
 
 
-void MyTaskAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
+void MyTaskAboutDlg::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);
 }
 

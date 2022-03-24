@@ -15,7 +15,7 @@ public:
 protected:
 	SignalFunction signal;
 	DFTFunction dft;
-// Данные диалогового окна
+	// Данные диалогового окна
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_Calculator };
 #endif

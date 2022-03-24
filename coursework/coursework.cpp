@@ -21,8 +21,7 @@ END_MESSAGE_MAP()
 
 // Создание CcourseworkApp
 
-CcourseworkApp::CcourseworkApp()
-{
+CcourseworkApp::CcourseworkApp() {
 	// поддержка диспетчера перезагрузки
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
 
@@ -38,11 +37,10 @@ CcourseworkApp theApp;
 
 // Инициализация CcourseworkApp
 
-BOOL CcourseworkApp::InitInstance()
-{
-// TODO: вызовите AfxInitRichEdit2(), чтобы инициализировать библиотеку richedit2.\n"	// InitCommonControlsEx() требуется для Windows XP, если манифест
-	// приложения использует ComCtl32.dll версии 6 или более поздней версии для включения
-	// стилей отображения.  В противном случае будет возникать сбой при создании любого окна.
+BOOL CcourseworkApp::InitInstance() {
+	// TODO: вызовите AfxInitRichEdit2(), чтобы инициализировать библиотеку richedit2.\n"	// InitCommonControlsEx() требуется для Windows XP, если манифест
+		// приложения использует ComCtl32.dll версии 6 или более поздней версии для включения
+		// стилей отображения.  В противном случае будет возникать сбой при создании любого окна.
 	INITCOMMONCONTROLSEX InitCtrls;
 	AfxInitRichEdit2();
 	InitCtrls.dwSize = sizeof(InitCtrls);
@@ -56,7 +54,7 @@ BOOL CcourseworkApp::InitInstance()
 
 	// Создать диспетчер оболочки, в случае, если диалоговое окно содержит
 	// представление дерева оболочки или какие-либо его элементы управления.
-	CShellManager *pShellManager = new CShellManager;
+	CShellManager* pShellManager = new CShellManager;
 
 	// Активация визуального диспетчера "Классический Windows" для включения элементов управления MFC
 	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
@@ -73,25 +71,19 @@ BOOL CcourseworkApp::InitInstance()
 	CcourseworkDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
-	{
+	if (nResponse == IDOK) {
 		// TODO: Введите код для обработки закрытия диалогового окна
 		//  с помощью кнопки "ОК"
-	}
-	else if (nResponse == IDCANCEL)
-	{
+	} else if (nResponse == IDCANCEL) {
 		// TODO: Введите код для обработки закрытия диалогового окна
 		//  с помощью кнопки "Отмена"
-	}
-	else if (nResponse == -1)
-	{
+	} else if (nResponse == -1) {
 		TRACE(traceAppMsg, 0, "Предупреждение. Не удалось создать диалоговое окно, поэтому работа приложения неожиданно завершена.\n");
 		TRACE(traceAppMsg, 0, "Предупреждение. При использовании элементов управления MFC для диалогового окна невозможно #define _AFX_NO_MFC_CONTROLS_IN_DIALOGS.\n");
 	}
 
 	// Удалить диспетчер оболочки, созданный выше.
-	if (pShellManager != nullptr)
-	{
+	if (pShellManager != nullptr) {
 		delete pShellManager;
 	}
 

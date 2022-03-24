@@ -11,23 +11,19 @@
 
 IMPLEMENT_DYNAMIC(DataErrorDlg, CDialogEx)
 
-DataErrorDlg::DataErrorDlg(CWnd* pParent /*=nullptr*/)
-{
+DataErrorDlg::DataErrorDlg(CWnd* pParent /*=nullptr*/) {
 
 }
 
-DataErrorDlg::~DataErrorDlg()
-{
+DataErrorDlg::~DataErrorDlg() {
 }
 
-BOOL DataErrorDlg::OnInitDialog()
-{
+BOOL DataErrorDlg::OnInitDialog() {
 	GetDlgItem(IDCANCEL)->SetWindowTextW(_T("Вернуться"));
 	return 0;
 }
 
-void DataErrorDlg::DoDataExchange(CDataExchange* pDX)
-{
+void DataErrorDlg::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);
 }
 

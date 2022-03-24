@@ -1,14 +1,16 @@
 #pragma once
 #include <vector>
 #define PI 3.141592653589793238463
-class MathFunction {
+class MathFunction
+{
 protected:
 	virtual  double f(double x) = 0;
 	double from, to;
 	double step;
 
 	bool is_log;
-	struct {
+	struct
+	{
 		double x_from, x_to;
 		double y_from, y_to;
 	}scale;
@@ -31,7 +33,8 @@ protected:
 	POINT to_the_new_coords_system(double x, double y) const;
 };
 
-class SignalFunction : public MathFunction {
+class SignalFunction : public MathFunction
+{
 protected:
 	double a, m, f_;
 public:
@@ -44,7 +47,8 @@ public:
 	void set_f(double f);
 	void calculate();
 };
-class DFTFunction : public MathFunction {
+class DFTFunction : public MathFunction
+{
 public:
 	DFTFunction(SignalFunction* s);
 protected:

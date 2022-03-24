@@ -5,7 +5,7 @@
 #pragma once
 
 #ifndef __AFXWIN_H__
-	#error "включить pch.h до включения этого файла в PCH"
+#error "включить pch.h до включения этого файла в PCH"
 #endif
 
 #include "resource.h"		// основные символы
@@ -20,11 +20,11 @@ class CcourseworkApp : public CWinApp
 public:
 	CcourseworkApp();
 
-// Переопределение
+	// Переопределение
 public:
 	virtual BOOL InitInstance();
 
-// Реализация
+	// Реализация
 
 	DECLARE_MESSAGE_MAP()
 };
