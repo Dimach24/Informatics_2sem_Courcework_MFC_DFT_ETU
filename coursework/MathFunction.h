@@ -6,7 +6,7 @@ class MathFunction
 protected:
 	virtual  double f(double x) = 0;
 	double from, to;
-	double step;
+	double step=1;
 
 	bool is_log;
 	struct
