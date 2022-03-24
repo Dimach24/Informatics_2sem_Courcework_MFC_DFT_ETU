@@ -83,7 +83,7 @@ void CMyGraph::OnPaint() {
 		dc.MoveTo(0, y);
 		dc.LineTo(10, y);
 		double l = i * step + scale_y.from;
-		if (is_log) { l *= pow(10, l); }
+		if (is_log) { l = pow(10, l); }
 		CString str;
 		str.Format(L"%5.2f", l);
 		dc.TextOutW(15, y - 10, str);
