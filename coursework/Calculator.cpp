@@ -249,14 +249,9 @@ void Calculator::OnBnClickedButtonSaveGr() {
 		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
 		bmdc.BitBlt(0, 0, rect.Width(), rect.Height(), &wdc, 0, 0, SRCCOPY);
 		bmdc.SelectObject(olddc);
-		p = GetDlgItem(IDC_STATIC_signal);
-		assert(p);
-		CString s;
-		p->GetWindowTextW(s);
-		s.Format(L"График ДПФ %s",s);
-		CFileDialog dlg(FALSE, _T(".bmp"), s, OFN_OVERWRITEPROMPT,
-			_T("BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif) \
-| *.gif | JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||"));
+		CFileDialog dlg(FALSE, _T(".bmp"), L"График ДПФ.bmp", OFN_OVERWRITEPROMPT,
+			_T("BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif)\
+|*.gif| JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||"));
 		dlg.DoModal();
 		CString path = dlg.GetOFN().lpstrFile;
 		short i = path.ReverseFind(L'.');
