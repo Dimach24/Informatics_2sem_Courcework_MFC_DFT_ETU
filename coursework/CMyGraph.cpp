@@ -68,7 +68,7 @@ void CMyGraph::OnPaint() {
 	double step;
 	step = (scale_x.to - scale_x.from) / (axis_serifs + 1);
 	for (int i = 1; i * step < scale_x.to - scale_x.from; i++) {
-		long x = i * step / (scale_x.to - scale_x.from) * r.right;
+		long x = round(i * step / (scale_x.to - scale_x.from) * r.right);
 		dc.MoveTo(x, r.bottom);
 		dc.LineTo(x, r.bottom - 10);
 		double l = i * step + scale_x.from;
@@ -79,7 +79,7 @@ void CMyGraph::OnPaint() {
 	axis_serifs = 7;
 	step = (scale_y.to - scale_y.from) / (axis_serifs + 1);
 	for (int i = 1; i * step < scale_y.to - scale_y.from; i++) {
-		long y = r.bottom - i * step / (scale_y.to - scale_y.from) * r.bottom;
+		long y = round(r.bottom - i * step / (scale_y.to - scale_y.from) * r.bottom);
 		dc.MoveTo(0, y);
 		dc.LineTo(10, y);
 		double l = i * step + scale_y.from;
