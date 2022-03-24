@@ -9,7 +9,7 @@ class CMyGraph : public CStatic
 
 protected:
 public:
-
+	bool hist=false;
 	struct
 	{
 		double from, to;

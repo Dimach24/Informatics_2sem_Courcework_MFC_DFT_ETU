@@ -27,7 +27,7 @@ public:
 	void set_log(bool b);
 	void set_color(COLORREF rgb);
 	void set_not_calculated();
-	const std::vector<POINT>& get_points();
+	virtual const std::vector<POINT>& get_points();
 protected:
 	virtual void calculate();
 	POINT to_the_new_coords_system(double x, double y) const;
@@ -40,14 +40,15 @@ protected:
 public:
 	std::vector<double> data;
 protected:
-	double f(double x);
+	virtual double f(double x);
 public:
 	void set_a(double a);
 	void set_m(double m);
 	void set_f(double f);
-	void calculate();
+	const std::vector<double>& get_data();
+	virtual void calculate();
 };
-class DFTFunction : public MathFunction
+class DFTFunction : public SignalFunction
 {
 public:
 	DFTFunction(SignalFunction* s);
@@ -57,4 +58,5 @@ protected:
 public:
 	void calculate();
 	void set_signal(SignalFunction* s);
+
 };

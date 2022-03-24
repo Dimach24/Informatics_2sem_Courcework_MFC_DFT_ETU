@@ -16,10 +16,12 @@
 #define IDC_TaskAbout                   1012
 #define IDC_CALCULATE_BUTTON            1015
 #define IDC_STATIC_graph                1020
+#define IDC_STATIC_graph2               1021
 #define IDC_EDIT_param_a                1028
 #define IDC_CHECK_is_log_scale          1029
 #define IDC_BUTTON_UPDATE_graph         1030
 #define IDC_STATIC_signal               1031
+#define IDC_CHECK_is_log_scale2         1032
 #define IDC_EDIT_param_m                1033
 #define IDC_EDIT_xscale_from            1034
 #define IDC_EDIT_param_f                1035
@@ -31,8 +33,10 @@
 #define IDC_BUTTON_SAVE_GR              1040
 #define IDC_BUTTON_SETTINGS_GR          1041
 #define IDC_BUTTON_reset                1041
+#define IDC_EDIT_yscale_from2           1042
 #define IDC_MFCCOLORBUTTON_BG           1043
 #define IDC_MFCCOLORBUTTON_AXES         1044
+#define IDC_EDIT_yscale_to2             1044
 #define IDC_MFCCOLORBUTTON_SIGNAL       1045
 #define IDC_MFCCOLORBUTTON_DCF          1046
 #define IDC_MFCCOLORBUTTON_dft          1046
