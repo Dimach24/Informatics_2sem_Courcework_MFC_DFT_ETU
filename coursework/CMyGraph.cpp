@@ -65,9 +65,9 @@ void CMyGraph::OnPaint() {
 	CPen axespen(BS_SOLID, 2, RGB(0, 0, 0));
 	dc.SelectObject(axespen);
 
-	dc.MoveTo(2, 0);
-	dc.LineTo(2, r.bottom - 2);
-	dc.LineTo(r.right, r.bottom - 2);
+	dc.MoveTo(1, 0);
+	dc.LineTo(1, r.bottom - 1);
+	dc.LineTo(r.right, r.bottom - 1);
 	int axis_serifs;
 	axis_serifs = 5;
 	double step;
