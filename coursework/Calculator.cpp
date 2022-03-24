@@ -217,7 +217,7 @@ void Calculator::OnBnClickedButtonSaveGr() {
 
 		/*...*/
 
-		CFileDialog dlg(FALSE, _T(".bmp"), _T("График ДПФ"), OFN_OVERWRITEPROMPT,
+		CFileDialog dlg(FALSE, _T(".bmp"), _T("График a*sin(2pi(mt+f)t)"), OFN_OVERWRITEPROMPT,
 			_T("BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif) \
 | *.gif | JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||"));
 		dlg.DoModal();
@@ -261,7 +261,6 @@ void Calculator::OnBnClickedCheckislogscale() {
 	double
 		from = _wtof(fromStr),
 		to = _wtof(toStr);
-	if (from <= 0 || to <= 0) { return; }
 	if (cb_is_log.GetCheck() == 1) { //turned to log
 		// exponentiating
 		fromStr.Format(L"%f", pow(10, from));
@@ -269,6 +268,7 @@ void Calculator::OnBnClickedCheckislogscale() {
 		toStr.Format(L"%f", pow(10, to));
 		edit_y_t.SetWindowTextW(toStr);
 	} else {						//turned to the normal
+		if (from <= 0 || to <= 0) { return; }
 		fromStr.Format(L"%f", log10( from));
 		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", log10(to));
