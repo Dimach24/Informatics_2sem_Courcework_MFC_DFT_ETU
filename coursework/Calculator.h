@@ -49,4 +49,5 @@ public:
 	CButton cb_is_dft_log;
 	CEdit edit_y_dft_f;
 	CEdit edit_y_dft_t;
+	afx_msg void OnBnClickedCheckislogscale2();
 };

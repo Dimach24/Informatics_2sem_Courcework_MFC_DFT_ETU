@@ -34,7 +34,7 @@ Calculator::~Calculator() {
 
 BOOL Calculator::OnInitDialog() {
 	Cgraph.SubclassDlgItem(IDC_STATIC_graph, this);
-	DFTgraph.SubclassDlgItem(IDC_STATIC_graph2,this);
+	DFTgraph.SubclassDlgItem(IDC_STATIC_graph2, this);
 	bg_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_BG, this);
 	signal_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_SIGNAL, this);
 	dft_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
@@ -101,7 +101,7 @@ void Calculator::UpdateCalculatorParams() {
 	CString y_to_s;
 	edit_y_t.GetWindowTextW(y_to_s);
 	double y_to = _wtof(y_to_s);
-	
+
 	CString y_from2_s;
 	edit_y_dft_f.GetWindowTextW(y_from2_s);
 	double y_from2 = _wtof(y_from2_s);
@@ -123,14 +123,17 @@ void Calculator::UpdateCalculatorParams() {
 				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
 				return;
 			}
+			Cgraph.setScale(x_from, x_to, log10(y_from), log10(y_to));
+		} else {
+			Cgraph.setScale(x_from, x_to, y_from, y_to);
+		}
+		if (cb_is_dft_log.GetCheck() == 1) {
 			if (y_from2 < 0) {
 				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
 				return;
 			}
-			Cgraph.setScale(x_from, x_to, log10(y_from), log10(y_to));
 			DFTgraph.setScale(x_from, x_to, log10(y_from2), log10(y_to2));
 		} else {
-			Cgraph.setScale(x_from, x_to, y_from, y_to);
 			DFTgraph.setScale(x_from, x_to, y_from2, y_to2);
 		}
 		RECT r;
@@ -189,6 +192,7 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_reset, &Calculator::OnBnClickedButtonreset)
 	ON_BN_CLICKED(IDC_BUTTON_SAVE_GR, &Calculator::OnBnClickedButtonSaveGr)
 	ON_BN_CLICKED(IDC_CHECK_is_log_scale, &Calculator::OnBnClickedCheckislogscale)
+	ON_BN_CLICKED(IDC_CHECK_is_log_scale2, &Calculator::OnBnClickedCheckislogscale2)
 END_MESSAGE_MAP()
 
 
@@ -301,5 +305,28 @@ void Calculator::OnBnClickedCheckislogscale() {
 		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", log10(to));
 		edit_y_t.SetWindowTextW(toStr);
+	}
+}
+
+
+void Calculator::OnBnClickedCheckislogscale2() {
+	CString fromStr, toStr;
+	edit_y_dft_f.GetWindowTextW(fromStr);
+	edit_y_dft_t.GetWindowTextW(toStr);
+	double
+		from = _wtof(fromStr),
+		to = _wtof(toStr);
+	if (cb_is_dft_log.GetCheck() == 1) { //turned to log
+		// exponentiating
+		fromStr.Format(L"%f", pow(10, from));
+		edit_y_dft_f.SetWindowTextW(fromStr);
+		toStr.Format(L"%f", pow(10, to));
+		edit_y_dft_t.SetWindowTextW(toStr);
+	} else {						//turned to the normal
+		if (from <= 0 || to <= 0) { return; }
+		fromStr.Format(L"%f", log10(from));
+		edit_y_dft_f.SetWindowTextW(fromStr);
+		toStr.Format(L"%f", log10(to));
+		edit_y_dft_t.SetWindowTextW(toStr);
 	}
 }
