@@ -64,10 +64,10 @@ BOOL Calculator::OnInitDialog() {
 
 	signal.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	Cgraph.functions.push_back(&signal);
-
+	Cgraph.hist = false;
 	dft.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	DFTgraph.functions.push_back(&dft);
-
+	DFTgraph.hist = true;
 
 	return 0;
 }
@@ -118,6 +118,9 @@ void Calculator::UpdateCalculatorParams() {
 		signal.set_a(a);
 		signal.set_f(f);
 		signal.set_m(m);
+		dft.set_a(a);
+		dft.set_f(f);
+		dft.set_m(m);
 		if (cb_is_log.GetCheck() == 1) {
 			if (y_from < 0) {
 				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);

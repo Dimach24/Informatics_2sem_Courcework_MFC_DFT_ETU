@@ -93,6 +93,13 @@ void SignalFunction::set_f(double f) {
 	this->f_ = f;
 }
 
+const std::vector<double>& SignalFunction::get_data() {
+	if (!is_calculated) {
+		calculate();
+	}
+	return data;
+}
+
 void SignalFunction::calculate() {
 	double start = max(scale.x_from, from);
 	double stop = min(scale.x_to, to);
@@ -116,11 +123,12 @@ DFTFunction::DFTFunction(SignalFunction* s) {
 
 double DFTFunction::f(double x) {
 	size_t m = x;
-	size_t N = signal->data.size();
+	std::vector<double> data = signal->get_data();
+	size_t N = data.size();
 	double re = 0, im = 0;
 	for (size_t n = 0; n < N; n++) {
-		re += signal->data[n] * cos(2 * PI * m * n / N);
-		im += signal->data[n] * sin(-2 * PI * m * n / N);
+		re += data[n] * cos(2 * PI * m * n / N);
+		im += data[n] * sin(-2 * PI * m * n / N);
 	}
 	return sqrt(re * re + im * im);
 }
@@ -143,3 +151,4 @@ void DFTFunction::calculate() {
 void DFTFunction::set_signal(SignalFunction* s) {
 	signal = s;
 }
+

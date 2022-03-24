@@ -50,10 +50,15 @@ void CMyGraph::OnPaint() {
 		dc.SelectObject(gr);
 		dc.MoveTo({ r.right / 2, r.bottom / 2 });
 		for (POINT dot : f->get_points()) {
-			if (is_first) { dc.MoveTo(dot); is_first = false; } else {
+			if (hist) {
+				dc.MoveTo(dot.x, r.bottom);
 				dc.LineTo(dot);
 			}
-
+			else {
+				if (is_first) { dc.MoveTo(dot); is_first = false; } else {
+					dc.LineTo(dot);
+				}
+			}
 		}
 	}
 
