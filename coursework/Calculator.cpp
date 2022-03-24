@@ -237,7 +237,7 @@ void Calculator::ResetInputData() {
 
 
 void Calculator::OnBnClickedButtonSaveGr() {
-	CWnd* p = GetDlgItem(IDC_STATIC_graph);
+	CWnd* p = GetDlgItem(IDC_STATIC_graph2);
 	if (p) {
 		CRect rect;
 		p->GetClientRect(rect);
@@ -249,10 +249,12 @@ void Calculator::OnBnClickedButtonSaveGr() {
 		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
 		bmdc.BitBlt(0, 0, rect.Width(), rect.Height(), &wdc, 0, 0, SRCCOPY);
 		bmdc.SelectObject(olddc);
-
-		/*...*/
-
-		CFileDialog dlg(FALSE, _T(".bmp"), _T("График a*sin(2pi(mt+f)t)"), OFN_OVERWRITEPROMPT,
+		p = GetDlgItem(IDC_STATIC_signal);
+		assert(p);
+		CString s;
+		p->GetWindowTextW(s);
+		s.Format(L"График ДПФ %s",s);
+		CFileDialog dlg(FALSE, _T(".bmp"), s, OFN_OVERWRITEPROMPT,
 			_T("BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif) \
 | *.gif | JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||"));
 		dlg.DoModal();
