@@ -53,8 +53,7 @@ void CMyGraph::OnPaint() {
 			if (hist) {
 				dc.MoveTo(dot.x, r.bottom);
 				dc.LineTo(dot);
-			}
-			else {
+			} else {
 				if (is_first) { dc.MoveTo(dot); is_first = false; } else {
 					dc.LineTo(dot);
 				}
@@ -71,7 +70,7 @@ void CMyGraph::OnPaint() {
 	int axis_serifs;
 	axis_serifs = 5;
 	double step;
-	step = (scale_x.to - scale_x.from) / (axis_serifs + 1);
+	step = (scale_x.to - scale_x.from) / (1 + (long)axis_serifs);
 	for (int i = 1; i * step < scale_x.to - scale_x.from; i++) {
 		long x = round(i * step / (scale_x.to - scale_x.from) * r.right);
 		dc.MoveTo(x, r.bottom);
@@ -82,7 +81,7 @@ void CMyGraph::OnPaint() {
 		dc.TextOutW(x - 20, r.bottom - 30, str);
 	}
 	axis_serifs = 4;
-	step = (scale_y.to - scale_y.from) / (axis_serifs + 1);
+	step = (scale_y.to - scale_y.from) / (1 + (long)axis_serifs);
 	for (int i = 1; i * step < scale_y.to - scale_y.from; i++) {
 		long y = round(r.bottom - i * step / (scale_y.to - scale_y.from) * r.bottom);
 		dc.MoveTo(0, y);
