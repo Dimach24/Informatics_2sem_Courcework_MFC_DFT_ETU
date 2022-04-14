@@ -71,6 +71,8 @@ void CMyGraph::OnPaint() {
 	axis_serifs = 5;
 	double step;
 	step = (scale_x.to - scale_x.from) / (1 + (long)axis_serifs);
+	// TODO: Fonting
+	// TODO: Graph shifting
 	for (int i = 1; i * step < scale_x.to - scale_x.from; i++) {
 		long x = round(i * step / (scale_x.to - scale_x.from) * r.right);
 		dc.MoveTo(x, r.bottom);
