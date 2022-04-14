@@ -81,7 +81,7 @@ void CMyGraph::OnPaint() {
 		str.Format(L"%5.2f", l);
 		dc.TextOutW(x - 20, r.bottom - 30, str);
 	}
-	axis_serifs = 7;
+	axis_serifs = 4;
 	step = (scale_y.to - scale_y.from) / (axis_serifs + 1);
 	for (int i = 1; i * step < scale_y.to - scale_y.from; i++) {
 		long y = round(r.bottom - i * step / (scale_y.to - scale_y.from) * r.bottom);
