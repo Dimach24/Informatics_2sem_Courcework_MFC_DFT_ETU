@@ -20,6 +20,24 @@ void CMyGraph::draw_axis(CDC& dc) {
 		}
 		old_bmp = bgdc.SelectObject(bg_bmp);
 		bgdc.FillSolidRect(&r, bg_color);
+
+		CPen pen(PS_SOLID,2,RGB(0,0,0));
+		HGDIOBJ oldpen = bgdc.SelectObject(pen);
+
+		bgdc.MoveTo(shift.x, 0);
+		bgdc.LineTo(shift.x, r.bottom - shift.y);
+		bgdc.LineTo(r.Width(), r.bottom - shift.y);
+		
+
+		int sstepx = (r.right - shift.x) / serifs.x;
+		int sstepy = (r.right - shift.y)/serifs.y;
+		for (int sn = 1, scord=shift.x; sn <= serifs.x; sn += 1, scord+=sstepx) {
+
+		}
+
+
+
+		bgdc.SelectObject(oldpen);
 		background_calculated = true;
 	}
 	dc.BitBlt(0, 0, r.Width(), r.Height(), &bgdc, 0, 0, SRCCOPY);

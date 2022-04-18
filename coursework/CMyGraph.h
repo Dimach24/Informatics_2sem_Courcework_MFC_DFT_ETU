@@ -15,6 +15,7 @@ protected:
 	HGDIOBJ old_bmp=NULL;
 	CDC bgdc;
 public:
+	struct { int x, y; } serifs={5,3};
 	bool hist=false;
 	struct
 	{
