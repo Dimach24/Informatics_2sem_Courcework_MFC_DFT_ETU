@@ -25,7 +25,7 @@ public:
 	void set_step(double s);
 	void set_rect(CRect r);
 	void set_log(bool b);
-	void set_color(COLORREF rgb);
+	void setBgColor(COLORREF rgb);
 	void set_not_calculated();
 	virtual const std::vector<POINT>& get_points();
 protected:

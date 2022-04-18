@@ -8,18 +8,20 @@ class CMyGraph : public CStatic
 	DECLARE_DYNAMIC(CMyGraph)
 
 protected:
+	void draw_axis(CDC& dc);
+	bool background_calculated=false;
+	COLORREF bg_color = RGB(255, 255, 255);
 public:
 	bool hist=false;
 	struct
 	{
 		double from, to;
 	}scale_x, scale_y;
-	COLORREF bg_color = RGB(255, 255, 255);
 	bool is_log = false;
 	std::vector<MathFunction*> functions;
 	CMyGraph();
 	virtual ~CMyGraph();
-
+	POINT shift = {50,50};
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
@@ -29,6 +31,7 @@ public:
 	void setRect(RECT r);
 	void setLog(bool b);
 	void setNotCalculated();
+	void setBgColor(COLORREF col);
 };
 
 

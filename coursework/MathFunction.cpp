@@ -37,7 +37,7 @@ void MathFunction::set_log(bool b) {
 	is_log = b;
 }
 
-void MathFunction::set_color(COLORREF rgb) {
+void MathFunction::setBgColor(COLORREF rgb) {
 	color = rgb;
 }
 
