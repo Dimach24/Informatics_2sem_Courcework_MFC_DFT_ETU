@@ -13,8 +13,15 @@ IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 std::pair<float,float> CMyGraph::dotCoords(int wx, int wy) {
 	CRect r;
 	GetClientRect(r);
-	//TODO back conv
-	return std::make_pair(0.,0.);
+	r.bottom -= shift.y;
+	wx -= shift.x;
+	r.right -= shift.y;
+	wy -= shift.y;
+	double xscaler = (scale_x.to - scale_x.from) / r.Width();
+	double yscaler = (scale_y.to - scale_y.from) / r.Height();
+	double x = wx * xscaler + scale_x.from;
+	double y = ((double)r.bottom-wy) * yscaler + scale_y.from;
+	return std::make_pair(x,y);
 }
 
 void CMyGraph::draw_axis(CDC& dc) {
@@ -43,30 +50,30 @@ void CMyGraph::draw_axis(CDC& dc) {
 			DEFAULT_PITCH || FF_ROMAN, _T("Times"));
 		HGDIOBJ oldfont = bgdc.SelectObject(font);
 
-		int sstepx = (r.right - shift.x) / serifs.x;
-		int sstepy = (r.right - shift.y)/serifs.y;
-		for (int sn = 1, scord=shift.x; sn <= serifs.x; sn += 1, scord+=sstepx) {
+		int sstepx = (r.right - shift.x) / (serifs.x+1);
+		int sstepy = (r.right - shift.y)/ (serifs.y+1);
+		for (int sn = 1, scord=shift.x; sn <= serifs.x+1; sn += 1, scord+=sstepx) {
 			CPoint sp(scord, r.bottom - shift.y);
 			sp.Offset(0,-serifsize / 2);
 			bgdc.MoveTo(sp);
 			sp.Offset(0, serifsize);
 			bgdc.LineTo(sp);
-			sp.Offset(0, 8);
+			sp.Offset(0, 4);
 			CString st=L"Что-то пошло не так!";
 			st.Format(L"%.4g", dotCoords(scord, r.bottom - shift.y).first);
 			bgdc.SetTextAlign(TA_CENTER);
 			bgdc.TextOutW(sp.x, sp.y, st);
 		}
-		for (int sn = 1, scord=shift.y; sn <= serifs.y; sn += 1, scord+=sstepy) {
+		for (int sn = 1, scord=r.bottom-shift.y; sn <= serifs.y+1; sn += 1, scord-=sstepy) {
 			CPoint sp(shift.x,scord);
 			sp.Offset(serifsize / 2,0);
 			bgdc.MoveTo(sp);
 			sp.Offset(-serifsize,0);
 			bgdc.LineTo(sp);
-			sp.Offset(-15,2);
+			sp.Offset(-45,5);
 			CString st=L"Что-то пошло не так!";
-			st.Format(L"%.4g", dotCoords(scord, r.bottom - shift.y).second);
-			bgdc.SetTextAlign(TA_CENTER);
+			st.Format(L"%.4g", dotCoords(shift.x, scord).second);
+			bgdc.SetTextAlign(TA_BASELINE);
 			bgdc.TextOutW(sp.x, sp.y, st);
 		}
 

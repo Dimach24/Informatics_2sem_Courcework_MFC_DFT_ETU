@@ -19,7 +19,7 @@ protected:
 	CDC bgdc;
 public:
 	struct { int x, y; } serifs={5,3};
-	int serifsize = 8;
+	int serifsize = 15;
 	bool hist=false;
 	struct
 	{
@@ -29,7 +29,7 @@ public:
 	std::vector<MathFunction*> functions;
 	CMyGraph();
 	virtual ~CMyGraph();
-	POINT shift = {50,50};
+	POINT shift = {60,30};
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
