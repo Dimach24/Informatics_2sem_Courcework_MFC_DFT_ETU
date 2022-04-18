@@ -10,6 +10,13 @@
 
 IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 
+std::pair<float,float> CMyGraph::dotCoords(int wx, int wy) {
+	CRect r;
+	GetClientRect(r);
+	//TODO back conv
+	return std::make_pair(0.,0.);
+}
+
 void CMyGraph::draw_axis(CDC& dc) {
 	CRect r;
 	GetClientRect(r);
@@ -29,14 +36,42 @@ void CMyGraph::draw_axis(CDC& dc) {
 		bgdc.LineTo(r.Width(), r.bottom - shift.y);
 		
 
+		CFont font;
+		font.CreateFontW(18, 0, 0, 0, FW_NORMAL, 0, 0, 0,
+			DEFAULT_CHARSET, OUT_RASTER_PRECIS,
+			CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, 
+			DEFAULT_PITCH || FF_ROMAN, _T("Times"));
+		HGDIOBJ oldfont = bgdc.SelectObject(font);
+
 		int sstepx = (r.right - shift.x) / serifs.x;
 		int sstepy = (r.right - shift.y)/serifs.y;
 		for (int sn = 1, scord=shift.x; sn <= serifs.x; sn += 1, scord+=sstepx) {
-
+			CPoint sp(scord, r.bottom - shift.y);
+			sp.Offset(0,-serifsize / 2);
+			bgdc.MoveTo(sp);
+			sp.Offset(0, serifsize);
+			bgdc.LineTo(sp);
+			sp.Offset(0, 8);
+			CString st=L"Что-то пошло не так!";
+			st.Format(L"%.4g", dotCoords(scord, r.bottom - shift.y).first);
+			bgdc.SetTextAlign(TA_CENTER);
+			bgdc.TextOutW(sp.x, sp.y, st);
+		}
+		for (int sn = 1, scord=shift.y; sn <= serifs.y; sn += 1, scord+=sstepy) {
+			CPoint sp(shift.x,scord);
+			sp.Offset(serifsize / 2,0);
+			bgdc.MoveTo(sp);
+			sp.Offset(-serifsize,0);
+			bgdc.LineTo(sp);
+			sp.Offset(-15,2);
+			CString st=L"Что-то пошло не так!";
+			st.Format(L"%.4g", dotCoords(scord, r.bottom - shift.y).second);
+			bgdc.SetTextAlign(TA_CENTER);
+			bgdc.TextOutW(sp.x, sp.y, st);
 		}
 
 
-
+		bgdc.SelectObject(oldfont);
 		bgdc.SelectObject(oldpen);
 		background_calculated = true;
 	}

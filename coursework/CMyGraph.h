@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <vector>
 #include "MathFunction.h"
+#include  <utility> //for std::pair
+
 // CMyGraph
 
 class CMyGraph : public CStatic
@@ -8,6 +10,7 @@ class CMyGraph : public CStatic
 	DECLARE_DYNAMIC(CMyGraph)
 
 protected:
+	std::pair<float,float> dotCoords(int wx, int wy);
 	void draw_axis(CDC& dc);
 	bool background_calculated=false;
 	COLORREF bg_color = RGB(255, 255, 255);
@@ -16,6 +19,7 @@ protected:
 	CDC bgdc;
 public:
 	struct { int x, y; } serifs={5,3};
+	int serifsize = 8;
 	bool hist=false;
 	struct
 	{
