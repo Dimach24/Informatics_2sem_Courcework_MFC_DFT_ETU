@@ -151,8 +151,8 @@ void Calculator::UpdateCalculatorParams() {
 		DFTgraph.setRect(r);
 		Cgraph.setLog(cb_is_log.GetCheck() == 1);
 		DFTgraph.setLog(cb_is_dft_log.GetCheck() == 1);
-		Cgraph.bg_color = bg_cp.GetColor();
-		DFTgraph.bg_color = bg_cp.GetColor();
+		Cgraph.setBgColor(bg_cp.GetColor());
+		DFTgraph.setBgColor(bg_cp.GetColor());
 		Cgraph.functions[0]->color = signal_cp.GetColor();
 		DFTgraph.functions[0]->color = dft_cp.GetColor();
 
