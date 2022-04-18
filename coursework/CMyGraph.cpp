@@ -11,6 +11,18 @@
 IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 
 void CMyGraph::draw_axis(CDC& dc) {
+	CRect r;
+	GetClientRect(r);
+	if (!background_calculated) {
+		if (!bgdc) {
+			bgdc.CreateCompatibleDC(&dc);
+			bg_bmp.CreateCompatibleBitmap(&dc, r.Width(), r.Height());
+		}
+		old_bmp = bgdc.SelectObject(bg_bmp);
+		bgdc.FillSolidRect(&r, bg_color);
+		background_calculated = true;
+	}
+	dc.BitBlt(0, 0, r.Width(), r.Height(), &bgdc, 0, 0, SRCCOPY);
 }
 
 CMyGraph::CMyGraph()
@@ -19,6 +31,7 @@ CMyGraph::CMyGraph()
 }
 
 CMyGraph::~CMyGraph() {
+	bgdc.SelectObject(old_bmp);
 }
 
 
@@ -37,17 +50,15 @@ END_MESSAGE_MAP()
 
 void CMyGraph::OnPaint() {
 	CPaintDC dc(this);
+	draw_axis(dc);
 	CPen gr(BS_SOLID, 1, RGB(0, 0, 0));
 	HGDIOBJ oldpen = dc.SelectObject(gr);
-
 	RECT r;
 	GetWindowRect(&r);
 	r = { 0,0,r.right - r.left,r.bottom - r.top };
 	CRect rforf(r);
 	rforf.left += shift.x;
 	rforf.bottom -= shift.y;
-	dc.FillSolidRect(&r, bg_color);
-
 	dc.IntersectClipRect(&rforf);
 	for (MathFunction* f : functions) {
 		bool is_first = true;
@@ -64,7 +75,6 @@ void CMyGraph::OnPaint() {
 			}
 		}
 	}
-	draw_axis(dc);
 
 	dc.SelectObject(oldpen);
 }

@@ -11,6 +11,9 @@ protected:
 	void draw_axis(CDC& dc);
 	bool background_calculated=false;
 	COLORREF bg_color = RGB(255, 255, 255);
+	CBitmap bg_bmp;
+	HGDIOBJ old_bmp=NULL;
+	CDC bgdc;
 public:
 	bool hist=false;
 	struct
