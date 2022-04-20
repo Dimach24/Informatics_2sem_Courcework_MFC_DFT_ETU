@@ -25,6 +25,7 @@ std::pair<float,float> CMyGraph::dotCoords(int wx, int wy) {
 }
 
 void CMyGraph::draw_axis(CDC& dc) {
+	//todo: serifs coording via direct conv not back
 	CRect r;
 	GetClientRect(r);
 	if (!background_calculated) {
