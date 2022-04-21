@@ -24,7 +24,32 @@ std::pair<float,float> CMyGraph::dotCoords(int wx, int wy) {
 	return std::make_pair(x,y);
 }
 
+POINT CMyGraph::realToScreenCoords(double x, double y) {
+	
+	CRect rect;
+	GetClientRect(&rect);
+
+	//
+	rect.left += shift.x;
+	rect.bottom -= shift.y;
+
+	// shifting in the math coords
+	x = x - scale_x.from;
+	y = y - scale_y.from;
+
+	// scaling
+	x = x * rect.Width() / (scale_x.to - scale_x.from);
+	y = - (y * rect.Height() / (scale_y.to - scale_y.from));
+
+	// shifting in win coords
+	x += rect.left;
+	y += rect.bottom;
+
+	return POINT({ (long)round(x), (long)round(y) });
+}
+
 void CMyGraph::draw_axis(CDC& dc) {
+	//todo: serifs coording via direct conv not back
 	CRect r;
 	GetClientRect(r);
 	if (!background_calculated) {
@@ -48,36 +73,72 @@ void CMyGraph::draw_axis(CDC& dc) {
 			DEFAULT_CHARSET, OUT_RASTER_PRECIS,
 			CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, 
 			DEFAULT_PITCH || FF_ROMAN, _T("Times"));
+		CFont pfont;
+		pfont.CreateFontW(14, 0, 0, 0, FW_NORMAL, 0, 0, 0,
+			DEFAULT_CHARSET, OUT_RASTER_PRECIS,
+			CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+			DEFAULT_PITCH || FF_ROMAN, _T("Times"));
+
 		HGDIOBJ oldfont = bgdc.SelectObject(font);
 
-		int sstepx = (r.right - shift.x) / (serifs.x+1);
-		int sstepy = (r.right - shift.y)/ (serifs.y+1);
-		for (int sn = 1, scord=shift.x; sn <= serifs.x+1; sn += 1, scord+=sstepx) {
-			CPoint sp(scord, r.bottom - shift.y);
-			sp.Offset(0,-serifsize / 2);
+
+
+		double step = (scale_x.to - scale_x.from) / (serifs.x);
+		for (int i = 0; i <= serifs.x; i++) {
+			double the_x = i * step + scale_x.from;
+			CPoint sp = realToScreenCoords(the_x, scale_y.from);
+			sp.Offset(0, -serifsize / 2);
 			bgdc.MoveTo(sp);
 			sp.Offset(0, serifsize);
 			bgdc.LineTo(sp);
 			sp.Offset(0, 4);
-			CString st=L"Что-то пошло не так!";
-			st.Format(L"%.4g", dotCoords(scord, r.bottom - shift.y).first);
+			CString st = L"Что-то пошло не так!";
+			st.Format(L"%.4g", the_x);
 			bgdc.SetTextAlign(TA_CENTER);
 			bgdc.TextOutW(sp.x, sp.y, st);
 		}
-		for (int sn = 1, scord=r.bottom-shift.y; sn <= serifs.y+1; sn += 1, scord-=sstepy) {
-			CPoint sp(shift.x,scord);
-			sp.Offset(serifsize / 2,0);
-			bgdc.MoveTo(sp);
-			sp.Offset(-serifsize,0);
-			bgdc.LineTo(sp);
-			sp.Offset(-45,5);
-			CString st=L"Что-то пошло не так!";
-			st.Format(L"%.4g", dotCoords(shift.x, scord).second);
-			bgdc.SetTextAlign(TA_BASELINE);
-			bgdc.TextOutW(sp.x, sp.y, st);
+
+		if (!is_log) {
+			step = (scale_y.to - scale_y.from) / (serifs.y);
+			for (int i = 0; i <= serifs.y; i++) {
+				double the_y = i * step + scale_y.from;
+				CPoint sp = realToScreenCoords(scale_x.from, the_y);
+				sp.Offset(serifsize / 2,0);
+				bgdc.MoveTo(sp);
+				sp.Offset(-serifsize,0);
+				bgdc.LineTo(sp);
+				sp.Offset(-40,-1);
+				CString st = L"Что-то пошло не так!";
+				st.Format(L"%.4g", the_y);
+				bgdc.SetTextAlign(TA_TOP);
+				bgdc.TextOutW(sp.x, sp.y, st);
+			}
+		} else {	// log scale
+			int start_power = ceil(scale_y.from),
+				stop_power = ceil(scale_y.to),
+				step_power= ceil(((double)stop_power-start_power)/ (serifs.y));
+			for (int i = 0; i <= serifs.y; i++) {
+				int current_power = i*step_power + start_power;
+				double the_y = pow(10,(double)current_power);
+				CPoint sp = realToScreenCoords(scale_x.from, log10(the_y));
+				sp.Offset(serifsize / 2, 0);
+				bgdc.MoveTo(sp);
+				sp.Offset(-serifsize, 0);
+				bgdc.LineTo(sp);
+				sp.Offset(-40, -5);
+				CString st = L"10";
+				/*st.Format(L"%.4g", the_y);*/
+				bgdc.SetTextAlign(TA_TOP);
+				bgdc.TextOutW(sp.x, sp.y, st);
+				sp.Offset(16, -5);
+				bgdc.SelectObject(pfont);
+				st.Format(L"%d", current_power);
+				bgdc.SetTextAlign(TA_LEFT);
+				bgdc.TextOutW(sp.x,sp.y,st);
+				bgdc.SelectObject(font);
+			}
 		}
-
-
+		
 		bgdc.SelectObject(oldfont);
 		bgdc.SelectObject(oldpen);
 		background_calculated = true;
@@ -104,8 +165,6 @@ BEGIN_MESSAGE_MAP(CMyGraph, CStatic)
 END_MESSAGE_MAP()
 
 
-
-// Обработчики сообщений CMyGraph
 
 
 void CMyGraph::OnPaint() {
@@ -138,6 +197,10 @@ void CMyGraph::OnPaint() {
 
 	dc.SelectObject(oldpen);
 }
+
+
+// setters
+
 
 void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to) {
 	if (x_from != scale_x.from || x_to != scale_x.to || y_from != scale_y.from || y_to != scale_y.to) {
