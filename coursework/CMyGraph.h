@@ -11,6 +11,7 @@ class CMyGraph : public CStatic
 
 protected:
 	std::pair<float,float> dotCoords(int wx, int wy);
+	POINT realToScreenCoords(double x, double y);
 	void draw_axis(CDC& dc);
 	bool background_calculated=false;
 	COLORREF bg_color = RGB(255, 255, 255);

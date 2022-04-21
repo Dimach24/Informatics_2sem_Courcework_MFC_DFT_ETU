@@ -24,6 +24,20 @@ std::pair<float,float> CMyGraph::dotCoords(int wx, int wy) {
 	return std::make_pair(x,y);
 }
 
+POINT CMyGraph::realToScreenCoords(double x, double y) {
+	CRect rect;
+	GetClientRect(&rect);
+	rect = { shift.x,
+		rect.bottom - shift.y,
+		rect.right - rect.left,
+		rect.bottom - rect.top };
+	double shifted_x = x - scale_x.from;
+	double shifted_y = y - scale_y.from;
+	x = rect.left + shifted_x * rect.Width() / (scale_x.to - scale_x.from);
+	y = rect.bottom - shifted_y * rect.Height() / (scale_y.to - scale_y.from);
+	return POINT({ (long)round(x), (long)round(y) });
+}
+
 void CMyGraph::draw_axis(CDC& dc) {
 	//todo: serifs coording via direct conv not back
 	CRect r;
