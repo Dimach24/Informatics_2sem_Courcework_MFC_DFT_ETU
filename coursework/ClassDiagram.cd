@@ -1,119 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="CAboutDlg">
-    <Position X="6.5" Y="4.25" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="CAboutDlg::__unnamed_enum_0002_1">
-        <TypeIdentifier>
-          <NewMemberFileName>courseworkDlg.cpp</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="CAboutDlg" Collapsed="true">
+    <Position X="5.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAEAAAAAAABAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>courseworkDlg.cpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Calculator">
-    <Position X="4.75" Y="0.5" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="Calculator::__unnamed_enum_0371_1" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Calculator.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="Calculator" Collapsed="true">
+    <Position X="5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACBAAAEAAAAAAAAAABACAEAAAAAAAAgCAgAAAAQAAAA=</HashCode>
+      <HashCode>BCBAgAEAgAAAJQEgABACAEICAAAABAhCAgAMAAwAAAA=</HashCode>
       <FileName>Calculator.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CMyGraph">
-    <Position X="10" Y="0.5" Width="1.5" />
-    <NestedTypes>
-      <Struct Name="CMyGraph::__unnamed_struct_028b_1" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>CMyGraph.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
-    </NestedTypes>
+  <Class Name="CMyGraph" Collapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACACAAAAAAAAiABAgAAAAABAAAAAAACAAAGAIAAAAA=</HashCode>
+      <HashCode>AACACAAACEAAQiARAwABAggBIAAIAAAGAAAmIIAgAAA=</HashCode>
       <FileName>CMyGraph.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MathFunction">
-    <Position X="2.75" Y="0.5" Width="1.5" />
-    <NestedTypes>
-      <Struct Name="MathFunction::__unnamed_struct_0372_1" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>MathFunction.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
-    </NestedTypes>
+  <Class Name="MathFunction" Collapsed="true">
+    <Position X="2.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAAKAAIABAAAgAAAAIAgCQAkoAACAAQAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAKAAIABAAAgAQAAIAgCQAkoAACQAAAAAAAAACA=</HashCode>
       <FileName>MathFunction.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PureFunction">
-    <Position X="0.5" Y="0.5" Width="2" />
+  <Class Name="SignalFunction" Collapsed="true">
+    <Position X="2.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PureFunction.h</FileName>
+      <HashCode>AAQAAAAAAEAAAAAAAAAAIAAAAAgAAAQyAgAQAAAAAAA=</HashCode>
+      <FileName>MathFunction.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SignalFunction">
-    <Position X="0.75" Y="2" Width="1.5" />
+  <Class Name="DFTFunction" Collapsed="true">
+    <Position X="2.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAwAgAAABAAAAA=</HashCode>
-      <FileName>PureFunction.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIIgAAAAAAAAASAAAAAAAAAAA=</HashCode>
+      <FileName>MathFunction.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CcourseworkApp">
-    <Position X="6.5" Y="2.75" Width="1.5" />
+  <Class Name="CcourseworkApp" Collapsed="true">
+    <Position X="6" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAQAAA=</HashCode>
       <FileName>coursework.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="CcourseworkDlg">
-    <Position X="8.25" Y="0.5" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="CcourseworkDlg::__unnamed_enum_0005_1" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>courseworkDlg.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="CcourseworkDlg" Collapsed="true">
+    <Position X="5.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EACIAAUAAAAAAAAAABAAAAAAAAAAIAQAIAAEAAAUAAA=</HashCode>
       <FileName>courseworkDlg.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DataErrorDlg">
-    <Position X="4.75" Y="4.25" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="DataErrorDlg::__unnamed_enum_0375_1" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>DataErrorDlg.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="DataErrorDlg" Collapsed="true">
+    <Position X="10" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAEAAAABAAAAABAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>DataErrorDlg.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MyTaskAboutDlg">
-    <Position X="6.5" Y="0.5" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="MyTaskAboutDlg::__unnamed_enum_036f_1" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>MyTaskAboutDlg.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="MyTaskAboutDlg" Collapsed="true">
+    <Position X="5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAEAAAAAAAAAEBAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MyTaskAboutDlg.h</FileName>

@@ -122,8 +122,8 @@ void Calculator::UpdateCalculatorParams() {
 		dft.set_f(f);
 		dft.set_m(m);
 		if (cb_is_log.GetCheck() == 1) {
-			if (y_from < 0) {
-				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
+			if (y_from <= 0) {
+				AfxMessageBox(_T("Неприемлимые границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
 				return;
 			}
 			Cgraph.setScale(x_from, x_to, log10(y_from), log10(y_to));
