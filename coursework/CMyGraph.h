@@ -10,8 +10,6 @@ class CMyGraph : public CStatic
 	DECLARE_DYNAMIC(CMyGraph)
 
 protected:
-	std::pair<float,float> dotCoords(int wx, int wy);
-	POINT realToScreenCoords(double x, double y);
 	void draw_axis(CDC& dc);
 	bool background_calculated=false;
 	COLORREF bg_color = RGB(255, 255, 255);
@@ -41,6 +39,8 @@ public:
 	void setLog(bool b);
 	void setNotCalculated();
 	void setBgColor(COLORREF col);
+	std::pair<float, float> dotCoords(int wx, int wy);
+	POINT realToScreenCoords(double x, double y);
 };
 
 

@@ -24,7 +24,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // поддержка DDX/DDV
 	DECLARE_MESSAGE_MAP()
 public:
-	CMyGraph Cgraph;
+	CMyGraph graph_signal;
 	afx_msg void OnBnClickedButtonUpdate();
 	CSliderCtrl slider_step;
 	CButton cb_is_log;
@@ -45,9 +45,10 @@ public:
 	CEdit edit_x_t;
 	CEdit edit_y_f;
 	CEdit edit_y_t;
-	CMyGraph DFTgraph;
+	CMyGraph graph_DFT;
 	CButton cb_is_dft_log;
 	CEdit edit_y_dft_f;
 	CEdit edit_y_dft_t;
 	afx_msg void OnBnClickedCheckislogscale2();
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };

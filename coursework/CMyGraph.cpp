@@ -14,9 +14,9 @@ std::pair<float,float> CMyGraph::dotCoords(int wx, int wy) {
 	CRect r;
 	GetClientRect(r);
 	r.bottom -= shift.y;
-	wx -= shift.x;
-	r.right -= shift.y;
 	wy -= shift.y;
+	r.left += shift.x;
+	wx += shift.x;
 	double xscaler = (scale_x.to - scale_x.from) / r.Width();
 	double yscaler = (scale_y.to - scale_y.from) / r.Height();
 	double x = wx * xscaler + scale_x.from;
