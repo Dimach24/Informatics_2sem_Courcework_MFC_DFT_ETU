@@ -348,11 +348,11 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	graph_DFT.GetWindowRect(rd);
 	if (rs.PtInRect(p)) {
 		p.Offset(-rs.left, -rs.top);
-		auto dot = graph_signal.dotCoords(p.x, p.y);
+		auto dot = graph_signal.dotToCoords(p.x, p.y);
 		s.Format(L"%.4f; %.4f", dot.first, dot.second);
 	} else	if (rd.PtInRect(p)) {
 		p.Offset(-rd.left, -rd.top);
-		auto dot = graph_DFT.dotCoords(p.x, p.y);
+		auto dot = graph_DFT.dotToCoords(p.x, p.y);
 		s.Format(L"%.4f; %.4f", dot.first, dot.second);
 	}
 	pWnd->SetWindowTextW(s);

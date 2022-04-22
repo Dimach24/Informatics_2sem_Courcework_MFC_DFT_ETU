@@ -10,7 +10,7 @@
 
 IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 
-std::pair<float,float> CMyGraph::dotCoords(int wx, int wy) {
+std::pair<float,float> CMyGraph::dotToCoords(int wx, int wy) {
 	CRect r;
 	GetClientRect(r);
 	r.left += shift.x;
@@ -26,7 +26,7 @@ std::pair<float,float> CMyGraph::dotCoords(int wx, int wy) {
 	return std::make_pair(x,y);
 }
 
-POINT CMyGraph::realToScreenCoords(double x, double y) {
+POINT CMyGraph::coordsToDot(double x, double y) {
 	
 	CRect rect;
 	GetClientRect(&rect);
@@ -88,7 +88,7 @@ void CMyGraph::draw_axis(CDC& dc) {
 		double step = (scale_x.to - scale_x.from) / (serifs.x);
 		for (int i = 0; i <= serifs.x; i++) {
 			double the_x = i * step + scale_x.from;
-			CPoint sp = realToScreenCoords(the_x, scale_y.from);
+			CPoint sp = coordsToDot(the_x, scale_y.from);
 			sp.Offset(0, -serifsize / 2);
 			bgdc.MoveTo(sp);
 			sp.Offset(0, serifsize);
@@ -104,7 +104,7 @@ void CMyGraph::draw_axis(CDC& dc) {
 			step = (scale_y.to - scale_y.from) / (serifs.y);
 			for (int i = 0; i <= serifs.y; i++) {
 				double the_y = i * step + scale_y.from;
-				CPoint sp = realToScreenCoords(scale_x.from, the_y);
+				CPoint sp = coordsToDot(scale_x.from, the_y);
 				sp.Offset(serifsize / 2,0);
 				bgdc.MoveTo(sp);
 				sp.Offset(-serifsize,0);
@@ -122,7 +122,7 @@ void CMyGraph::draw_axis(CDC& dc) {
 			for (int i = 0; i <= serifs.y; i++) {
 				int current_power = i*step_power + start_power;
 				double the_y = pow(10,(double)current_power);
-				CPoint sp = realToScreenCoords(scale_x.from, log10(the_y));
+				CPoint sp = coordsToDot(scale_x.from, log10(the_y));
 				sp.Offset(serifsize / 2, 0);
 				bgdc.MoveTo(sp);
 				sp.Offset(-serifsize, 0);

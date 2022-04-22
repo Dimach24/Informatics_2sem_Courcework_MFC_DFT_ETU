@@ -39,8 +39,8 @@ public:
 	void setLog(bool b);
 	void setNotCalculated();
 	void setBgColor(COLORREF col);
-	std::pair<float, float> dotCoords(int wx, int wy);
-	POINT realToScreenCoords(double x, double y);
+	std::pair<float, float> dotToCoords(int wx, int wy);
+	POINT coordsToDot(double x, double y);
 };
 
 
