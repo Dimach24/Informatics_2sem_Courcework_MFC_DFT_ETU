@@ -339,7 +339,7 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	ClientToScreen(&p);
 	CWnd* pWnd = nullptr;
 	pWnd = GetDlgItem(IDC_STATIC_CPOS);
-	CString s = L"Наведите курсор на график";
+	CString s = L"Наведите курсор на график, чтобы посмотреть координаты точки";
 	assert(pWnd);
 
 	CRect rs;
@@ -349,11 +349,18 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	if (rs.PtInRect(p)) {
 		p.Offset(-rs.left, -rs.top);
 		auto dot = graph_signal.dotToCoords(p.x, p.y);
-		s.Format(L"%.4f; %.4f", dot.first, dot.second);
+		if (!cb_is_log.GetCheck() == 1) {
+			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
+		}
 	} else	if (rd.PtInRect(p)) {
 		p.Offset(-rd.left, -rd.top);
 		auto dot = graph_DFT.dotToCoords(p.x, p.y);
-		s.Format(L"%.4f; %.4f", dot.first, dot.second);
+		if (!cb_is_dft_log.GetCheck()==1) {
+			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
+		} else {
+			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10,dot.second));
+
+		}
 	}
 	pWnd->SetWindowTextW(s);
 	CDialogEx::OnMouseMove(nFlags, point);
