@@ -62,10 +62,10 @@ BOOL Calculator::OnInitDialog() {
 	ResetInputData();
 	ResetColorPickers();
 
-	signal.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
+	signal.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_signal.functions.push_back(&signal);
 	graph_signal.hist = false;
-	dft.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
+	dft.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_DFT.functions.push_back(&dft);
 	graph_DFT.hist = true;
 
@@ -115,12 +115,10 @@ void Calculator::UpdateCalculatorParams() {
 		return;
 	}
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
-		signal.set_a(a);
-		signal.set_f(f);
-		signal.set_m(m);
-		dft.set_a(a);
-		dft.set_f(f);
-		dft.set_m(m);
+		signal.set_a(a); signal.set_f(f); signal.set_m(m);
+		//dft.set_a(a);
+		//dft.set_f(f); wat?
+		//dft.set_m(m);
 		if (cb_is_log.GetCheck() == 1) {
 			if (y_from <= 0) {
 				AfxMessageBox(_T("Неприемлимые границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
@@ -355,10 +353,10 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	} else	if (rd.PtInRect(p)) {
 		p.Offset(-rd.left, -rd.top);
 		auto dot = graph_DFT.dotToCoords(p.x, p.y);
-		if (!cb_is_dft_log.GetCheck()==1) {
+		if (!cb_is_dft_log.GetCheck() == 1) {
 			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
 		} else {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10,dot.second));
+			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10, dot.second));
 
 		}
 	}

@@ -10,12 +10,16 @@ class CMyGraph : public CStatic
 	DECLARE_DYNAMIC(CMyGraph)
 
 protected:
-	void draw_axis(CDC& dc);
+	void drawBg(CDC& dc);
 	bool background_calculated=false;
 	COLORREF bg_color = RGB(255, 255, 255);
 	CBitmap bg_bmp;
 	HGDIOBJ old_bmp=NULL;
 	CDC bgdc;
+	bool graph_is_done = false;
+	CBitmap graph;
+	HGDIOBJ old_g_bmp = NULL;
+	CDC graph_dc;
 public:
 	struct { int x, y; } serifs={5,3};
 	int serifsize = 15;

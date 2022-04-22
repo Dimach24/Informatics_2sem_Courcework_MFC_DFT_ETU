@@ -50,7 +50,7 @@ POINT CMyGraph::coordsToDot(double x, double y) {
 	return POINT({ (long)round(x), (long)round(y) });
 }
 
-void CMyGraph::draw_axis(CDC& dc) {
+void CMyGraph::drawBg(CDC& dc) {
 	//todo: serifs coording via direct conv not back
 	CRect r;
 	GetClientRect(r);
@@ -171,7 +171,7 @@ END_MESSAGE_MAP()
 
 void CMyGraph::OnPaint() {
 	CPaintDC dc(this);
-	draw_axis(dc);
+	drawBg(dc);
 	CPen gr(BS_SOLID, 1, RGB(0, 0, 0));
 	HGDIOBJ oldpen = dc.SelectObject(gr);
 	RECT r;
@@ -207,17 +207,19 @@ void CMyGraph::OnPaint() {
 void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to) {
 	if (x_from != scale_x.from || x_to != scale_x.to || y_from != scale_y.from || y_to != scale_y.to) {
 		background_calculated = false;
+		graph_is_done = false;
 	}
 	this->scale_x = { x_from,x_to };
 	this->scale_y = { y_from,y_to };
 	for (MathFunction* f : functions) {
-		f->set_scale(x_from, x_to, y_from, y_to);
+		f->setScale(x_from, x_to, y_from, y_to);
 	}
 }
 
 void CMyGraph::setStep(double step) {
+	graph_is_done = false;
 	for (MathFunction* f : functions) {
-		f->set_step(step);
+		f->setStep(step);
 	}
 }
 
@@ -225,30 +227,34 @@ void CMyGraph::setRect(RECT r) {
 	r.bottom -= shift.x;
 	r.left += shift.x;
 	for (MathFunction* f : functions) {
-		f->set_rect(r);
+		f->setRect(r);
 	}
 }
 
 void CMyGraph::setLog(bool b) {
 	if (b != is_log) {
+		graph_is_done = false;
 		background_calculated = false;
 	}
 	this->is_log = b;
 	for (MathFunction* f : functions) {
-		f->set_log(b);
+		f->setLog(b);
 	}
 }
 
 void CMyGraph::setNotCalculated() {
+	graph_is_done = false;
 	background_calculated = false;
 	for (MathFunction* f : functions) {
-		f->set_not_calculated();
+		f->setNotCalculated();
 	}
 }
 
 void CMyGraph::setBgColor(COLORREF col) {
 	if (col != bg_color) {
+		graph_is_done = false;
 		background_calculated = false;
 		bg_color = col;
 	}
 }
+

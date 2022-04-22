@@ -20,17 +20,18 @@ public:
 	std::vector<POINT> points;
 	COLORREF color;
 public:
-	void set_scale(double x_from, double x_to, double y_from, double y_to);
-	void set_definition_scope(double from, double to);
-	void set_step(double s);
-	void set_rect(CRect r);
-	void set_log(bool b);
+	bool setScale(double x_from, double x_to, double y_from, double y_to);
+	bool setDefinitionScope(double from, double to);
+	bool setStep(double s);
+	bool setRect(CRect r);
+	bool setLog(bool b);
 	void setBgColor(COLORREF rgb);
-	void set_not_calculated();
+	bool getCalculated();
+	void setNotCalculated();
 	virtual const std::vector<POINT>& get_points();
 protected:
 	virtual void calculate();
-	POINT to_the_new_coords_system(double x, double y) const;
+	POINT coordsToDot(double x, double y) const;
 };
 
 class SignalFunction : public MathFunction
@@ -42,10 +43,10 @@ public:
 protected:
 	virtual double f(double x);
 public:
-	void set_a(double a);
-	void set_m(double m);
-	void set_f(double f);
-	const std::vector<double>& get_data();
+	bool set_a(double a);
+	bool set_m(double m);
+	bool set_f(double f);
+	const std::vector<double>& getData();
 	virtual void calculate();
 };
 class DFTFunction : public SignalFunction
