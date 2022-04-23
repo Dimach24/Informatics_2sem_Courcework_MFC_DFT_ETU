@@ -5,6 +5,7 @@
 
 class Calculator : public CDialogEx
 {
+	const static uint64_t timer_id = 0x54696D65724944;
 	DECLARE_DYNAMIC(Calculator)
 
 public:
@@ -51,4 +52,6 @@ public:
 	CEdit edit_y_dft_t;
 	afx_msg void OnBnClickedCheckislogscale2();
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	CButton cb_anim;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };

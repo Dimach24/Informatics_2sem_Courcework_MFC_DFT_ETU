@@ -41,6 +41,7 @@ BOOL Calculator::OnInitDialog() {
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
 	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
 	cb_is_dft_log.SubclassDlgItem(IDC_CHECK_is_log_scale2, this);
+	cb_anim.SubclassDlgItem(IDC_CHECK_ANIM, this);
 	edit_a.SubclassDlgItem(IDC_EDIT_param_a, this);
 	edit_m.SubclassDlgItem(IDC_EDIT_param_m, this);
 	edit_f.SubclassDlgItem(IDC_EDIT_param_f, this);
@@ -185,6 +186,7 @@ void Calculator::DoDataExchange(CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_CHECK_is_log_scale2, cb_is_dft_log);
 	DDX_Control(pDX, IDC_EDIT_yscale_from2, edit_y_dft_f);
 	DDX_Control(pDX, IDC_EDIT_yscale_to2, edit_y_dft_t);
+	DDX_Control(pDX, IDC_CHECK_ANIM, cb_anim);
 }
 
 
@@ -195,6 +197,7 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK_is_log_scale, &Calculator::OnBnClickedCheckislogscale)
 	ON_BN_CLICKED(IDC_CHECK_is_log_scale2, &Calculator::OnBnClickedCheckislogscale2)
 	ON_WM_MOUSEMOVE()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -203,6 +206,11 @@ END_MESSAGE_MAP()
 
 void Calculator::OnBnClickedButtonUpdate() {
 	UpdateCalculatorParams();
+	if (cb_anim.GetCheck() == 1) {
+		graph_signal.setAnimState(true);
+		graph_DFT.setAnimState(true);
+		SetTimer(timer_id, 40, nullptr);
+	}
 	graph_signal.RedrawWindow();
 	graph_DFT.RedrawWindow();
 }
@@ -362,4 +370,16 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	}
 	pWnd->SetWindowTextW(s);
 	CDialogEx::OnMouseMove(nFlags, point);
+}
+
+
+void Calculator::OnTimer(UINT_PTR nIDEvent) {
+	if (nIDEvent == timer_id) {
+		if (!graph_signal.timerTick() && !graph_DFT.timerTick()) {
+			KillTimer(timer_id);
+			graph_DFT.setAnimState(false);
+			graph_signal.setAnimState(false);
+		}
+	}
+	CDialogEx::OnTimer(nIDEvent);
 }

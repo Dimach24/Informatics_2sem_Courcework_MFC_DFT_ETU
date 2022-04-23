@@ -7,6 +7,7 @@
 
 class CMyGraph : public CStatic
 {
+	
 	DECLARE_DYNAMIC(CMyGraph)
 
 protected:
@@ -25,7 +26,6 @@ protected:
 
 	void draw(CDC& dc);
 protected:
-	bool do_animate = true;
 	bool animation_in_process=false;
 	double current_animation_phase=0;
 	double animation_speed=0.1;
@@ -53,8 +53,10 @@ public:
 	void setLog(bool b);
 	void setNotCalculated();
 	void setBgColor(COLORREF col);
+	void setAnimState(bool state);
 	std::pair<float, float> dotToCoords(int wx, int wy);
 	POINT coordsToDot(double x, double y);
+	bool timerTick();
 };
 
 

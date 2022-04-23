@@ -50,6 +50,12 @@ POINT CMyGraph::coordsToDot(double x, double y) {
 	return POINT({ (long)round(x), (long)round(y) });
 }
 
+bool CMyGraph::timerTick() {
+	current_animation_phase += animation_speed;
+	RedrawWindow();
+	return current_animation_phase >= 1;
+}
+
 void CMyGraph::drawBg(CDC& dc) {
 	CRect r;
 	GetClientRect(r);
@@ -301,5 +307,9 @@ void CMyGraph::setBgColor(COLORREF col) {
 		background_calculated = false;
 		bg_color = col;
 	}
+}
+
+void CMyGraph::setAnimState(bool state) {
+	animation_in_process = state;
 }
 

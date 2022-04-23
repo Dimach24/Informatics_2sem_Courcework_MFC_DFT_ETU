@@ -41,6 +41,8 @@
 #define IDC_MFCCOLORBUTTON_DCF          1046
 #define IDC_MFCCOLORBUTTON_dft          1046
 #define IDC_STATIC_CPOS                 1047
+#define IDC_CHECK1                      1048
+#define IDC_CHECK_ANIM                  1048
 
 // Next default values for new objects
 // 
@@ -48,7 +50,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1048
+#define _APS_NEXT_CONTROL_VALUE         1049
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif
