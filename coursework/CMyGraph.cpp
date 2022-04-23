@@ -53,7 +53,7 @@ POINT CMyGraph::coordsToDot(double x, double y) {
 void CMyGraph::drawBg(CDC& dc) {
 	CRect r;
 	GetClientRect(r);
-	
+
 	dc.FillSolidRect(&r, bg_color);
 
 	CPen pen(PS_SOLID, 2, RGB(0, 0, 0));
@@ -140,7 +140,7 @@ void CMyGraph::drawBg(CDC& dc) {
 	background_calculated = true;
 }
 
-void CMyGraph::drawGraph(CDC& dc) {//FIXME//TODO
+void CMyGraph::drawGraph(CDC& dc) {
 	CPen gr(BS_SOLID, 1, RGB(0, 0, 0));
 	HGDIOBJ oldpen = dc.SelectObject(gr);
 	CRect r;
@@ -155,18 +155,30 @@ void CMyGraph::drawGraph(CDC& dc) {//FIXME//TODO
 	CRgn rgnf;
 	rgnf.CreateRectRgn(rforf.left, rforf.top, rforf.right, rforf.bottom);
 	dc.SelectClipRgn(&rgnf);
-	
 	for (MathFunction* f : functions) {
 		bool is_first = true;
 		CPen gr(BS_SOLID, 1, f->color);
+		int i = 0;
 		dc.SelectObject(gr);
-		for (POINT dot : f->get_points()) {
+		auto dots = f->get_points();
+		size_t dots_count = dots.size();
+		for (size_t i = 0; i < dots_count; i++) {
+			CPoint dot(dots[i]);
 			if (hist) {
-				dc.MoveTo(dot.x, r.bottom - shift.y);
+				if (animation_in_process) {
+					dot=recalcDotForAnimation(dot,rforf);
+				}
+				dc.MoveTo(dot.x, rforf.bottom);
 				dc.LineTo(dot);
 			} else {
-				if (is_first) { dc.MoveTo(dot); is_first = false; } else {
+				if (is_first) {
+					dc.MoveTo(dot);
+					is_first = false;
+				} else {
 					dc.LineTo(dot);
+				}
+				if (animation_in_process && i > current_animation_phase * dots_count) {
+					break;
 				}
 			}
 		}
@@ -175,6 +187,35 @@ void CMyGraph::drawGraph(CDC& dc) {//FIXME//TODO
 	CRgn rgn;
 	rgn.CreateRectRgn(r.left, r.top, r.right, r.bottom);
 	dc.SelectClipRgn(&rgn);
+}
+
+void CMyGraph::draw(CDC& dc) {
+	CRect r;
+	GetClientRect(r);
+	if (!graph_is_done) {
+
+		if (!bgdc) {
+			bgdc.CreateCompatibleDC(&dc);
+			bg_bmp.CreateCompatibleBitmap(&dc, r.Width(), r.Height());
+			old_bmp = bgdc.SelectObject(bg_bmp);
+		}
+
+		if (!background_calculated) {
+			drawBg(bgdc);
+		}
+		if (!graph_dc) {
+			graph_dc.CreateCompatibleDC(&dc);
+			graph.CreateCompatibleBitmap(&dc, r.Width(), r.Height());
+			old_g_bmp = graph_dc.SelectObject(graph);
+		}
+		drawGraph(graph_dc);
+	}
+	dc.BitBlt(0, 0, r.Width(), r.Height(), &graph_dc, 0, 0, SRCCOPY);
+}
+
+CPoint CMyGraph::recalcDotForAnimation(CPoint p, CRect r) {
+	p.y = r.bottom-(r.bottom - p.y)*current_animation_phase;
+	return p;
 }
 
 CMyGraph::CMyGraph()
@@ -201,27 +242,7 @@ END_MESSAGE_MAP()
 
 void CMyGraph::OnPaint() {
 	CPaintDC dc(this);
-	CRect r;
-	GetClientRect(r);
-	if (!graph_is_done) {
-
-		if (!bgdc) {
-			bgdc.CreateCompatibleDC(&dc);
-			bg_bmp.CreateCompatibleBitmap(&dc, r.Width(), r.Height());
-			old_bmp = bgdc.SelectObject(bg_bmp);
-		}
-
-		if (!background_calculated) {
-			drawBg(bgdc);
-		}
-		if (!graph_dc) {
-			graph_dc.CreateCompatibleDC(&dc);
-			graph.CreateCompatibleBitmap(&dc, r.Width(), r.Height());
-			old_g_bmp = graph_dc.SelectObject(graph);
-		}
-		drawGraph(graph_dc);
-	}
-	dc.BitBlt(0, 0, r.Width(), r.Height(), &graph_dc, 0, 0, SRCCOPY);
+	draw(dc);
 }
 
 

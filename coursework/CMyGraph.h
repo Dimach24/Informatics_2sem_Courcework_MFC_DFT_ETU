@@ -16,11 +16,20 @@ protected:
 	CBitmap bg_bmp;
 	HGDIOBJ old_bmp=NULL;
 	CDC bgdc;
+protected:
 	void drawGraph(CDC& dc);
 	bool graph_is_done = false;
 	CBitmap graph;
 	HGDIOBJ old_g_bmp = NULL;
 	CDC graph_dc;
+
+	void draw(CDC& dc);
+protected:
+	bool do_animate = true;
+	bool animation_in_process=false;
+	double current_animation_phase=0;
+	double animation_speed=0.1;
+	CPoint recalcDotForAnimation(CPoint point, CRect r);
 public:
 	struct { int x, y; } serifs={5,3};
 	int serifsize = 15;
