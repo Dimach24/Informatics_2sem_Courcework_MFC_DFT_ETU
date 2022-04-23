@@ -41,6 +41,7 @@ BOOL Calculator::OnInitDialog() {
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
 	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
 	cb_is_dft_log.SubclassDlgItem(IDC_CHECK_is_log_scale2, this);
+	cb_anim.SubclassDlgItem(IDC_CHECK_ANIM, this);
 	edit_a.SubclassDlgItem(IDC_EDIT_param_a, this);
 	edit_m.SubclassDlgItem(IDC_EDIT_param_m, this);
 	edit_f.SubclassDlgItem(IDC_EDIT_param_f, this);
@@ -62,10 +63,10 @@ BOOL Calculator::OnInitDialog() {
 	ResetInputData();
 	ResetColorPickers();
 
-	signal.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
+	signal.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_signal.functions.push_back(&signal);
 	graph_signal.hist = false;
-	dft.set_definition_scope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
+	dft.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_DFT.functions.push_back(&dft);
 	graph_DFT.hist = true;
 
@@ -115,12 +116,10 @@ void Calculator::UpdateCalculatorParams() {
 		return;
 	}
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
-		signal.set_a(a);
-		signal.set_f(f);
-		signal.set_m(m);
-		dft.set_a(a);
-		dft.set_f(f);
-		dft.set_m(m);
+		signal.set_a(a); signal.set_f(f); signal.set_m(m);
+		//dft.set_a(a);
+		//dft.set_f(f); wat?
+		//dft.set_m(m);
 		if (cb_is_log.GetCheck() == 1) {
 			if (y_from <= 0) {
 				AfxMessageBox(_T("Неприемлимые границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
@@ -187,6 +186,7 @@ void Calculator::DoDataExchange(CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_CHECK_is_log_scale2, cb_is_dft_log);
 	DDX_Control(pDX, IDC_EDIT_yscale_from2, edit_y_dft_f);
 	DDX_Control(pDX, IDC_EDIT_yscale_to2, edit_y_dft_t);
+	DDX_Control(pDX, IDC_CHECK_ANIM, cb_anim);
 }
 
 
@@ -197,6 +197,7 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK_is_log_scale, &Calculator::OnBnClickedCheckislogscale)
 	ON_BN_CLICKED(IDC_CHECK_is_log_scale2, &Calculator::OnBnClickedCheckislogscale2)
 	ON_WM_MOUSEMOVE()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -205,6 +206,11 @@ END_MESSAGE_MAP()
 
 void Calculator::OnBnClickedButtonUpdate() {
 	UpdateCalculatorParams();
+	if (cb_anim.GetCheck() == 1) {
+		graph_signal.setAnimState(true);
+		graph_DFT.setAnimState(true);
+		SetTimer(timer_id, timer_delay, nullptr);
+	}
 	graph_signal.RedrawWindow();
 	graph_DFT.RedrawWindow();
 }
@@ -355,13 +361,27 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	} else	if (rd.PtInRect(p)) {
 		p.Offset(-rd.left, -rd.top);
 		auto dot = graph_DFT.dotToCoords(p.x, p.y);
-		if (!cb_is_dft_log.GetCheck()==1) {
+		if (!cb_is_dft_log.GetCheck() == 1) {
 			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
 		} else {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10,dot.second));
+			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10, dot.second));
 
 		}
 	}
 	pWnd->SetWindowTextW(s);
 	CDialogEx::OnMouseMove(nFlags, point);
+}
+
+
+void Calculator::OnTimer(UINT_PTR nIDEvent) {
+	if (nIDEvent == timer_id) {
+		bool end = graph_signal.timerTick();
+		end = graph_DFT.timerTick() && end;
+		if (end) {
+			KillTimer(timer_id);
+			graph_DFT.setAnimState(false);
+			graph_signal.setAnimState(false);
+		}
+	}
+	CDialogEx::OnTimer(nIDEvent);
 }

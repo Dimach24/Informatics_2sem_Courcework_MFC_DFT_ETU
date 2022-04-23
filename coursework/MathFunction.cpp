@@ -2,43 +2,52 @@
 #include "MathFunction.h"
 #include <cmath>
 
-void MathFunction::set_not_calculated() {
+void MathFunction::setNotCalculated() {
 	is_calculated = false;
 }
 
-void MathFunction::set_scale(double x_from, double x_to, double y_from, double y_to) {
-	if (x_from == scale.x_from && y_from == scale.y_from && x_to == scale.x_to && y_to == scale.y_to) { return; }
-	set_not_calculated();
+bool MathFunction::setScale(double x_from, double x_to, double y_from, double y_to) {
+	if (x_from == scale.x_from && y_from == scale.y_from && x_to == scale.x_to && y_to == scale.y_to) { return false; }
+	setNotCalculated();
 	scale = { x_from, x_to, y_from, y_to };
+	return true;
 }
 
-void MathFunction::set_definition_scope(double from, double to) {
-	if (from == this->from && to == this->to) { return; }
-	set_not_calculated();
+bool MathFunction::setDefinitionScope(double from, double to) {
+	if (from == this->from && to == this->to) { return false; }
+	setNotCalculated();
 	this->from = from;
 	this->to = to;
+	return true;
 }
 
-void MathFunction::set_step(double s) {
-	if (step == s) { return; }
-	set_not_calculated();
+bool MathFunction::setStep(double s) {
+	if (step == s) { return false; }
+	setNotCalculated();
 	step = s;
+	return true;
 }
 
-void MathFunction::set_rect(CRect r) {
-	if (r.left == rect.left && r.right == rect.right && r.top == rect.top && r.bottom == rect.bottom) { return; }
-	set_not_calculated();
+bool MathFunction::setRect(CRect r) {
+	if (r.left == rect.left && r.right == rect.right && r.top == rect.top && r.bottom == rect.bottom) { return false; }
+	setNotCalculated();
 	rect = r;
+	return true;
 }
 
-void MathFunction::set_log(bool b) {
-	if (b == is_log) { return; }
-	set_not_calculated();
+bool MathFunction::setLog(bool b) {
+	if (b == is_log) { return false; }
+	setNotCalculated();
 	is_log = b;
+	return true;
 }
 
 void MathFunction::setBgColor(COLORREF rgb) {
 	color = rgb;
+}
+
+bool MathFunction::getCalculated() {
+	return is_calculated;
 }
 
 const std::vector<POINT>& MathFunction::get_points() {
@@ -48,7 +57,7 @@ const std::vector<POINT>& MathFunction::get_points() {
 	return points;
 }
 
-POINT MathFunction::to_the_new_coords_system(double x, double y) const {
+POINT MathFunction::coordsToDot(double x, double y) const {
 	double shifted_x = x - scale.x_from;
 	double shifted_y = y - scale.y_from;
 	x = rect.left + shifted_x * rect.Width() / (scale.x_to - scale.x_from);
@@ -66,7 +75,7 @@ void MathFunction::calculate() {
 		if (is_log) {
 			y = log10(abs(y));
 		}
-		points[i] = to_the_new_coords_system(x, y);
+		points[i] = coordsToDot(x, y);
 	}
 	is_calculated = true;
 }
@@ -75,25 +84,28 @@ double SignalFunction::f(double x) {
 	return a * sin(2 * PI * (f_ + m * x) * x);
 }
 
-void SignalFunction::set_a(double a) {
-	if (a == this->a) { return; }
-	set_not_calculated();
+bool SignalFunction::set_a(double a) {
+	if (a == this->a) { return false; }
+	setNotCalculated();
 	this->a = a;
+	return true;
 }
 
-void SignalFunction::set_m(double m) {
-	if (m == this->m) { return; }
-	set_not_calculated();
+bool SignalFunction::set_m(double m) {
+	if (m == this->m) { return false; }
+	setNotCalculated();
 	this->m = m;
+	return true;
 }
 
-void SignalFunction::set_f(double f) {
-	if (f == this->f_) { return; }
-	set_not_calculated();
+bool SignalFunction::set_f(double f) {
+	if (f == this->f_) { return false; }
+	setNotCalculated();
 	this->f_ = f;
+	return true;
 }
 
-const std::vector<double>& SignalFunction::get_data() {
+const std::vector<double>& SignalFunction::getData() {
 	if (!is_calculated) {
 		calculate();
 	}
@@ -112,7 +124,7 @@ void SignalFunction::calculate() {
 		if (is_log) {
 			y = log10(abs(y));
 		}
-		points[i] = to_the_new_coords_system(x, y);
+		points[i] = coordsToDot(x, y);
 	}
 	is_calculated = true;
 }
@@ -123,7 +135,7 @@ DFTFunction::DFTFunction(SignalFunction* s) {
 
 double DFTFunction::f(double x) {
 	size_t m = x;
-	std::vector<double> data = signal->get_data();
+	std::vector<double> data = signal->getData();
 	size_t N = data.size();
 	double re = 0, im = 0;
 	for (size_t n = 0; n < N; n++) {
@@ -143,12 +155,13 @@ void DFTFunction::calculate() {
 		if (is_log) {
 			y = log10(abs(y));
 		}
-		points[i] = to_the_new_coords_system(x, y);
+		points[i] = coordsToDot(x, y);
 	}
 	is_calculated = true;
 }
 
 void DFTFunction::set_signal(SignalFunction* s) {
 	signal = s;
+	setNotCalculated();
 }
 
