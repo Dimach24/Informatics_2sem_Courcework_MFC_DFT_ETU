@@ -209,7 +209,7 @@ void Calculator::OnBnClickedButtonUpdate() {
 	if (cb_anim.GetCheck() == 1) {
 		graph_signal.setAnimState(true);
 		graph_DFT.setAnimState(true);
-		SetTimer(timer_id, 40, nullptr);
+		SetTimer(timer_id, timer_delay, nullptr);
 	}
 	graph_signal.RedrawWindow();
 	graph_DFT.RedrawWindow();
@@ -375,7 +375,9 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 
 void Calculator::OnTimer(UINT_PTR nIDEvent) {
 	if (nIDEvent == timer_id) {
-		if (!graph_signal.timerTick() && !graph_DFT.timerTick()) {
+		bool end = graph_signal.timerTick();
+		end = graph_DFT.timerTick() && end;
+		if (end) {
 			KillTimer(timer_id);
 			graph_DFT.setAnimState(false);
 			graph_signal.setAnimState(false);

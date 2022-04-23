@@ -5,7 +5,8 @@
 
 class Calculator : public CDialogEx
 {
-	const static uint64_t timer_id = 0x54696D65724944;
+	const static uint64_t timer_id = 12345654;
+	const static uint64_t timer_delay = 40;
 	DECLARE_DYNAMIC(Calculator)
 
 public:

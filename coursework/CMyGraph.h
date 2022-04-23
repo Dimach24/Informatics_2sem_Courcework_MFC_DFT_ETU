@@ -27,8 +27,8 @@ protected:
 	void draw(CDC& dc);
 protected:
 	bool animation_in_process=false;
-	double current_animation_phase=0;
-	double animation_speed=0.1;
+	float current_animation_phase=0;
+	float animation_speed=5e-2;
 	CPoint recalcDotForAnimation(CPoint point, CRect r);
 public:
 	struct { int x, y; } serifs={5,3};

@@ -52,8 +52,9 @@ POINT CMyGraph::coordsToDot(double x, double y) {
 
 bool CMyGraph::timerTick() {
 	current_animation_phase += animation_speed;
+	if (current_animation_phase > 1) { current_animation_phase = 1; }
 	RedrawWindow();
-	return current_animation_phase >= 1;
+	return current_animation_phase == 1;
 }
 
 void CMyGraph::drawBg(CDC& dc) {
@@ -220,7 +221,7 @@ void CMyGraph::draw(CDC& dc) {
 }
 
 CPoint CMyGraph::recalcDotForAnimation(CPoint p, CRect r) {
-	p.y = r.bottom-(r.bottom - p.y)*current_animation_phase;
+	p.y = r.bottom-(r.bottom - p.y)*(current_animation_phase);
 	return p;
 }
 
@@ -310,6 +311,7 @@ void CMyGraph::setBgColor(COLORREF col) {
 }
 
 void CMyGraph::setAnimState(bool state) {
+	current_animation_phase = 0;
 	animation_in_process = state;
 }
 
