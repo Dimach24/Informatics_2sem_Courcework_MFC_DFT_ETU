@@ -16,6 +16,7 @@ protected:
 	CBitmap bg_bmp;
 	HGDIOBJ old_bmp=NULL;
 	CDC bgdc;
+	void drawGraph(CDC& dc);
 	bool graph_is_done = false;
 	CBitmap graph;
 	HGDIOBJ old_g_bmp = NULL;
