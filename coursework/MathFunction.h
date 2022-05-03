@@ -16,8 +16,8 @@ protected:
 	}scale;
 	bool is_calculated = false;
 	CRect rect;
-public:
 	std::vector<POINT> points;
+public:
 	COLORREF color;
 public:
 	bool setScale(double x_from, double x_to, double y_from, double y_to);
