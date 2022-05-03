@@ -27,12 +27,16 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CMyGraph graph_signal;
+	CMyGraph graph_DFT;
+
 	afx_msg void OnBnClickedButtonUpdate();
+	
 	CSliderCtrl slider_step;
-	CButton cb_is_log;
+	
 	CMFCColorButton bg_cp;
 	CMFCColorButton signal_cp;
 	CMFCColorButton dft_cp;
+	
 	afx_msg void OnBnClickedButtonreset();
 protected:
 	void ResetColorPickers();
@@ -47,12 +51,12 @@ public:
 	CEdit edit_x_t;
 	CEdit edit_y_f;
 	CEdit edit_y_t;
-	CMyGraph graph_DFT;
-	CButton cb_is_dft_log;
 	CEdit edit_y_dft_f;
 	CEdit edit_y_dft_t;
+	CButton cb_is_dft_log;
+	CButton cb_is_log;
+	CButton cb_anim;
 	afx_msg void OnBnClickedCheckislogscale2();
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	CButton cb_anim;
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
