@@ -41,7 +41,6 @@
 #define IDC_MFCCOLORBUTTON_DCF          1046
 #define IDC_MFCCOLORBUTTON_dft          1046
 #define IDC_STATIC_CPOS                 1047
-#define IDC_CHECK1                      1048
 #define IDC_CHECK_ANIM                  1048
 
 // Next default values for new objects
