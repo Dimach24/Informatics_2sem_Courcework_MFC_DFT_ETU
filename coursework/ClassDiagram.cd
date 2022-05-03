@@ -92,7 +92,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CcourseworkDlg">
-    <Position X="6.25" Y="3.75" Width="1.5" />
+    <Position X="8" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -108,25 +108,8 @@
       <FileName>courseworkDlg.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DataErrorDlg">
-    <Position X="8" Y="3.75" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Enum Name="DataErrorDlg::__unnamed_enum_0375_1" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>DataErrorDlg.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAAAEAAAABAAAAABAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>DataErrorDlg.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="MyTaskAboutDlg">
-    <Position X="8" Y="0.5" Width="1.5" />
+    <Position X="6.25" Y="3.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>

@@ -187,7 +187,6 @@
     <ClInclude Include="CMyGraph.h" />
     <ClInclude Include="coursework.h" />
     <ClInclude Include="courseworkDlg.h" />
-    <ClInclude Include="DataErrorDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MathFunction.h" />
     <ClInclude Include="MyTaskAboutDlg.h" />
@@ -201,7 +200,6 @@
     <ClCompile Include="CMyGraph.cpp" />
     <ClCompile Include="coursework.cpp" />
     <ClCompile Include="courseworkDlg.cpp" />
-    <ClCompile Include="DataErrorDlg.cpp" />
     <ClCompile Include="MathFunction.cpp" />
     <ClCompile Include="MyTaskAboutDlg.cpp" />
     <ClCompile Include="pch.cpp">
