@@ -221,7 +221,8 @@ void CMyGraph::draw(CDC& dc) {
 }
 
 CPoint CMyGraph::recalcDotForAnimation(CPoint p, CRect r) {
-	p.y = r.bottom-(r.bottom - p.y)*(current_animation_phase);
+	double y = r.bottom - p.y;
+	p.y = r.bottom-y*pow(y,current_animation_phase-1);
 	return p;
 }
 
