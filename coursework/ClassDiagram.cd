@@ -42,14 +42,9 @@
           <NewMemberFileName>CMyGraph.h</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
-      <Struct Name="CMyGraph::__unnamed_struct_028b_2" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>CMyGraph.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AACACAABCECAQiBRAwIBAIgBLAUIAAAOAgCGIIAhAAA=</HashCode>
+      <HashCode>AAAAAAAAAECAQgBQAAIBAIgAKAQgAAAEAgCAIAAhAAA=</HashCode>
       <FileName>CMyGraph.h</FileName>
     </TypeIdentifier>
   </Class>

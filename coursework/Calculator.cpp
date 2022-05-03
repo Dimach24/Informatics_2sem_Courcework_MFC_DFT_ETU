@@ -5,7 +5,6 @@
 #include "coursework.h"
 #include "Calculator.h"
 #include "afxdialogex.h"
-#include "DataErrorDlg.h"
 #include <initguid.h>
 #include <cassert>
 
@@ -139,14 +138,12 @@ void Calculator::UpdateCalculatorParams() {
 			graph_DFT.setScale(x_from, x_to, y_from2, y_to2);
 		}
 		RECT r;
-		graph_signal.GetWindowRect(&r);
-		r.right = r.right - r.left;
-		r.bottom = r.bottom - r.top;
-		r.left = r.top = 0;
-		double step = slider_step.GetPos() * (x_to - x_from) / (r.right - r.left);
+		graph_signal.GetClientRect(&r);
+		int step = slider_step.GetPos();
 		graph_signal.setStep(step);
 		graph_DFT.setStep(step);
 		graph_signal.setRect(r);
+		graph_DFT.GetClientRect(&r);
 		graph_DFT.setRect(r);
 		graph_signal.setLog(cb_is_log.GetCheck() == 1);
 		graph_DFT.setLog(cb_is_dft_log.GetCheck() == 1);

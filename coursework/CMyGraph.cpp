@@ -175,8 +175,8 @@ void CMyGraph::drawGraph(CDC& dc) {
 				if (animation_in_process) {
 					dot=recalcDotForAnimation(dot,rforf);
 				}
-				dc.MoveTo(dot.x, rforf.bottom);
-				dc.LineTo(dot);
+				RECT rect = {dot.x,dot.y,dot.x+step,rforf.bottom};
+				dc.FillSolidRect(&rect, f->color);
 			} else {
 				if (is_first) {
 					dc.MoveTo(dot);
@@ -269,8 +269,14 @@ void CMyGraph::setScale(double x_from, double x_to, double y_from, double y_to) 
 	}
 }
 
-void CMyGraph::setStep(double step) {
-	graph_is_done = false;
+void CMyGraph::setStep(int step_) {
+	if (this->step != step) {
+		graph_is_done = false;
+	}
+	RECT r;
+	GetClientRect(&r);
+	double step = step_ * (scale_x.to - scale_x.from) / (r.right - r.left);
+	this -> step = step_;
 	for (MathFunction* f : functions) {
 		f->setStep(step);
 	}

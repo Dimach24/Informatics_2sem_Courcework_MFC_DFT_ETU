@@ -34,6 +34,7 @@ public:
 	struct { int x, y; } serifs={5,3};
 	int serifsize = 15;
 	bool hist=false;
+	int step = 0;
 	struct
 	{
 		double from, to;
@@ -48,7 +49,7 @@ protected:
 public:
 	afx_msg void OnPaint();
 	void setScale(double x_from, double x_to, double y_from, double y_to);
-	void setStep(double step);
+	void setStep(int step);
 	void setRect(RECT r);
 	void setLog(bool b);
 	void setNotCalculated();
