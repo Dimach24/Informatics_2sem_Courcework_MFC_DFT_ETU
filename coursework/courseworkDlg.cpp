@@ -139,26 +139,6 @@ void CcourseworkDlg::OnSysCommand(UINT nID, LPARAM lParam) {
 	}
 }
 
-void CcourseworkDlg::OnPaint() {
-	if (IsIconic()) {
-		CPaintDC dc(this); // контекст устройства для рисования
-
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
-
-		// Выравнивание значка по центру клиентского прямоугольника
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
-
-		// Нарисуйте значок
-		dc.DrawIcon(x, y, m_hIcon);
-	} else {
-		CDialogEx::OnPaint();
-	}
-}
 
 // Система вызывает эту функцию для получения отображения курсора при перемещении
 //  свернутого окна.
