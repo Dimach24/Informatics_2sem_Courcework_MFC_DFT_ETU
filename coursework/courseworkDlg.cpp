@@ -82,10 +82,11 @@ CcourseworkDlg::CcourseworkDlg(CWnd* pParent /*=nullptr*/)
 }
 
 void CcourseworkDlg::DoDataExchange(CDataExchange* pDX) {
-	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_STATIC_TASK, theTask);
+	CDialogEx::DoDataExchange(pDX);				// base data exchange
+	DDX_Text(pDX, IDC_STATIC_TASK, theTask);	// data exchange between CStatic and CString
 }
 
+// message processing loop
 BEGIN_MESSAGE_MAP(CcourseworkDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
@@ -100,15 +101,15 @@ END_MESSAGE_MAP()
 // Обработчики сообщений CcourseworkDlg
 
 BOOL CcourseworkDlg::OnInitDialog() {
-	CDialogEx::OnInitDialog();
+	CDialogEx::OnInitDialog();	// base OnInit
+	// set title
 	SetWindowText(_T("Курсовая - Чаминов Д. А. гр. 1183 " __COURSE__VERSION));
-
-	// Добавление пункта "О программе..." в системное меню.
 
 	// IDM_ABOUTBOX должен быть в пределах системной команды.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
+	// adding "About" to the system menu
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != nullptr) {
 		BOOL bNameValid;
@@ -120,29 +121,23 @@ BOOL CcourseworkDlg::OnInitDialog() {
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 	}
-
-	// Задает значок для этого диалогового окна.  Среда делает это автоматически,
-	//  если главное окно приложения не является диалоговым
-	SetIcon(m_hIcon, TRUE);			// Крупный значок
-	SetIcon(m_hIcon, FALSE);		// Мелкий значок
-
-	// TODO: добавьте дополнительную инициализацию
-
-	return TRUE;  // возврат значения TRUE, если фокус не передан элементу управления
+	
+	// set icon (32x32 - big icon)
+	SetIcon(m_hIcon, TRUE);			
+	return TRUE;  
 }
 
+// catching system menu commands
 void CcourseworkDlg::OnSysCommand(UINT nID, LPARAM lParam) {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX) { 
+		// create and show about dlg
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
 	} else {
+		// base action
 		CDialogEx::OnSysCommand(nID, lParam);
 	}
 }
-
-// При добавлении кнопки свертывания в диалоговое окно нужно воспользоваться приведенным ниже кодом,
-//  чтобы нарисовать значок.  Для приложений MFC, использующих модель документов или представлений,
-//  это автоматически выполняется рабочей областью.
 
 void CcourseworkDlg::OnPaint() {
 	if (IsIconic()) {
