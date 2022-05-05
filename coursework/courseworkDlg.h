@@ -1,18 +1,19 @@
-﻿
-// courseworkDlg.h: файл заголовка
-//
+﻿#pragma once
 
-#pragma once
-
-
-// Диалоговое окно CcourseworkDlg
+/// <summary>
+/// Class that defines exterior and behavour
+/// of the main dialog - child of CDialogEx
+/// </summary>
 class CcourseworkDlg : public CDialogEx
 {
-	// Создание
 public:
-	CcourseworkDlg(CWnd* pParent = nullptr);	// стандартный конструктор
+	/// <summary>
+	/// Standart constructor
+	/// </summary>
+	/// <param name="pParent">a pointer to the parent window</param>
+	CcourseworkDlg(CWnd* pParent = nullptr);
 
-// Данные диалогового окна
+	// dialog id for building
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_COURSEWORK_DIALOG };
 #endif
@@ -21,20 +22,29 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// поддержка DDX/DDV
 
 
-// Реализация
 protected:
+	/// <summary>
+	/// App Icon
+	/// </summary>
 	HICON m_hIcon;
 
-	// Созданные функции схемы сообщений
+	/// <summary>
+	/// Short task info
+	/// </summary>
+	CString theTask;
+
+	// functions of the message processing
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
+
+	// message processing loop
 	DECLARE_MESSAGE_MAP()
 public:
+	// functions of the message processing
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedTaskAboutBn();
-	CString theTask;
 	afx_msg void OnBnClickedCalculateButton();
 };
