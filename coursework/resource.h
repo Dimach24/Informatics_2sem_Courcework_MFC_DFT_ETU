@@ -7,13 +7,11 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_COURSEWORK_DIALOG           102
 #define IDS_STRING102                   102
-#define IDD_MyTaskAboutDlg              103
 #define IDD_Calculator                  104
 #define IDR_MAINFRAME                   128
 #define ID_LOGO_ICO                     133
 #define IDC_STATIC_TASK                 1000
 #define IDC_Task_About_Bn               1001
-#define IDC_TaskAbout                   1012
 #define IDC_CALCULATE_BUTTON            1015
 #define IDC_STATIC_graph                1020
 #define IDC_STATIC_graph2               1021

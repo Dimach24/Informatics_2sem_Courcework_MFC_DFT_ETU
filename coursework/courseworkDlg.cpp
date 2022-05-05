@@ -6,7 +6,6 @@
 #include "courseworkDlg.h"
 #include "afxdialogex.h"
 
-#include "MyTaskAboutDlg.h"
 #include "Calculator.h"
 #include "SomeDefinitions.h"
 
@@ -92,7 +91,6 @@ BEGIN_MESSAGE_MAP(CcourseworkDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CcourseworkDlg::OnBnClickedOk)
-	ON_BN_CLICKED(IDCANCEL, &CcourseworkDlg::OnBnClickedCancel)
 	ON_BN_CLICKED(IDC_Task_About_Bn, &CcourseworkDlg::OnBnClickedTaskAboutBn)
 	ON_BN_CLICKED(IDC_CALCULATE_BUTTON, &CcourseworkDlg::OnBnClickedCalculateButton)
 END_MESSAGE_MAP()
@@ -154,10 +152,18 @@ void CcourseworkDlg::OnBnClickedOk() {
 
 // on button 'about the task' clicked message
 void CcourseworkDlg::OnBnClickedTaskAboutBn() {
-	// create and run MyTaskAboutDlg
-	//TODO:replace it with messagebox
-	MyTaskAboutDlg dlg(this);
-	dlg.DoModal();
+	// create and show messagebox with theoretical information
+	AfxMessageBox(
+		L"Дискретное преобразование Фурье является линейным преобразованием, "
+		L"которое переводит 𝖭-мерный комплексный вектор временных отсчётов 𝘅 в 𝖭-мерный "
+		L"комплексный вектор спектральных (частотных) отсчётов 𝗫 той же длины. Таким "
+		L"образом преобразование может быть реализовано как умножение квадратной матрицы "
+		L"на вектор 𝗫=𝖠*𝘅 , где матрица 𝖠 – некая унитарная матрица, которую можно рассматривать "
+		L"как матрицу преобразования (поворота) системы координат некоторого 𝖭-мерного пространства.\n"
+		L"Формула преобразования для 𝗄-того компонента ДПФ:\n"
+		L"𝖷𝗄=Σ𝗑𝗇*𝖾𝗑𝗉(-2π𝗂𝗄𝗇/𝖭)\n"
+		L"Эту формулу можно преобразовать с помощью формулы Эйлера.\n "
+		L"Квадрат модуля отсчета равен |𝖷𝗄|²=𝖱𝖾²(𝖷𝗄)+𝖨𝗆²(𝖷𝗄)", MB_OK | MB_ICONINFORMATION);
 }
 
 // button 'calculate' has been clicked action

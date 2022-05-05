@@ -39,9 +39,6 @@
     <ClInclude Include="framework.h">
       <Filter>Файлы заголовков\+-готово</Filter>
     </ClInclude>
-    <ClInclude Include="MyTaskAboutDlg.h">
-      <Filter>Файлы заголовков\+-готово</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Файлы заголовков\+-готово</Filter>
     </ClInclude>
@@ -63,9 +60,6 @@
       <Filter>Исходные файлы\+-готово</Filter>
     </ClCompile>
     <ClCompile Include="courseworkDlg.cpp">
-      <Filter>Исходные файлы\+-готово</Filter>
-    </ClCompile>
-    <ClCompile Include="MyTaskAboutDlg.cpp">
       <Filter>Исходные файлы\+-готово</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">

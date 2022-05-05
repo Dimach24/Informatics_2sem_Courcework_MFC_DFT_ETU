@@ -189,7 +189,6 @@
     <ClInclude Include="courseworkDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MathFunction.h" />
-    <ClInclude Include="MyTaskAboutDlg.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SomeDefinitions.h" />
@@ -201,7 +200,6 @@
     <ClCompile Include="coursework.cpp" />
     <ClCompile Include="courseworkDlg.cpp" />
     <ClCompile Include="MathFunction.cpp" />
-    <ClCompile Include="MyTaskAboutDlg.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

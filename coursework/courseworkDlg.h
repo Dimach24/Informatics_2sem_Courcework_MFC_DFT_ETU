@@ -43,7 +43,6 @@ protected:
 public:
 	// functions of the message processing
 	afx_msg void OnBnClickedOk();
-	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedTaskAboutBn();
 	afx_msg void OnBnClickedCalculateButton();
 };
