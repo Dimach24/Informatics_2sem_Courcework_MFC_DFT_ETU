@@ -1,13 +1,14 @@
-﻿// Calculator.cpp: файл реализации
-//
-#include <cmath>
+﻿// including project files
 #include "pch.h"
 #include "coursework.h"
 #include "Calculator.h"
 #include "afxdialogex.h"
-#include <initguid.h>
-#include <cassert>
 
+#include <initguid.h>	// for guids
+#include <cassert>		// for asserts 
+#include <cmath>		// for math functions as log, pow, etc
+
+// guids for image codecs
 DEFINE_GUID(ImageFormatBMP, 0xb96b3cab, 0x0728, 0x11d3, 0x9d,
 	0x7b, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e);
 DEFINE_GUID(ImageFormatJPEG, 0xb96b3cae, 0x0728, 0x11d3, 0x9d,
@@ -17,21 +18,21 @@ DEFINE_GUID(ImageFormatPNG, 0xb96b3caf, 0x0728, 0x11d3, 0x9d,
 DEFINE_GUID(ImageFormatGIF, 0xb96b3cb0, 0x0728, 0x11d3, 0x9d,
 	0x7b, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e);
 
-// Диалоговое окно Calculator
-
+// for runtime data
 IMPLEMENT_DYNAMIC(Calculator, CDialogEx)
 
 Calculator::Calculator(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_Calculator, pParent),
-	signal(),
-	dft(nullptr) {
-	dft.set_signal(&signal);
+	: CDialogEx(IDD_Calculator, pParent),	// base constructor
+	signal(),								// SignalFunction default constructor
+	dft() {									// DFTFunction default constructor
+	dft.set_signal(&signal);				// Set signal function for dft object
 }
 
-Calculator::~Calculator() {
+Calculator::~Calculator() {					// default destructor
 }
 
-BOOL Calculator::OnInitDialog() {
+BOOL Calculator::OnInitDialog() {			
+	// control elements connection
 	graph_signal.SubclassDlgItem(IDC_STATIC_graph, this);
 	graph_DFT.SubclassDlgItem(IDC_STATIC_graph2, this);
 	bg_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_BG, this);
@@ -54,14 +55,20 @@ BOOL Calculator::OnInitDialog() {
 	slider_step.SetRangeMax(10);
 	slider_step.SetPos(3);
 
+	// find element
 	CWnd* p = GetDlgItem(IDC_STATIC_signal);
+	//set default text
 	if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
-	p = nullptr;
+
+	// set focus to the first input element
 	edit_a.SetFocus();
 
+	// set default data for controls
 	ResetInputData();
 	ResetColorPickers();
 
+	// set default for the MathFunction s
+	// and add it to graph drawer
 	signal.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_signal.functions.push_back(&signal);
 	graph_signal.hist = false;
@@ -73,6 +80,9 @@ BOOL Calculator::OnInitDialog() {
 }
 
 void Calculator::UpdateCalculatorParams() {
+	// getting data from input as strings
+	// and converting string to doubles
+
 	CString a_s;
 	edit_a.GetWindowTextW(a_s);
 	double a = _wtof(a_s);
@@ -109,24 +119,35 @@ void Calculator::UpdateCalculatorParams() {
 	edit_y_dft_t.GetWindowTextW(y_to2_s);
 	double y_to2 = _wtof(y_to2_s);
 
+	// if lower bound is less then high one
 	if (x_from >= x_to || y_from > y_to) {
+		// send message to the user
 		AfxMessageBox(_T("Невозможный масштаб"), MB_OK | MB_ICONERROR);
+		// end (do not update info)
 		return;
 	}
+
+	// if there is no empty fields
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
-		signal.set_a(a); signal.set_f(f); signal.set_m(m);
-		//dft.set_a(a);
-		//dft.set_f(f); wat?
-		//dft.set_m(m);
+		// set signal params
+		signal.set_a(a);	signal.set_f(f);	signal.set_m(m);
+		dft.set_a(a);		dft.set_f(f);		dft.set_m(m);
+
+		// if log (signal function)
 		if (cb_is_log.GetCheck() == 1) {
 			if (y_from <= 0) {
+				// send message to the user
 				AfxMessageBox(_T("Неприемлимые границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
 				return;
 			}
+			// set scale
 			graph_signal.setScale(x_from, x_to, log10(y_from), log10(y_to));
 		} else {
+			// set scale
 			graph_signal.setScale(x_from, x_to, y_from, y_to);
 		}
+
+		// same but with DFT
 		if (cb_is_dft_log.GetCheck() == 1) {
 			if (y_from2 < 0) {
 				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
@@ -136,21 +157,33 @@ void Calculator::UpdateCalculatorParams() {
 		} else {
 			graph_DFT.setScale(x_from, x_to, y_from2, y_to2);
 		}
+
+		// declare rectangular
 		RECT r;
+		// write client region to it
 		graph_signal.GetClientRect(&r);
+		
+		// get step (amount of pixels between two nearest points along the abscissa axis)
 		int step = slider_step.GetPos();
+		
+		// setting the step and region
 		graph_signal.setStep(step);
 		graph_DFT.setStep(step);
 		graph_signal.setRect(r);
 		graph_DFT.GetClientRect(&r);
 		graph_DFT.setRect(r);
+
+		// set log scale
 		graph_signal.setLog(cb_is_log.GetCheck() == 1);
 		graph_DFT.setLog(cb_is_dft_log.GetCheck() == 1);
+		
+		// set colors
 		graph_signal.setBgColor(bg_cp.GetColor());
 		graph_DFT.setBgColor(bg_cp.GetColor());
 		graph_signal.functions[0]->color = signal_cp.GetColor();
 		graph_DFT.functions[0]->color = dft_cp.GetColor();
 
+		// find the static element and put formetted string to it
 		CWnd* p;
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) {
@@ -159,15 +192,18 @@ void Calculator::UpdateCalculatorParams() {
 			p->SetWindowTextW(signal);
 		}
 
-	} else {
+	} else { // empty elements were found
+		// find the static element and put formetted string to it
 		CWnd* p = GetDlgItem(IDC_STATIC_signal);
 		if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
+		// send message to the user
 		AfxMessageBox(_T("Недостаточно параметров"), MB_OK | MB_ICONERROR);
 	}
 }
 
 void Calculator::DoDataExchange(CDataExchange* pDX) {
-	CDialogEx::DoDataExchange(pDX);
+	CDialogEx::DoDataExchange(pDX);								// base data exchange
+	// controls data exchange
 	DDX_Control(pDX, IDC_STATIC_graph, graph_signal);
 	DDX_Control(pDX, IDC_SLIDER_STEP, slider_step);
 	DDX_Control(pDX, IDC_CHECK_is_log_scale, cb_is_log);
@@ -186,6 +222,7 @@ void Calculator::DoDataExchange(CDataExchange* pDX) {
 }
 
 
+// messages processing loop
 BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_UPDATE_graph, &Calculator::OnBnClickedButtonUpdate)
 	ON_BN_CLICKED(IDC_BUTTON_reset, &Calculator::OnBnClickedButtonreset)
@@ -197,34 +234,33 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// Обработчики сообщений Calculator
-
-
 void Calculator::OnBnClickedButtonUpdate() {
-	UpdateCalculatorParams();
-	if (cb_anim.GetCheck() == 1) {
-		graph_signal.setAnimState(true);
-		graph_DFT.setAnimState(true);
+	UpdateCalculatorParams();			// update data
+	if (cb_anim.GetCheck() == 1) {		// if do animate
+		graph_signal.setAnimState(true);// set anim state
+		graph_DFT.setAnimState(true);	// same
+		// set timer
 		SetTimer(timer_id, timer_delay, nullptr);
 	}
+	// draw graphs
 	graph_signal.RedrawWindow();
 	graph_DFT.RedrawWindow();
 }
 
-
 void Calculator::OnBnClickedButtonreset() {
-	ResetInputData();
-
-	ResetColorPickers();
+	ResetInputData();	// reset input data
+	ResetColorPickers();// reset color pickers
 }
 
 void Calculator::ResetColorPickers() {
+	// sets default colors
 	bg_cp.SetColor(RGB(0xff, 0xfb, 0xf0));
 	signal_cp.SetColor(RGB(0x80, 0, 0));
 	dft_cp.SetColor(RGB(0, 0, 0x80));
 }
 
 void Calculator::ResetInputData() {
+	// sets default input data
 	edit_a.SetWindowTextW(_T("1"));
 	edit_m.SetWindowTextW(_T("0"));
 	edit_f.SetWindowTextW(_T("0.1592"));
@@ -237,7 +273,6 @@ void Calculator::ResetInputData() {
 	cb_is_dft_log.SetCheck(0);
 	cb_is_log.SetCheck(0);
 }
-
 
 void Calculator::OnBnClickedButtonSaveGr() {
 	CWnd* p = GetDlgItem(IDC_STATIC_graph2);
@@ -288,21 +323,22 @@ void Calculator::OnBnClickedButtonSaveGr() {
 	}
 }
 
-
 void Calculator::OnBnClickedCheckislogscale() {
-	CString fromStr, toStr;
-	edit_y_f.GetWindowTextW(fromStr);
-	edit_y_t.GetWindowTextW(toStr);
+	CString fromStr, toStr;				// strings for f=data
+	edit_y_f.GetWindowTextW(fromStr);	// getting data
+	edit_y_t.GetWindowTextW(toStr);		// same
 	double
-		from = _wtof(fromStr),
+		from = _wtof(fromStr),			// converting to the double
 		to = _wtof(toStr);
-	if (cb_is_log.GetCheck() == 1) { //turned to log
-		// exponentiating
+	if (cb_is_log.GetCheck() == 1) { 
+						//turned to log
+		// exponentiation
 		fromStr.Format(L"%f", pow(10, from));
 		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", pow(10, to));
 		edit_y_t.SetWindowTextW(toStr);
-	} else {						//turned to the normal
+	} else {			//turned to the normal
+		// logarithm
 		if (from <= 0 || to <= 0) { return; }
 		fromStr.Format(L"%f", log10(from));
 		edit_y_f.SetWindowTextW(fromStr);
@@ -311,8 +347,8 @@ void Calculator::OnBnClickedCheckislogscale() {
 	}
 }
 
-
 void Calculator::OnBnClickedCheckislogscale2() {
+	// same but with another controls
 	CString fromStr, toStr;
 	edit_y_dft_f.GetWindowTextW(fromStr);
 	edit_y_dft_t.GetWindowTextW(toStr);
@@ -334,27 +370,37 @@ void Calculator::OnBnClickedCheckislogscale2() {
 	}
 }
 
-
 void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
-	CPoint p(point);
-	ClientToScreen(&p);
+	CPoint p(point);	// copy coords
+	ClientToScreen(&p);	// coord conversion
+	// find the static text object
 	CWnd* pWnd = nullptr;
 	pWnd = GetDlgItem(IDC_STATIC_CPOS);
+
+	// default text
 	CString s = L"Наведите курсор на график, чтобы посмотреть координаты точки";
 	assert(pWnd);
 
+	// get client rects of the graphs
 	CRect rs;
 	graph_signal.GetWindowRect(rs);
 	CRect rd;
 	graph_DFT.GetWindowRect(rd);
+
+	// if point in the 1st graph
 	if (rs.PtInRect(p)) {
+		// move the point
 		p.Offset(-rs.left, -rs.top);
+		// coord back conversion
 		auto dot = graph_signal.dotToCoords(p.x, p.y);
+		// format string according to scale type
 		if (!cb_is_log.GetCheck() == 1) {
 			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
+		} else {
+			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10, dot.second));
+
 		}
-	} else	if (rd.PtInRect(p)) {
+	} else	if (rd.PtInRect(p)) {	//same but with 2nd graph
 		p.Offset(-rd.left, -rd.top);
 		auto dot = graph_DFT.dotToCoords(p.x, p.y);
 		if (!cb_is_dft_log.GetCheck() == 1) {
@@ -363,21 +409,30 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10, dot.second));
 
 		}
-	}
+	}//else{;}
+
+	// set formatted text
 	pWnd->SetWindowTextW(s);
+
+	// base message processing
 	CDialogEx::OnMouseMove(nFlags, point);
 }
 
-
 void Calculator::OnTimer(UINT_PTR nIDEvent) {
-	if (nIDEvent == timer_id) {
+	if (nIDEvent == timer_id) { // if it is animation timer
+		//tick and check is it the last tick in the animation for both graphs
 		bool end = graph_signal.timerTick();
 		end = graph_DFT.timerTick() && end;
-		if (end) {
+		//P.S. move operands if you want to draw one by one
+
+		if (end) { // if it is the last tick in both graphs
+			// stop the timer
 			KillTimer(timer_id);
+			
+			// set animation stopped
 			graph_DFT.setAnimState(false);
 			graph_signal.setAnimState(false);
 		}
 	}
-	CDialogEx::OnTimer(nIDEvent);
+	CDialogEx::OnTimer(nIDEvent);	// base timer processing
 }
