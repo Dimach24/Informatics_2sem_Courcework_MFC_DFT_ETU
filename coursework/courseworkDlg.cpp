@@ -147,28 +147,22 @@ HCURSOR CcourseworkDlg::OnQueryDragIcon() {
 }
 
 
-
+// on button 'ok' clicked message
 void CcourseworkDlg::OnBnClickedOk() {
-	// TODO: добавьте свой код обработчика уведомлений
-	CDialogEx::OnOK();
+	CDialogEx::OnOK();	// base action
 }
 
-
-void CcourseworkDlg::OnBnClickedCancel() {
-	// TODO: добавьте свой код обработчика уведомлений
-	CDialogEx::OnCancel();
-}
-
-
-
+// on button 'about the task' clicked message
 void CcourseworkDlg::OnBnClickedTaskAboutBn() {
+	// create and run MyTaskAboutDlg
+	//TODO:replace it with messagebox
 	MyTaskAboutDlg dlg(this);
 	dlg.DoModal();
-	// TODO: добавьте свой код обработчика уведомлений
 }
 
-
+// button 'calculate' has been clicked action
 void CcourseworkDlg::OnBnClickedCalculateButton() {
+	// create and show calculator dlg
 	Calculator dlg;
 	dlg.DoModal();
 }
