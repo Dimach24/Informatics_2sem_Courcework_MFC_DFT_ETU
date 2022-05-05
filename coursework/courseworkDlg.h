@@ -1,14 +1,14 @@
 ﻿#pragma once
 
 /// <summary>
-/// Class that defines exterior and behavour
+/// Class that defines exterior and behaviour
 /// of the main dialog - child of CDialogEx
 /// </summary>
 class CcourseworkDlg : public CDialogEx
 {
 public:
 	/// <summary>
-	/// Standart constructor
+	/// Standard constructor
 	/// </summary>
 	/// <param name="pParent">a pointer to the parent window</param>
 	CcourseworkDlg(CWnd* pParent = nullptr);

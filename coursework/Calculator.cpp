@@ -72,7 +72,6 @@ BOOL Calculator::OnInitDialog() {
 	return 0;
 }
 
-
 void Calculator::UpdateCalculatorParams() {
 	CString a_s;
 	edit_a.GetWindowTextW(a_s);

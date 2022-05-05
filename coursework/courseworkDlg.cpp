@@ -28,7 +28,7 @@ public:
 	CAboutDlg();
 
 	/// <summary>
-	/// Defines on dlg initialization behavour
+	/// Defines on dlg initialization behaviour
 	/// </summary>
 	BOOL OnInitDialog();
 
