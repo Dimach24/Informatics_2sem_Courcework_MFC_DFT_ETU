@@ -134,6 +134,7 @@ DFTFunction::DFTFunction(SignalFunction* s) {
 }
 
 double DFTFunction::f(double x) {
+	assert(signal);
 	size_t m = x;
 	std::vector<double> data = signal->getData();
 	size_t N = data.size();

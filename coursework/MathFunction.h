@@ -52,7 +52,7 @@ public:
 class DFTFunction : public SignalFunction
 {
 public:
-	DFTFunction(SignalFunction* s);
+	DFTFunction(SignalFunction* s=nullptr);
 protected:
 	double f(double x);
 	SignalFunction* signal;
