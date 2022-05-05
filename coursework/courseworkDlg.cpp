@@ -1,6 +1,4 @@
-﻿
-// courseworkDlg.cpp: файл реализации
-//
+﻿// including project  files 
 
 #include "pch.h"
 #include "framework.h"
@@ -11,19 +9,31 @@
 #include "MyTaskAboutDlg.h"
 #include "Calculator.h"
 #include "SomeDefinitions.h"
+
+// definitions for the debug mode
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// Диалоговое окно CAboutDlg используется для описания сведений о приложении
-
+//=====================CAboutDlg class===========================
+/// <summary>
+/// Class that defines dlg "about app"
+/// </summary>
 class CAboutDlg : public CDialogEx
 {
 public:
+	/// <summary>
+	/// Constructor
+	/// </summary>
 	CAboutDlg();
+
+	/// <summary>
+	/// Defines on dlg initialization behavour
+	/// </summary>
 	BOOL OnInitDialog();
-	// Данные диалогового окна
+
+	// dialog id for building
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
 #endif
@@ -31,34 +41,43 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // поддержка DDX/DDV
 
-// Реализация
 protected:
+	/// message processing loop
 	DECLARE_MESSAGE_MAP()
 };
 
-CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX) {
+CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX) { // call constructor of the base class
 }
 
 BOOL CAboutDlg::OnInitDialog() {
-	SetWindowText(_T("О программе. Номер версии: "__COURSE_LAST_COMMIT_INDEX));
+	// set the title, commit index - the index of 
+	// the last git commit (defined in 'SomeDefinitions.h')
+	SetWindowText(_T("О программе. Номер последние изменения: " __COURSE_LAST_COMMIT_INDEX));
 	return 0;
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX) {
-	CDialogEx::DoDataExchange(pDX);
+	CDialogEx::DoDataExchange(pDX); // use base data exchange
 }
 
+// message loop
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
-
-// Диалоговое окно CcourseworkDlg
-
-
+//===============================================================
 
 CcourseworkDlg::CcourseworkDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_COURSEWORK_DIALOG, pParent)
-	, theTask(_T("Для сигнала заданного вида вычислить дискретное преобразование Фурье(ДПФ), нарисовать график сигнальной функции и график модуля  ее ДПФ, предоставить возможность изменять масштаб графика по Х и по У, выбор линейного или логарифмического масштаба по У для графика ДПФ, интерактивный режим изменения параметров сигнала, запись в файл графиков сигнала и ДПФ в формате BMP.")) {
+	: CDialogEx(IDD_COURSEWORK_DIALOG, pParent) //base constructor
+	, theTask(	//task text init
+		L"Для сигнала заданного вида вычислить дискретное "
+		L"преобразование Фурье(ДПФ), нарисовать график сигнальной "
+		L"функции и график модуля  ее ДПФ, предоставить возможность "
+		L"изменять масштаб графика по Х и по У, выбор линейного или "
+		L"логарифмического масштаба по У для графика ДПФ, интерактивный "
+		L"режим изменения параметров сигнала, запись в файл графиков "
+		L"сигнала и ДПФ в формате BMP."
+	) {
+	// set icon
 	m_hIcon = AfxGetApp()->LoadIcon(ID_LOGO_ICO);
 }
 
