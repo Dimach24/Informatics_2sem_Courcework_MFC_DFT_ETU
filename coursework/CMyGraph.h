@@ -1,8 +1,7 @@
 ﻿#pragma once
-#include <vector>
-#include "MathFunction.h"
-#include  <utility> //for std::pair
-
+#include <vector>			// for the vector
+#include  <utility>			// for std::pair
+#include "MathFunction.h"	// functions to draw
 
 /// <summary>
 /// Class represents CStatic element,
@@ -181,8 +180,9 @@ public:
 	/// </summary>
 	/// <param name="wx">x coord in the elements coords</param>
 	/// <param name="wy">y coord in the elements coords</param>
+	/// <param name="rect">rectangular border of the drawing region (of this element)</param>
 	/// <returns>pair of float - real (math) coords</returns>
-	std::pair<float, float> dotToCoords(int wx, int wy);
+	std::pair<float, float> dotToCoords(int wx, int wy, CRect rect);
 
 	/// <summary>
 	/// Direct conversion real (math) to element (in pixels) coords
@@ -190,7 +190,7 @@ public:
 	/// <param name="x">x math coord</param>
 	/// <param name="y">y math coord</param>
 	/// <returns>element coords as POINT</returns>
-	POINT coordsToDot(double x, double y);
+	POINT coordsToDot(double x, double y, CRect rect);
 
 	/// <summary>
 	/// Defines behaviour on timer tick (it is not connected to the timer)
