@@ -220,7 +220,7 @@ void CMyGraph::draw(CDC& dc) {
 	dc.BitBlt(0, 0, r.Width(), r.Height(), &graph_dc, 0, 0, SRCCOPY);
 }
 
-CPoint CMyGraph::recalcDotForAnimation(CPoint p, CRect r) {
+CPoint CMyGraph::recalcDotForAnimation(CPoint p, const CRect& r) {
 	double y = r.bottom - p.y;
 	p.y = r.bottom-y*pow(y,current_animation_phase-1);
 	return p;
