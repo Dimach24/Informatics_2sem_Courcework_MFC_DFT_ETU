@@ -55,7 +55,7 @@ public:
 	bool setStep(double s);
 	bool setRect(CRect r);
 	bool setLog(bool b);
-	void setBgColor(COLORREF rgb);
+	void setColor(COLORREF rgb);
 	void setNotCalculated();
 	// getters
 	bool getCalculated();
