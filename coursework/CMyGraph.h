@@ -20,16 +20,16 @@ protected:
 	/// </summary>
 	/// <param name="dc">dc to use</param>
 	void drawBg(CDC& dc);
-	
+
 	/// <summary>
 	/// indicates if background is done
 	/// </summary>
-	bool background_calculated=false;
+	bool background_calculated = false;
 
 	/// <summary>
 	/// background color
 	/// </summary>
-	COLORREF bg_color = RGB(255, 255, 255); 
+	COLORREF bg_color = RGB(255, 255, 255);
 
 	/// <summary>
 	/// Bitmap for the background
@@ -39,8 +39,8 @@ protected:
 	/// <summary>
 	/// Old object for bgdc
 	/// </summary>
-	HGDIOBJ old_bmp=NULL;
-	
+	HGDIOBJ old_bmp = NULL;
+
 	/// <summary>
 	/// dc for drawing background
 	/// </summary>
@@ -53,7 +53,7 @@ protected:
 	/// </summary>
 	/// <param name="dc">dc to draw</param>
 	void drawGraph(CDC& dc);
-	
+
 	/// <summary>
 	/// indicates if graph is done
 	/// </summary>
@@ -85,17 +85,17 @@ protected:
 	/// <summary>
 	/// indicates if animation in progress
 	/// </summary>
-	bool animation_in_process=false;
+	bool animation_in_process = false;
 
 	/// <summary>
 	/// animation phase divided by 2pi
 	/// </summary>
-	float current_animation_phase=0;
+	float current_animation_phase = 0;
 
 	/// <summary>
 	/// animation cyclic frequency divided by 2pi
 	/// </summary>
-	float animation_speed=5e-2;
+	float animation_speed = 5e-2;
 
 	/// <summary>
 	/// Function that returns dot coordinates in animation phase
@@ -113,17 +113,17 @@ public:
 	/// <summary>
 	/// represents amount of serifs on axes
 	/// </summary>
-	struct { int x, y; } serifs={5,3};
+	struct { int x, y; } serifs = { 5,3 };
 
 	/// <summary>
 	/// length of serifs in the pixels
 	/// </summary>
 	int serifsize = 15;
-	
+
 	/// <summary>
 	/// indicates if it is histogram
 	/// </summary>
-	bool hist=false;
+	bool hist = false;
 
 	/// <summary>
 	///  calculating step in pixels
@@ -165,7 +165,7 @@ public:
 	/// defines on message WM_PAINT behaviour
 	/// </summary>
 	afx_msg void OnPaint();
-	
+
 	// setters
 	void setScale(double x_from, double x_to, double y_from, double y_to);
 	void setStep(int step);
@@ -174,7 +174,7 @@ public:
 	void setNotCalculated();
 	void setBgColor(COLORREF col);
 	void setAnimState(bool state);
-	
+
 	/// <summary>
 	/// Back conversion elemnts to real coords
 	/// </summary>

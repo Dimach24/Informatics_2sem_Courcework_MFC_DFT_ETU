@@ -44,7 +44,7 @@ protected:
 	/// the object represents signal function
 	/// </summary>
 	SignalFunction signal;
-	
+
 	/// <summary>
 	/// the object represents DFT
 	/// </summary>
@@ -81,7 +81,7 @@ protected:
 	CMFCColorButton signal_cp;
 	CMFCColorButton dft_cp;
 	CButton cb_anim;
-		
+
 	// dialog id for building
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_Calculator };
@@ -89,10 +89,10 @@ protected:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // поддержка DDX/DDV
-	
+
 	// message processing loop
 	DECLARE_MESSAGE_MAP()
-	
+
 protected:
 	/// <summary>
 	/// resets color pickers

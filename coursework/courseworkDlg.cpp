@@ -119,15 +119,15 @@ BOOL CcourseworkDlg::OnInitDialog() {
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 	}
-	
+
 	// set icon (32x32 - big icon)
-	SetIcon(m_hIcon, TRUE);			
-	return TRUE;  
+	SetIcon(m_hIcon, TRUE);
+	return TRUE;
 }
 
 // catching system menu commands
 void CcourseworkDlg::OnSysCommand(UINT nID, LPARAM lParam) {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX) { 
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
 		// create and show about dlg
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();

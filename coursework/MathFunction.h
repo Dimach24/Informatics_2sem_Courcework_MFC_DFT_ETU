@@ -25,7 +25,7 @@ protected:
 	double from, to;
 
 	// calculating step (in math coords)
-	double step=1;
+	double step = 1;
 
 	// indicates if axis is log
 	bool is_log;
@@ -39,7 +39,7 @@ protected:
 
 	// indicates if vector 
 	bool is_calculated = false;
-	
+
 	// drawing area
 	CRect rect;
 
@@ -97,7 +97,7 @@ public:
 	bool set_a(double a);
 	bool set_m(double m);
 	bool set_f(double f);
-	
+
 	// dots vector getter
 	const std::vector<double>& getData();
 
@@ -115,7 +115,7 @@ public:
 	/// Constructs the class
 	/// </summary>
 	/// <param name="s">a pinter to the SignalFunction - signal function</param>
-	DFTFunction(SignalFunction* s=nullptr);
+	DFTFunction(SignalFunction* s = nullptr);
 protected:
 	/// <summary>
 	/// calculates one sample

@@ -24,7 +24,7 @@ public:
 	/// </summary>
 	virtual BOOL InitInstance();
 
-	
+
 	/// <summary>
 	/// message processing loop
 	/// </summary>

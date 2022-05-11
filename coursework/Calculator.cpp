@@ -31,7 +31,7 @@ Calculator::Calculator(CWnd* pParent /*=nullptr*/)
 Calculator::~Calculator() {					// default destructor
 }
 
-BOOL Calculator::OnInitDialog() {			
+BOOL Calculator::OnInitDialog() {
 	// control elements connection
 	graph_signal.SubclassDlgItem(IDC_STATIC_graph, this);
 	graph_DFT.SubclassDlgItem(IDC_STATIC_graph2, this);
@@ -162,10 +162,10 @@ void Calculator::UpdateCalculatorParams() {
 		RECT r;
 		// write client region to it
 		graph_signal.GetClientRect(&r);
-		
+
 		// get step (amount of pixels between two nearest points along the abscissa axis)
 		int step = slider_step.GetPos();
-		
+
 		// setting the step and region
 		graph_signal.setStep(step);
 		graph_DFT.setStep(step);
@@ -176,7 +176,7 @@ void Calculator::UpdateCalculatorParams() {
 		// set log scale
 		graph_signal.setLog(cb_is_log.GetCheck() == 1);
 		graph_DFT.setLog(cb_is_dft_log.GetCheck() == 1);
-		
+
 		// set colors
 		graph_signal.setBgColor(bg_cp.GetColor());
 		graph_DFT.setBgColor(bg_cp.GetColor());
@@ -330,9 +330,9 @@ void Calculator::OnBnClickedCheckislogscale() {
 	double
 		from = _wtof(fromStr),			// converting to the double
 		to = _wtof(toStr);
-	if (cb_is_log.GetCheck() == 1) { 
-						//turned to log
-		// exponentiation
+	if (cb_is_log.GetCheck() == 1) {
+		//turned to log
+// exponentiation
 		fromStr.Format(L"%f", pow(10, from));
 		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", pow(10, to));
@@ -428,7 +428,7 @@ void Calculator::OnTimer(UINT_PTR nIDEvent) {
 		if (end) { // if it is the last tick in both graphs
 			// stop the timer
 			KillTimer(timer_id);
-			
+
 			// set animation stopped
 			graph_DFT.setAnimState(false);
 			graph_signal.setAnimState(false);

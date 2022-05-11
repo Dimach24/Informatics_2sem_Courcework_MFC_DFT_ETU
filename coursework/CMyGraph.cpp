@@ -11,7 +11,7 @@ std::pair<float, float> CMyGraph::dotToCoords(int wx, int wy, CRect r) {
 	// shift left and botom borders to get calculating area
 	r.left += shift.x;
 	r.bottom -= shift.y;
-	
+
 	// place for result
 	double x, y;
 
@@ -53,10 +53,10 @@ bool CMyGraph::timerTick() {
 
 	// limit the phase
 	if (current_animation_phase > 1) { current_animation_phase = 1; }
-	
+
 	// draw the frame with increased phase
 	RedrawWindow();
-	
+
 	// return if the animation is stopped
 	return current_animation_phase == 1;
 }
@@ -106,7 +106,7 @@ void CMyGraph::drawBg(CDC& dc) {
 
 		// calculate position (in element coords)
 		CPoint sp = coordsToDot(the_x, scale_y.from, r);
-		
+
 		// some moves to draw the serif with length=serifsize
 		sp.Offset(0, -serifsize / 2);
 		dc.MoveTo(sp);
@@ -116,14 +116,14 @@ void CMyGraph::drawBg(CDC& dc) {
 
 		// default text
 		CString st = L"Что-то пошло не так!";
-		
+
 		// make the string consist of x coord rounded to 4 
 		// significant digits
 		st.Format(L"%.4g", the_x);
-		
+
 		// set text align
 		dc.SetTextAlign(TA_CENTER);
-		
+
 		//show the text
 		dc.TextOutW(sp.x, sp.y, st);
 	}
@@ -151,10 +151,10 @@ void CMyGraph::drawBg(CDC& dc) {
 		for (int i = 0; i <= serifs.y; i++) { // for power of 10
 			// calculate the power
 			int current_power = i * step_power + start_power;
-			
+
 			// calculate the y of the serif (in math coords)
 			double the_y = pow(10, (double)current_power);
-			
+
 			// calculate in element coords
 			CPoint sp = coordsToDot(scale_x.from, log10(the_y), r);
 
@@ -164,12 +164,12 @@ void CMyGraph::drawBg(CDC& dc) {
 			sp.Offset(-serifsize, 0);
 			dc.LineTo(sp);
 			sp.Offset(-40, -5);
-			
+
 			// write '10'
 			CString st = L"10";
 			dc.SetTextAlign(TA_TOP);
 			dc.TextOutW(sp.x, sp.y, st);
-			
+
 			// offset, change the font
 			sp.Offset(16, -5);
 			dc.SelectObject(pfont);
@@ -197,7 +197,7 @@ void CMyGraph::drawGraph(CDC& dc) {
 	// create pen, select it and remember old obj
 	CPen gr(BS_SOLID, 1, RGB(0, 0, 0));
 	HGDIOBJ oldpen = dc.SelectObject(gr);
-	
+
 	// get the client area borders
 	CRect r;
 	GetWindowRect(&r);
@@ -221,7 +221,7 @@ void CMyGraph::drawGraph(CDC& dc) {
 
 		// set that it's the first point
 		bool is_first = true;
-		
+
 		// create pen for this function, and choose it
 		CPen gr(BS_SOLID, 1, f->color);
 		dc.SelectObject(gr);
@@ -231,20 +231,20 @@ void CMyGraph::drawGraph(CDC& dc) {
 
 		//amount of dots
 		size_t dots_count = dots.size();
-		
+
 		for (size_t i = 0; i < dots_count; i++) {
-			
+
 			// current dot from the dots
 			CPoint dot(dots[i]);
 
 			if (hist) {
 				if (animation_in_process) {
 					// recalc coords according to phase
-					dot=recalcDotForAnimation(dot,rforf);
+					dot = recalcDotForAnimation(dot, rforf);
 				}
-				
+
 				// hist column calculating and drawing
-				RECT rect = {dot.x,dot.y,dot.x+step,rforf.bottom};
+				RECT rect = { dot.x,dot.y,dot.x + step,rforf.bottom };
 				dc.FillSolidRect(&rect, f->color);
 			} else {// not hist
 				if (is_first) {
@@ -254,7 +254,7 @@ void CMyGraph::drawGraph(CDC& dc) {
 					dc.LineTo(dot);		// draw the line
 				}
 				// if current phase means to stop drawing
-				if (animation_in_process && i > dots_count*pow(dots_count,current_animation_phase-1)) {
+				if (animation_in_process && i > dots_count * pow(dots_count, current_animation_phase - 1)) {
 					break; // stop drawing
 				}
 			}
@@ -307,11 +307,11 @@ CPoint CMyGraph::recalcDotForAnimation(CPoint p, const CRect& r) {
 	double y = r.bottom - p.y;
 
 	// protection from small numbers
-	if (y < 1) { p.y = r.bottom - y*current_animation_phase; return p; }
-	
+	if (y < 1) { p.y = r.bottom - y * current_animation_phase; return p; }
+
 	//recalcing
-	p.y = r.bottom-y*pow(y,current_animation_phase-1);
-	
+	p.y = r.bottom - y * pow(y, current_animation_phase - 1);
+
 	return p;
 }
 
@@ -369,7 +369,7 @@ void CMyGraph::setStep(int step_) {
 	RECT r;
 	GetClientRect(&r);
 	double step = step_ * (scale_x.to - scale_x.from) / (r.right - r.left);
-	this -> step = step_;
+	this->step = step_;
 	for (MathFunction* f : functions) {
 		f->setStep(step);
 	}

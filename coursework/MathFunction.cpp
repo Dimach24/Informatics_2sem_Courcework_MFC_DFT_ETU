@@ -12,11 +12,13 @@ void MathFunction::setNotCalculated() {
 bool MathFunction::setScale(double x_from, double x_to, double y_from, double y_to) {
 	// if scale is not changed return false
 	if (x_from == scale.x_from && y_from == scale.y_from &&
-		x_to == scale.x_to && y_to == scale.y_to) { return false; }
+		x_to == scale.x_to && y_to == scale.y_to) {
+		return false;
+	}
 	// else
 	setNotCalculated();
 	// construct and assign scale
-	scale = { x_from, x_to, y_from, y_to };	
+	scale = { x_from, x_to, y_from, y_to };
 	return true;
 }
 
@@ -43,8 +45,10 @@ bool MathFunction::setStep(double s) {
 
 bool MathFunction::setRect(CRect r) {
 	// if drawing area isn't changed return false
-	if (r.left == rect.left && r.right == rect.right && 
-		r.top == rect.top && r.bottom == rect.bottom) { return false; }
+	if (r.left == rect.left && r.right == rect.right &&
+		r.top == rect.top && r.bottom == rect.bottom) {
+		return false;
+	}
 	//else
 	setNotCalculated();
 	// assign drawing rect
@@ -100,7 +104,7 @@ void MathFunction::calculate() {
 
 	// reserving memory for the points
 	points.resize(ceil((stop - start) / step));
-	
+
 	// for points with the step
 	for (size_t i = 0; i < points.size(); i++) {
 		double x = start + step * i;	// calculating x of the point (progression)
@@ -183,7 +187,7 @@ double DFTFunction::f(double x) {
 
 	// getting signal function samples 
 	std::vector<double> data = signal->getData();
-	
+
 	// amount of samples
 	size_t N = data.size();
 
@@ -206,7 +210,7 @@ void DFTFunction::calculate() {
 	double stop = min(scale.x_to, to);
 	// memory reserving for points
 	points.resize(ceil((stop - start) / step));
-	
+
 	// for each point with the step
 	for (size_t i = 0; i < points.size(); i++) {
 		double x = start + step * i;	// calculating x of the point
@@ -220,7 +224,7 @@ void DFTFunction::calculate() {
 }
 
 void DFTFunction::set_signal(SignalFunction* s) {
-	signal = s;			//set signal
+	signal = s;			// set signal
 	setNotCalculated();	// set not relevant
 }
 

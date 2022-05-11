@@ -32,7 +32,7 @@ CcourseworkApp theApp;
 
 BOOL CcourseworkApp::InitInstance() {
 	// data for dynamic lib of control elements connection
-	INITCOMMONCONTROLSEX InitCtrls; 
+	INITCOMMONCONTROLSEX InitCtrls;
 	// initialization of this data
 	InitCtrls.dwSize = sizeof(InitCtrls);
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
@@ -51,12 +51,12 @@ BOOL CcourseworkApp::InitInstance() {
 
 	// setting the win registry key for application data
 	SetRegistryKey(_T("SPbETU Chaminov Dmeatry 1183"));
-	
+
 	// creating main dlg
 	CcourseworkDlg dlg;
 	// setting dlg as main dlg
 	m_pMainWnd = &dlg;
-	
+
 	// waiting till the dlg is closed
 	INT_PTR nResponse = dlg.DoModal();
 	// response checking
