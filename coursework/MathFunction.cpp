@@ -80,8 +80,8 @@ void MathFunction::calculate() {
 	is_calculated = true;
 }
 
-double SignalFunction::f(double x) {
-	return a * sin(2 * PI * (f_ + m * x) * x);
+double SignalFunction::f(double t) {
+	return a * sin(2 * PI * (f_ + m * t) * t);
 }
 
 bool SignalFunction::set_a(double a) {
