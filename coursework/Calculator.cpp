@@ -180,8 +180,8 @@ void Calculator::UpdateCalculatorParams() {
 		// set colors
 		graph_signal.setBgColor(bg_cp.GetColor());
 		graph_DFT.setBgColor(bg_cp.GetColor());
-		graph_signal.functions[0]->color = signal_cp.GetColor();
-		graph_DFT.functions[0]->color = dft_cp.GetColor();
+		graph_signal.functions[0]->setColor(signal_cp.GetColor());
+		graph_DFT.functions[0]->setColor(dft_cp.GetColor());
 
 		// find the static element and put formetted string to it
 		CWnd* p;
