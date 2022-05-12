@@ -76,6 +76,14 @@ BOOL Calculator::OnInitDialog() {
 	graph_DFT.functions.push_back(&dft);
 	graph_DFT.hist = true;
 
+	CMenu* pSysMenu = GetSystemMenu(FALSE);
+	if (pSysMenu != nullptr) {
+		CString strSaveMenu = L"Сохранить как";
+		if (!strSaveMenu.IsEmpty()) {
+			pSysMenu->AppendMenu(MF_SEPARATOR);
+			pSysMenu->AppendMenu(MF_STRING, IDD_Calculator, strSaveMenu);
+		}
+	}
 	return 0;
 }
 
@@ -231,6 +239,7 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK_is_log_scale2, &Calculator::OnBnClickedCheckislogscale2)
 	ON_WM_MOUSEMOVE()
 	ON_WM_TIMER()
+	ON_WM_SYSCOMMAND()
 END_MESSAGE_MAP()
 
 
@@ -435,4 +444,13 @@ void Calculator::OnTimer(UINT_PTR nIDEvent) {
 		}
 	}
 	CDialogEx::OnTimer(nIDEvent);	// base timer processing
+}
+
+void Calculator::OnSysCommand(UINT nID, LPARAM lParam) {
+	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+	if (nID == IDD_Calculator) {
+		OnBnClickedButtonSaveGr();
+	} else {
+		CDialogEx::OnSysCommand(nID, lParam);
+	}
 }
