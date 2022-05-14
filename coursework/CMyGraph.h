@@ -175,6 +175,9 @@ public:
 	void setBgColor(COLORREF col);
 	void setAnimState(bool state);
 
+	// getter
+	COLORREF getBgColor();
+
 	/// <summary>
 	/// Back conversion elemnts to real coords
 	/// </summary>

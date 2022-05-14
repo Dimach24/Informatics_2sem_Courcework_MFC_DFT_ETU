@@ -415,3 +415,8 @@ void CMyGraph::setAnimState(bool state) {
 	animation_in_process = state;
 }
 
+// just a getter
+COLORREF CMyGraph::getBgColor() {
+	return bg_color;
+}
+
