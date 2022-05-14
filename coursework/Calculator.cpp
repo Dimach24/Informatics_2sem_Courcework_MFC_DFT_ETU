@@ -284,6 +284,30 @@ void Calculator::ResetInputData() {
 }
 
 void Calculator::OnBnClickedButtonSaveGr() {
+	CRect r1, r2, rr; 
+	graph_signal.GetClientRect(r1);
+	graph_DFT.GetClientRect(r2);
+	rr = { 0,0,r1.Width(),r1.Height() + r2.Height() };
+	CBitmap bmp;
+	{
+		CWindowDC wdc(&graph_signal);
+		CDC bmdc;
+		bmdc.CreateCompatibleDC(&wdc);
+		bmp.CreateCompatibleBitmap(&wdc, rr.Width(), rr.Height());
+		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
+		bmdc.BitBlt(0, 0, r1.Width(), r1.Height(), &wdc, 0, 0, SRCCOPY);
+		bmdc.SelectObject(olddc);
+	}{
+		CWindowDC wdc(&graph_DFT);
+		CDC bmdc;
+		bmdc.CreateCompatibleDC(&wdc);
+		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
+		bmdc.BitBlt(0, r1.Height(), r2.Width(), r2.Height(), &wdc, 0, 0, SRCCOPY);
+		bmdc.SelectObject(olddc);
+	}
+
+
+/*
 	CWnd* p = GetDlgItem(IDC_STATIC_graph2);
 	if (p) {
 		CRect rect;
@@ -296,6 +320,10 @@ void Calculator::OnBnClickedButtonSaveGr() {
 		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
 		bmdc.BitBlt(0, 0, rect.Width(), rect.Height(), &wdc, 0, 0, SRCCOPY);
 		bmdc.SelectObject(olddc);
+
+*/
+
+
 		CFileDialog dlg(FALSE, _T(".bmp"), L"График ДПФ.bmp", OFN_OVERWRITEPROMPT,
 			_T("BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif)\
 |*.gif| JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||"));
@@ -328,7 +356,7 @@ void Calculator::OnBnClickedButtonSaveGr() {
 		}
 		if (FAILED(saving)) {
 			AfxMessageBox(_T("При сохранении файла что-то пошло не так"));
-		}
+		//}
 	}
 }
 
