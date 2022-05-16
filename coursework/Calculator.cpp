@@ -76,6 +76,14 @@ BOOL Calculator::OnInitDialog() {
 	graph_DFT.functions.push_back(&dft);
 	graph_DFT.hist = true;
 
+	CMenu* pSysMenu = GetSystemMenu(FALSE);
+	if (pSysMenu != nullptr) {
+		CString strSaveMenu = L"Сохранить как";
+		if (!strSaveMenu.IsEmpty()) {
+			pSysMenu->AppendMenu(MF_SEPARATOR);
+			pSysMenu->AppendMenu(MF_STRING, IDD_Calculator, strSaveMenu);
+		}
+	}
 	return 0;
 }
 
@@ -231,6 +239,7 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECK_is_log_scale2, &Calculator::OnBnClickedCheckislogscale2)
 	ON_WM_MOUSEMOVE()
 	ON_WM_TIMER()
+	ON_WM_SYSCOMMAND()
 END_MESSAGE_MAP()
 
 
@@ -275,51 +284,103 @@ void Calculator::ResetInputData() {
 }
 
 void Calculator::OnBnClickedButtonSaveGr() {
-	CWnd* p = GetDlgItem(IDC_STATIC_graph2);
-	if (p) {
-		CRect rect;
-		p->GetClientRect(rect);
-		CWindowDC wdc(p);
-		CDC bmdc;
-		bmdc.CreateCompatibleDC(&wdc);
-		CBitmap bmp;
-		bmp.CreateCompatibleBitmap(&wdc, rect.Width(), rect.Height());
-		HGDIOBJ olddc = bmdc.SelectObject(&bmp);
-		bmdc.BitBlt(0, 0, rect.Width(), rect.Height(), &wdc, 0, 0, SRCCOPY);
-		bmdc.SelectObject(olddc);
-		CFileDialog dlg(FALSE, _T(".bmp"), L"График ДПФ.bmp", OFN_OVERWRITEPROMPT,
-			_T("BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif)\
-|*.gif| JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||"));
-		dlg.DoModal();
-		CString path = dlg.GetOFN().lpstrFile;
-		short i = path.ReverseFind(L'.');
-		CString extension;
-		if (i == -1) {
-			path += ".bmp";
-			extension = _T(".bmp");
-		} else {
-			i = path.GetLength() - i;
-			extension = path.Right(i);
-			extension.MakeLower();
-		}
-		CImage img;
-		img.Attach(HBITMAP(bmp));
-		HRESULT saving;
-		if (extension == _T(".jpg")) {
-			saving = img.Save(path, ImageFormatJPEG);
-		} else if (extension == _T(".png")) {
-			saving = img.Save(path, ImageFormatPNG);
-		} else if (extension == _T(".gif")) {
-			saving = img.Save(path, ImageFormatGIF);
-		} else if (extension == _T(".bmp")) {
-			saving = img.Save(path, ImageFormatBMP);
-		} else {
-			path += ".bmp";
-			saving = img.Save(path, ImageFormatBMP);
-		}
-		if (FAILED(saving)) {
-			AfxMessageBox(_T("При сохранении файла что-то пошло не так"));
-		}
+	// Areas of the 1st pic, 2nd pic and result pic
+	CRect r1, r2, rr;
+
+	// offset between pics
+	const int offset = 20;
+	
+	// getting areas
+	graph_signal.GetClientRect(r1);
+	graph_DFT.GetClientRect(r2);
+
+	//calculating the area
+	rr = { 0,0,r1.Width(),r1.Height() + r2.Height() + offset };
+	
+	CBitmap bmp;		// bitmap for the picture
+	CDC bmdc;			// dc for drawing
+
+	// existing dc to create own bmdc
+	CWindowDC wdc(&graph_signal);
+	
+	// creating dc and bitmap
+	bmdc.CreateCompatibleDC(&wdc);
+	bmp.CreateCompatibleBitmap(&wdc, rr.Width(), rr.Height());
+	
+	// selecting bitmap
+	HGDIOBJ olddc = bmdc.SelectObject(&bmp);
+
+	// copying pic from CWindowDC(&graph_signal)
+	bmdc.BitBlt(0, 0, r1.Width(), r1.Height(), &wdc, 0, 0, SRCCOPY);
+	
+	// filling space between pics
+	bmdc.FillSolidRect(
+		CRect({ 0,r1.Height(),r1.Width(),r1.Height() + offset }), 
+		graph_signal.getBgColor()
+	);
+	
+	// copying pic from CWindowDC(&graph_DFT)
+	bmdc.BitBlt(0, r1.Height() + offset, r2.Width(), r2.Height(), &CWindowDC(&graph_DFT), 0, 0, SRCCOPY);
+	
+	// dc restoring
+	bmdc.SelectObject(olddc);
+
+
+	// creating file dialog
+	CFileDialog dlg(FALSE, _T(".bmp"), L"График ДПФ.bmp", OFN_OVERWRITEPROMPT,
+		L"BMP Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png| GIF Files(*.gif)"
+		L"|*.gif| JPG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||");
+	dlg.DoModal();	// show the dlg
+
+	// getting file path
+	CString path = dlg.GetOFN().lpstrFile;
+
+	// find the last dot in the path
+	short i = path.ReverseFind(L'.');
+
+	// file extension
+	CString extension;	
+	if (i == -1) {
+		// there is no dot
+		path += ".bmp";			// default
+		extension = _T(".bmp");	// default
+	} else {					
+		// calculating lenght of the 
+		// path after last dot
+		i = path.GetLength() - i;
+
+		// slicing the path string to get extension
+		extension = path.Right(i);
+
+		// lowering the extension (from ".BMP" to ".bmp", etc)
+		extension.MakeLower();
+	}
+	// Creating CImage according to the bitmap 'bmp'
+	CImage img;
+	img.Attach(HBITMAP(bmp));
+
+	HRESULT saving;	// place for the error code
+
+	// switch-calse like block (choosing the file format)
+	if (extension == _T(".jpg")) {
+		saving = img.Save(path, ImageFormatJPEG);
+	} else if (extension == _T(".png")) {
+		saving = img.Save(path, ImageFormatPNG);
+	} else if (extension == _T(".gif")) {
+		saving = img.Save(path, ImageFormatGIF);
+	} else if (extension == _T(".bmp")) {
+		saving = img.Save(path, ImageFormatBMP);
+	} else {	// default
+		// not found correct img formats
+		// add ".bmp" to the end of path
+		//		file.myexten -> file.myexten.bmp
+		// to avoid mistakes with replacing extension
+		path += ".bmp";
+		saving = img.Save(path, ImageFormatBMP);
+	}
+	if (FAILED(saving)) {	// errors detected
+		// tell to user
+		AfxMessageBox(_T("При сохранении файла что-то пошло не так"), MB_OK | MB_ICONERROR);
 	}
 }
 
@@ -435,4 +496,13 @@ void Calculator::OnTimer(UINT_PTR nIDEvent) {
 		}
 	}
 	CDialogEx::OnTimer(nIDEvent);	// base timer processing
+}
+
+void Calculator::OnSysCommand(UINT nID, LPARAM lParam) {
+	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+	if (nID == IDD_Calculator) {
+		OnBnClickedButtonSaveGr();
+	} else {
+		CDialogEx::OnSysCommand(nID, lParam);
+	}
 }
