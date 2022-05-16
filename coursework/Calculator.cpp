@@ -452,6 +452,9 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	if (rs.PtInRect(p)) {
 		// move the point
 		p.Offset(-rs.left, -rs.top);
+
+		//
+		rs = { 0,0,rs.Width(),rs.Height() };
 		// coord back conversion
 		auto dot = graph_signal.dotToCoords(p.x, p.y, rs);
 		// format string according to scale type
@@ -463,6 +466,7 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 		}
 	} else	if (rd.PtInRect(p)) {	//same but with 2nd graph
 		p.Offset(-rd.left, -rd.top);
+		rd = { 0,0,rd.Width(),rd.Height() };
 		auto dot = graph_DFT.dotToCoords(p.x, p.y, rd);
 		if (!cb_is_dft_log.GetCheck() == 1) {
 			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
