@@ -452,8 +452,7 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	if (rs.PtInRect(p)) {
 		// move the point
 		p.Offset(-rs.left, -rs.top);
-
-		//
+		// rect shifting
 		rs = { 0,0,rs.Width(),rs.Height() };
 		// coord back conversion
 		auto dot = graph_signal.dotToCoords(p.x, p.y, rs);
