@@ -56,6 +56,9 @@ BOOL Calculator::OnInitDialog() {
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
 
+	// turn animation on
+	cb_anim.SetCheck(1);
+
 	// find element
 	CWnd* p = GetDlgItem(IDC_STATIC_signal);
 	//set default text
