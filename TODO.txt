@@ -1,3 +1,4 @@
 * change buttons from "OK" to "Закрыть"
 * change datatypes in back conv to and graph
   drawing to double to solve the "inf" problem
+* add calculation step to reset function
