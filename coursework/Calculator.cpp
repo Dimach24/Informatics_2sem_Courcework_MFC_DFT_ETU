@@ -53,7 +53,6 @@ BOOL Calculator::OnInitDialog() {
 	edit_y_dft_f.SubclassDlgItem(IDC_EDIT_yscale_from2, this);
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
-	slider_step.SetPos(3);
 
 	// find element
 	CWnd* p = GetDlgItem(IDC_STATIC_signal);
@@ -281,6 +280,7 @@ void Calculator::ResetInputData() {
 	edit_y_dft_t.SetWindowTextW(_T("1.5"));
 	cb_is_dft_log.SetCheck(0);
 	cb_is_log.SetCheck(0);
+	slider_step.SetPos(3);
 }
 
 void Calculator::OnBnClickedButtonSaveGr() {
