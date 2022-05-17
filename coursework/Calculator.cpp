@@ -51,6 +51,8 @@ BOOL Calculator::OnInitDialog() {
 	edit_y_t.SubclassDlgItem(IDC_EDIT_yscale_to, this);
 	edit_y_dft_t.SubclassDlgItem(IDC_EDIT_yscale_to2, this);
 	edit_y_dft_f.SubclassDlgItem(IDC_EDIT_yscale_from2, this);
+
+	// setting range of the slider
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
 
