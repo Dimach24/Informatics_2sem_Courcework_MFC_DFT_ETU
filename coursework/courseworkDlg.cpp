@@ -51,7 +51,7 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX) { // call constructor of the ba
 BOOL CAboutDlg::OnInitDialog() {
 	// set the title, commit index - the index of 
 	// the last git commit (defined in 'SomeDefinitions.h')
-	SetWindowText(L"Курсовая. Версия: " __COURSE__VERSION L"-" __COURSE_LAST_COMMIT_INDEX);
+	SetWindowText(L"Курсовая. Версия: " __COURSE_VERSION L"-" __COURSE_LAST_COMMIT_INDEX);
 	return 0;
 }
 
@@ -101,7 +101,7 @@ END_MESSAGE_MAP()
 BOOL CcourseworkDlg::OnInitDialog() {
 	CDialogEx::OnInitDialog();	// base OnInit
 	// set title
-	SetWindowText(_T("Курсовая - Чаминов Д. А. гр. 1183 " __COURSE__VERSION));
+	SetWindowText(_T("Курсовая - Чаминов Д. А. гр. 1183 " __COURSE_VERSION));
 
 	// IDM_ABOUTBOX должен быть в пределах системной команды.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
