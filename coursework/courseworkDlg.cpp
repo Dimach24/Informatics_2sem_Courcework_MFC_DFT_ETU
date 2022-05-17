@@ -51,7 +51,7 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX) { // call constructor of the ba
 BOOL CAboutDlg::OnInitDialog() {
 	// set the title, commit index - the index of 
 	// the last git commit (defined in 'SomeDefinitions.h')
-	SetWindowText(_T("О программе. Номер последние изменения: " __COURSE_LAST_COMMIT_INDEX));
+	SetWindowText(L"Курсовая. Версия: " __COURSE__VERSION L"-" __COURSE_LAST_COMMIT_INDEX);
 	return 0;
 }
 
