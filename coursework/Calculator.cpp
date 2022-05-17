@@ -463,9 +463,9 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 		auto dot = graph_signal.dotToCoords(p.x, p.y, rs);
 		// format string according to scale type
 		if (!cb_is_log.GetCheck() == 1) {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
+			s.Format(L"x:%.4g; y:%.4g", dot.first, dot.second);
 		} else {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10, dot.second));
+			s.Format(L"x:%.4g; y:%.4g", dot.first, pow(10, dot.second));
 
 		}
 	} else	if (rd.PtInRect(p)) {	//same but with 2nd graph
@@ -473,9 +473,9 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 		rd = { 0,0,rd.Width(),rd.Height() };
 		auto dot = graph_DFT.dotToCoords(p.x, p.y, rd);
 		if (!cb_is_dft_log.GetCheck() == 1) {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
+			s.Format(L"x:%.4g; y:%.4g", dot.first, dot.second);
 		} else {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10, dot.second));
+			s.Format(L"x:%.4g; y:%.4g", dot.first, pow(10, dot.second));
 
 		}
 	}//else{;}

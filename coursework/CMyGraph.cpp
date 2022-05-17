@@ -7,12 +7,12 @@
 // for run0time data
 IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 
-std::pair<float, float> CMyGraph::dotToCoords(int wx, int wy, CRect r) {
+std::pair<double, double> CMyGraph::dotToCoords(int wx, int wy, CRect r) {
 	// rect shifting to get the graph area
 	r.bottom -= shift.y;
 	r.left += shift.x;
 
-	float x,y;
+	double x,y;
 	// moving axis to ↑→ and shifting to the zero (in pixels)
 	x = wx - r.left;
 	y = r.bottom - wy;
