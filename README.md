@@ -22,4 +22,4 @@ I hope that was useful :)
 
 --
 
-Dmeatry Chaminov - student of the Faculty of Radio Engineering group 1183 SPbETU "LETI"
+Dmeatry Chaminov - student of the group 1183 of Faculty of Radio Engineering  SPbETU "LETI"

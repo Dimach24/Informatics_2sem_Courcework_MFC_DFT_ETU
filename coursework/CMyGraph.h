@@ -184,8 +184,8 @@ public:
 	/// <param name="wx">x coord in the elements coords</param>
 	/// <param name="wy">y coord in the elements coords</param>
 	/// <param name="rect">rectangular border of the drawing region (of this element)</param>
-	/// <returns>pair of float - real (math) coords</returns>
-	std::pair<float, float> dotToCoords(int wx, int wy, CRect rect);
+	/// <returns>pair of double - real (math) coords</returns>
+	std::pair<double, double> dotToCoords(int wx, int wy, CRect rect);
 
 	/// <summary>
 	/// Direct conversion real (math) to element (in pixels) coords

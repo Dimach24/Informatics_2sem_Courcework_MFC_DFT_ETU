@@ -51,9 +51,13 @@ BOOL Calculator::OnInitDialog() {
 	edit_y_t.SubclassDlgItem(IDC_EDIT_yscale_to, this);
 	edit_y_dft_t.SubclassDlgItem(IDC_EDIT_yscale_to2, this);
 	edit_y_dft_f.SubclassDlgItem(IDC_EDIT_yscale_from2, this);
+
+	// setting range of the slider
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
-	slider_step.SetPos(3);
+
+	// turn animation on
+	cb_anim.SetCheck(1);
 
 	// find element
 	CWnd* p = GetDlgItem(IDC_STATIC_signal);
@@ -278,9 +282,10 @@ void Calculator::ResetInputData() {
 	edit_y_f.SetWindowTextW(_T("-1.5"));
 	edit_y_t.SetWindowTextW(_T("1.5"));
 	edit_y_dft_f.SetWindowTextW(_T("0"));
-	edit_y_dft_t.SetWindowTextW(_T("1.5"));
+	edit_y_dft_t.SetWindowTextW(_T("200"));
 	cb_is_dft_log.SetCheck(0);
 	cb_is_log.SetCheck(0);
+	slider_step.SetPos(3);
 }
 
 void Calculator::OnBnClickedButtonSaveGr() {
@@ -452,22 +457,25 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	if (rs.PtInRect(p)) {
 		// move the point
 		p.Offset(-rs.left, -rs.top);
+		// rect shifting
+		rs = { 0,0,rs.Width(),rs.Height() };
 		// coord back conversion
 		auto dot = graph_signal.dotToCoords(p.x, p.y, rs);
 		// format string according to scale type
 		if (!cb_is_log.GetCheck() == 1) {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
+			s.Format(L"x:%.4g; y:%.4g", dot.first, dot.second);
 		} else {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10, dot.second));
+			s.Format(L"x:%.4g; y:%.4g", dot.first, pow(10, dot.second));
 
 		}
 	} else	if (rd.PtInRect(p)) {	//same but with 2nd graph
 		p.Offset(-rd.left, -rd.top);
+		rd = { 0,0,rd.Width(),rd.Height() };
 		auto dot = graph_DFT.dotToCoords(p.x, p.y, rd);
 		if (!cb_is_dft_log.GetCheck() == 1) {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, dot.second);
+			s.Format(L"x:%.4g; y:%.4g", dot.first, dot.second);
 		} else {
-			s.Format(L"x:%.4f; y:%.4f", dot.first, pow(10, dot.second));
+			s.Format(L"x:%.4g; y:%.4g", dot.first, pow(10, dot.second));
 
 		}
 	}//else{;}

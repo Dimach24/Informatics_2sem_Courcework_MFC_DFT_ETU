@@ -7,7 +7,6 @@
 #include "afxdialogex.h"
 
 #include "Calculator.h"
-#include "SomeDefinitions.h"
 
 // definitions for the debug mode
 #ifdef _DEBUG
@@ -50,8 +49,15 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX) { // call constructor of the ba
 
 BOOL CAboutDlg::OnInitDialog() {
 	// set the title, commit index - the index of 
-	// the last git commit (defined in 'SomeDefinitions.h')
-	SetWindowText(_T("О программе. Номер последние изменения: " __COURSE_LAST_COMMIT_INDEX));
+	// the last git commit (defined in string table coursework.rc')
+	CString 
+		app_v, // app version
+		app_ci;	// last commit index
+	app_v.LoadStringW(IDS_VERSION);
+	app_ci.LoadStringW(IDS_COMMIT);
+	CString title;
+	title.Format(L"О программе. Версия: %s-%s", app_v, app_ci);
+	SetWindowText(title);
 	return 0;
 }
 
@@ -101,7 +107,10 @@ END_MESSAGE_MAP()
 BOOL CcourseworkDlg::OnInitDialog() {
 	CDialogEx::OnInitDialog();	// base OnInit
 	// set title
-	SetWindowText(_T("Курсовая - Чаминов Д. А. гр. 1183 " __COURSE__VERSION));
+	CString title;
+	title.LoadStringW(IDS_VERSION);
+	title.Format(L"Курсовая - Чаминов Д. А. гр. 1183 v.%s", title);
+	SetWindowText(title);
 
 	// IDM_ABOUTBOX должен быть в пределах системной команды.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);

@@ -7,6 +7,8 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_COURSEWORK_DIALOG           102
 #define IDS_STRING102                   102
+#define IDS_VERSION                     102
+#define IDS_COMMIT                      103
 #define IDD_Calculator                  104
 #define IDR_MAINFRAME                   128
 #define ID_LOGO_ICO                     133
@@ -47,7 +49,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1049
+#define _APS_NEXT_CONTROL_VALUE         1055
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif
