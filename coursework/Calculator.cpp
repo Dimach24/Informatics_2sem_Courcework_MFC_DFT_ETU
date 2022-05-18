@@ -282,7 +282,7 @@ void Calculator::ResetInputData() {
 	edit_y_f.SetWindowTextW(_T("-1.5"));
 	edit_y_t.SetWindowTextW(_T("1.5"));
 	edit_y_dft_f.SetWindowTextW(_T("0"));
-	edit_y_dft_t.SetWindowTextW(_T("1.5"));
+	edit_y_dft_t.SetWindowTextW(_T("200"));
 	cb_is_dft_log.SetCheck(0);
 	cb_is_log.SetCheck(0);
 	slider_step.SetPos(3);
