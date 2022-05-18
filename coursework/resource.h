@@ -7,6 +7,8 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_COURSEWORK_DIALOG           102
 #define IDS_STRING102                   102
+#define IDS_VERSION                     102
+#define IDS_COMMIT                      103
 #define IDD_Calculator                  104
 #define IDR_MAINFRAME                   128
 #define ID_LOGO_ICO                     133
