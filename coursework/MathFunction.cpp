@@ -187,12 +187,10 @@ DFTFunction::DFTFunction(SignalFunction* s) {
 	signal = s;		// asign the pointer to signal function 
 }
 
-double DFTFunction::f(double x) {
+double DFTFunction::f(int m) {
 #ifdef __DEBUG
 	assert(signal);	// must exist
 #endif
-	size_t m = x;	// number of the sample
-
 	// getting signal function samples 
 	std::vector<double> samples = signal->getData();
 
@@ -220,15 +218,16 @@ void DFTFunction::calculate() {
 	points.resize(samples_amount);
 
 	// for each point with the step
-	/*for (size_t i = 0; i < points.size(); i++) {
+	for (size_t i = 0; i < samples_amount; i++) {
 		// fixme, daddy : D.mon24 22-05-19 22:20
-		double x = start + step * i;	// calculating x of the point
-		double y = f(i);				// calculating y of the point
+		double x = samples_step*i/samples_amount;	
+										// calculating f=Fд*k/N 
+		double y = f(i);				// calculating y of the point abs(DFT)
 		if (is_log) {					// if log scale enabled
 			y = log10(abs(y));			// calculate log
 		}
 		points[i] = coordsToDot(x, y);	// coord conversion
-	}*/
+	}
 	is_calculated = true;				// mark points as relevant
 }
 

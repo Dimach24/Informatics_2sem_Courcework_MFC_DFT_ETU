@@ -126,7 +126,7 @@ protected:
 	/// </summary>
 	/// <param name="x">number of the sample (is double cos of overriding)</param>
 	/// <returns>|Xk|</returns>
-	double f(double x) override;
+	double f(int m);
 
 	// a pointer to a signal function
 	SignalFunction* signal;
