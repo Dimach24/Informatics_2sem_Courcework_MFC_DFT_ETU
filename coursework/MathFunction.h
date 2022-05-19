@@ -27,6 +27,7 @@ protected:
 	// calculating step (in math coords)
 	double step = 1;
 
+
 	// indicates if axis is log
 	bool is_log;
 
@@ -82,9 +83,12 @@ class SignalFunction : public MathFunction
 protected:
 	// parameters of the signal function
 	double a, m, f_;
+	// samples amount
+	double samples_amount = 10;
+	static const double samples_step;
 public:
 	// vector of the dots for DFT
-	std::vector<double> data;
+	std::vector<double> samples;
 protected:
 	/// <summary>
 	/// Calculates x(t)=a*sin(x*(m*x+f))

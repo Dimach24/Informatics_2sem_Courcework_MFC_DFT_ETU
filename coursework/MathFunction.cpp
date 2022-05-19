@@ -118,6 +118,8 @@ void MathFunction::calculate() {
 	is_calculated = true;				// set calculated
 }
 
+const double SignalFunction::samples_step = 1e-7;
+
 double SignalFunction::f(double t) {
 	// signal function ↓
 	return a * sin(2 * PI * (f_ + m * t) * t);
@@ -154,7 +156,7 @@ const std::vector<double>& SignalFunction::getData() {
 	if (!is_calculated) {
 		calculate();	// update data
 	}
-	return data;		// return it
+	return samples;		// return it
 }
 
 void SignalFunction::calculate() {
@@ -163,19 +165,22 @@ void SignalFunction::calculate() {
 	double stop = min(scale.x_to, to);
 
 	// memory reserving for data and points
-	points.resize(ceil((stop - start) / step));
-	data.resize(points.size());
-
-	for (size_t i = 0; i < points.size(); i++) {
-		double x = start + step * i;	// calculating x of the point
+	points.resize(samples_amount + ceil((stop - start - samples_amount*samples_step) / step));
+	samples.resize(samples_amount);
+	double x = start;
+	for (size_t i = 0; x < stop; i++) {
 		double y = f(x);				// calculating y of the point
-		data[i] = y;					// saving the y value
+		if (i < samples_amount) {
+			samples[i] = y;					// saving the y value
+		}
 		if (is_log) {					// if log scale enabled
 			y = log10(abs(y));			// calculate log
 		}
 		points[i] = coordsToDot(x, y);	// coord conversion
+		x += i < samples_amount ? samples_step : step;
 	}
 	is_calculated = true;				// mark as calculated
+
 }
 
 DFTFunction::DFTFunction(SignalFunction* s) {
@@ -189,10 +194,10 @@ double DFTFunction::f(double x) {
 	size_t m = x;	// number of the sample
 
 	// getting signal function samples 
-	std::vector<double> data = signal->getData();
+	std::vector<double> samples = signal->getData();
 
 	// amount of samples
-	size_t N = data.size();
+	size_t N = samples.size();
 
 	// real and imaginary parts
 	double re = 0, im = 0;
@@ -200,8 +205,8 @@ double DFTFunction::f(double x) {
 	// for each sample
 	for (size_t n = 0; n < N; n++) {
 		// summing
-		re += data[n] * cos(2 * PI * m * n / N);
-		im += data[n] * sin(-2 * PI * m * n / N);
+		re += samples[n] * cos(2 * PI * m * n / N);
+		im += samples[n] * sin(-2 * PI * m * n / N);
 	}
 	// return the abs(X)
 	return sqrt(re * re + im * im);
@@ -212,17 +217,18 @@ void DFTFunction::calculate() {
 	double start = max(scale.x_from, from);
 	double stop = min(scale.x_to, to);
 	// memory reserving for points
-	points.resize(ceil((stop - start) / step));
+	points.resize(samples_amount);
 
 	// for each point with the step
-	for (size_t i = 0; i < points.size(); i++) {
+	/*for (size_t i = 0; i < points.size(); i++) {
+		// fixme, daddy : D.mon24 22-05-19 22:20
 		double x = start + step * i;	// calculating x of the point
 		double y = f(i);				// calculating y of the point
 		if (is_log) {					// if log scale enabled
 			y = log10(abs(y));			// calculate log
 		}
 		points[i] = coordsToDot(x, y);	// coord conversion
-	}
+	}*/
 	is_calculated = true;				// mark points as relevant
 }
 
