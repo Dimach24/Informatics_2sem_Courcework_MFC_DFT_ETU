@@ -79,10 +79,10 @@ BOOL Calculator::OnInitDialog() {
 	// and add it to graph drawer
 	signal.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_signal.functions.push_back(&signal);
-	graph_signal.hist = false;
+	graph_signal.is_hist = false;
 	dft.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_DFT.functions.push_back(&dft);
-	graph_DFT.hist = true;
+	graph_DFT.is_hist = true;
 
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != nullptr) {
@@ -177,9 +177,9 @@ void Calculator::UpdateCalculatorParams() {
 		}
 
 		// declare rectangular
-		RECT r;
+		CRect r;
 		// write client region to it
-		graph_signal.GetClientRect(&r);
+		graph_signal.GetClientRect(r);
 
 		// get step (amount of pixels between two nearest points along the abscissa axis)
 		int step = slider_step.GetPos();
@@ -188,11 +188,13 @@ void Calculator::UpdateCalculatorParams() {
 		graph_signal.setStep(step);
 		graph_DFT.setStep(step);
 		graph_signal.setRect(r);
-		graph_DFT.GetClientRect(&r);
+		graph_DFT.GetClientRect(r);
 		graph_DFT.setRect(r);
 
-		dft.set_samples_amount(slider_samples.GetPos());
-		signal.set_samples_amount(slider_samples.GetPos());
+		int N = slider_samples.GetPos();
+		dft.set_samples_amount(N);
+		signal.set_samples_amount(N);
+		graph_DFT.setColumnsCount(N);
 
 		// set log scale
 		graph_signal.setLog(cb_is_log.GetCheck() == 1);
@@ -209,7 +211,7 @@ void Calculator::UpdateCalculatorParams() {
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) {
 			CString signal;
-			signal.Format(L"x(t) = %.2F*sin(2π(%.2F + %.2Ft)*t)", a, f, m);
+			signal.Format(L"x(t) = %.2g*sin(2π(%.2g + %.2gt)*t)", a, f, m);
 			p->SetWindowTextW(signal);
 		}
 
