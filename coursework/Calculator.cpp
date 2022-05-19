@@ -162,16 +162,18 @@ void Calculator::UpdateCalculatorParams() {
 			// set scale
 			graph_signal.setScale(x_from, x_to, y_from, y_to);
 		}
-
+		double 
+			x_from_dft= 0, 
+			x_to_dft=1e7;
 		// same but with DFT
 		if (cb_is_dft_log.GetCheck() == 1) {
 			if (y_from2 < 0) {
 				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
 				return;
 			}
-			graph_DFT.setScale(x_from, x_to, log10(y_from2), log10(y_to2));
+			graph_DFT.setScale(x_from_dft, x_to_dft, log10(y_from2), log10(y_to2));
 		} else {
-			graph_DFT.setScale(x_from, x_to, y_from2, y_to2);
+			graph_DFT.setScale(x_from_dft, x_to_dft, y_from2, y_to2);
 		}
 
 		// declare rectangular
@@ -188,6 +190,9 @@ void Calculator::UpdateCalculatorParams() {
 		graph_signal.setRect(r);
 		graph_DFT.GetClientRect(&r);
 		graph_DFT.setRect(r);
+
+		dft.set_samples_amount(slider_samples.GetPos());
+		signal.set_samples_amount(slider_samples.GetPos());
 
 		// set log scale
 		graph_signal.setLog(cb_is_log.GetCheck() == 1);
@@ -282,16 +287,16 @@ void Calculator::ResetColorPickers() {
 void Calculator::ResetInputData() {
 	// sets default input data
 	edit_a.SetWindowTextW(_T("1"));
-	edit_m.SetWindowTextW(_T("0"));
-	edit_f.SetWindowTextW(_T("0.1592"));
-	edit_x_f.SetWindowTextW(_T("-6.2832"));
-	edit_x_t.SetWindowTextW(_T("6.2832"));
+	edit_m.SetWindowTextW(_T("1e7"));
+	edit_f.SetWindowTextW(_T("0.2e7"));
+	edit_x_f.SetWindowTextW(_T("0"));
+	edit_x_t.SetWindowTextW(_T("1e-4"));
 	edit_y_f.SetWindowTextW(_T("-1.5"));
 	edit_y_t.SetWindowTextW(_T("1.5"));
-	edit_y_dft_f.SetWindowTextW(_T("0"));
-	edit_y_dft_t.SetWindowTextW(_T("200"));
+	edit_y_dft_f.SetWindowTextW(_T("1e-2"));
+	edit_y_dft_t.SetWindowTextW(_T("1e4"));
 	text_slider_samples.SetWindowTextW(L"Число отсчётов: 500");
-	cb_is_dft_log.SetCheck(0);
+	cb_is_dft_log.SetCheck(1);
 	cb_is_log.SetCheck(0);
 	slider_step.SetPos(3);
 	slider_samples.SetPos(500);

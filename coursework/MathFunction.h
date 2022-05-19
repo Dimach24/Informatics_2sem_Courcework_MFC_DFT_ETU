@@ -84,7 +84,7 @@ protected:
 	// parameters of the signal function
 	double a, m, f_;
 	// samples amount
-	double samples_amount = 10;
+	double samples_amount = 100;
 	static const double samples_step;
 public:
 	// vector of the dots for DFT
@@ -101,7 +101,7 @@ public:
 	bool set_a(double a);
 	bool set_m(double m);
 	bool set_f(double f);
-
+	bool set_samples_amount(size_t N);
 	// dots vector getter
 	const std::vector<double>& getData();
 

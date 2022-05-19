@@ -151,6 +151,13 @@ bool SignalFunction::set_f(double f) {
 	return true;
 }
 
+bool SignalFunction::set_samples_amount(size_t N) {
+	if (samples_amount == N) { return false; }
+	setNotCalculated();
+	samples_amount=N;
+	return true;
+}
+
 const std::vector<double>& SignalFunction::getData() {
 	// if data is not relevant
 	if (!is_calculated) {
@@ -163,12 +170,14 @@ void SignalFunction::calculate() {
 	// calculating scope calculating
 	double start = max(scale.x_from, from);
 	double stop = min(scale.x_to, to);
-
+	if (step < samples_step) {
+		step = samples_step;
+	}
 	// memory reserving for data and points
 	points.resize(samples_amount + ceil((stop - start - samples_amount*samples_step) / step));
 	samples.resize(samples_amount);
 	double x = start;
-	for (size_t i = 0; x < stop; i++) {
+	for (size_t i = 0; i<points.size(); i++) {
 		double y = f(x);				// calculating y of the point
 		if (i < samples_amount) {
 			samples[i] = y;					// saving the y value
@@ -220,7 +229,7 @@ void DFTFunction::calculate() {
 	// for each point with the step
 	for (size_t i = 0; i < samples_amount; i++) {
 		// fixme, daddy : D.mon24 22-05-19 22:20
-		double x = samples_step*i/samples_amount;	
+		double x = 1./samples_step*i/samples_amount;	
 										// calculating f=Fд*k/N 
 		double y = f(i);				// calculating y of the point abs(DFT)
 		if (is_log) {					// if log scale enabled
