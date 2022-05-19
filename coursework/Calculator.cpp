@@ -39,6 +39,8 @@ BOOL Calculator::OnInitDialog() {
 	signal_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_SIGNAL, this);
 	dft_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
+	slider_samples.SubclassDlgItem(IDC_SLIDER_SAMPLES, this);
+	text_slider_samples.SubclassDlgItem(IDC_STATIC_SAMPLES, this);
 	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
 	cb_is_dft_log.SubclassDlgItem(IDC_CHECK_is_log_scale2, this);
 	cb_anim.SubclassDlgItem(IDC_CHECK_ANIM, this);
@@ -55,6 +57,8 @@ BOOL Calculator::OnInitDialog() {
 	// setting range of the slider
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
+	slider_samples.SetRangeMin(100);
+	slider_samples.SetRangeMax(1000);
 
 	// turn animation on
 	cb_anim.SetCheck(1);
@@ -215,7 +219,7 @@ void Calculator::UpdateCalculatorParams() {
 
 void Calculator::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);								// base data exchange
-	// controls data exchange
+																// controls data exchange
 	DDX_Control(pDX, IDC_STATIC_graph, graph_signal);
 	DDX_Control(pDX, IDC_SLIDER_STEP, slider_step);
 	DDX_Control(pDX, IDC_CHECK_is_log_scale, cb_is_log);
@@ -231,6 +235,8 @@ void Calculator::DoDataExchange(CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_EDIT_yscale_from2, edit_y_dft_f);
 	DDX_Control(pDX, IDC_EDIT_yscale_to2, edit_y_dft_t);
 	DDX_Control(pDX, IDC_CHECK_ANIM, cb_anim);
+	DDX_Control(pDX, IDC_SLIDER_SAMPLES, slider_samples);
+	DDX_Control(pDX, IDC_STATIC_SAMPLES, text_slider_samples);
 }
 
 
@@ -244,6 +250,7 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_WM_MOUSEMOVE()
 	ON_WM_TIMER()
 	ON_WM_SYSCOMMAND()
+	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -283,9 +290,11 @@ void Calculator::ResetInputData() {
 	edit_y_t.SetWindowTextW(_T("1.5"));
 	edit_y_dft_f.SetWindowTextW(_T("0"));
 	edit_y_dft_t.SetWindowTextW(_T("200"));
+	text_slider_samples.SetWindowTextW(L"Число отсчётов: 500");
 	cb_is_dft_log.SetCheck(0);
 	cb_is_log.SetCheck(0);
 	slider_step.SetPos(3);
+	slider_samples.SetPos(500);
 }
 
 void Calculator::OnBnClickedButtonSaveGr() {
@@ -513,4 +522,15 @@ void Calculator::OnSysCommand(UINT nID, LPARAM lParam) {
 	} else {
 		CDialogEx::OnSysCommand(nID, lParam);
 	}
+}
+
+
+void Calculator::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
+	if (pScrollBar == reinterpret_cast<CScrollBar*>(&slider_samples)) {
+		CString str;
+		str.Format(L"Число отсчётов: %d", slider_samples.GetPos());
+		text_slider_samples.SetWindowTextW(str);
+	}
+
+	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
