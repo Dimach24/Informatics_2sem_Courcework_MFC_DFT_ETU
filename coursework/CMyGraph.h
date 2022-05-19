@@ -123,7 +123,12 @@ public:
 	/// <summary>
 	/// indicates if it is histogram
 	/// </summary>
-	bool hist = false;
+	bool is_hist = false;
+	
+	/// <summary>
+	/// hist column width
+	/// </summary>
+	int hist_width = 1;
 
 	/// <summary>
 	///  calculating step in pixels
@@ -174,6 +179,7 @@ public:
 	void setNotCalculated();
 	void setBgColor(COLORREF col);
 	void setAnimState(bool state);
+	void setColumnsCount(int N);
 
 	// getter
 	COLORREF getBgColor();

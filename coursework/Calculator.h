@@ -64,7 +64,9 @@ protected:
 
 	// Controls:
 
+	CSliderCtrl slider_samples;
 	CSliderCtrl slider_step;
+
 	CEdit edit_a;
 	CEdit edit_m;
 	CEdit edit_f;
@@ -74,13 +76,17 @@ protected:
 	CEdit edit_y_t;
 	CEdit edit_y_dft_f;
 	CEdit edit_y_dft_t;
+
 	CButton cb_is_dft_log;
 	CButton cb_is_log;
+	CButton cb_anim;
 
 	CMFCColorButton bg_cp;
 	CMFCColorButton signal_cp;
 	CMFCColorButton dft_cp;
-	CButton cb_anim;
+
+	// static text with samples amount
+	CStatic text_slider_samples;
 
 	// dialog id for building
 #ifdef AFX_DESIGN_TIME
@@ -113,4 +119,5 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 };
