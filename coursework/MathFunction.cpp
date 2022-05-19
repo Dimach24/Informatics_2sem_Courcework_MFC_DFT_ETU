@@ -183,7 +183,9 @@ DFTFunction::DFTFunction(SignalFunction* s) {
 }
 
 double DFTFunction::f(double x) {
+#ifdef __DEBUG
 	assert(signal);	// must exist
+#endif
 	size_t m = x;	// number of the sample
 
 	// getting signal function samples 
