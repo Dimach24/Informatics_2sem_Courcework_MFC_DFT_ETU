@@ -54,9 +54,11 @@ TEST(TestCaseName, TestName) {
   std::vector<double> true_dft;
   std::vector<double> calculated_dft;
   
-  for (int i = 0; i < 100; i++) {
-	  readTheTestLine(fin, signal, 100);
-	  readTheTestLine(fin, true_dft, 100);
+  size_t N=1000;
+  size_t tests = 100;
+  for (int i = 0; i < tests; i++) {
+	  readTheTestLine(fin, signal, N);
+	  readTheTestLine(fin, true_dft, N);
 	  genDft(signal, calculated_dft);
 	  check(true_dft, calculated_dft);
   }
