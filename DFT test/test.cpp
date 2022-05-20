@@ -8,7 +8,7 @@ void genTest() {
 	system("python \"./the standard.py\"");
 }
 
-double dft(const std::vector<double>& samples,int m) {
+double dft(const std::vector<double>& samples, int m) {
 	size_t N = samples.size();
 
 	// real and imaginary parts
@@ -42,26 +42,26 @@ void genDft(const std::vector<double>& signal, std::vector<double>& out) {
 void check(const std::vector<double>& a, const std::vector<double>& b) {
 	for (int i = 0; i < a.size(); i++) {
 		double	first = round(a[i] * 1e7) * 1e-7,
-				second = round(b[i] * 1e7) * 1e-7;
+			second = round(b[i] * 1e7) * 1e-7;
 		EXPECT_DOUBLE_EQ(first, second);
 	}
 }
 
-TEST(TestCaseName, TestName) {
-  genTest();
-  std::ifstream fin("./test.txt");
-  std::vector<double> signal;
-  std::vector<double> true_dft;
-  std::vector<double> calculated_dft;
-  
-  size_t N=1000;
-  size_t tests = 100;
-  for (int i = 0; i < tests; i++) {
-	  readTheTestLine(fin, signal, N);
-	  readTheTestLine(fin, true_dft, N);
-	  genDft(signal, calculated_dft);
-	  check(true_dft, calculated_dft);
-  }
+TEST(DFT_test, RandomTest) {
+	genTest();
+	std::ifstream fin("./test.txt");
+	std::vector<double> signal;
+	std::vector<double> true_dft;
+	std::vector<double> calculated_dft;
 
-  fin.close();
+	size_t N = 1000;
+	size_t tests = 100;
+	for (int i = 0; i < tests; i++) {
+		readTheTestLine(fin, signal, N);
+		readTheTestLine(fin, true_dft, N);
+		genDft(signal, calculated_dft);
+		check(true_dft, calculated_dft);
+	}
+
+	fin.close();
 }
