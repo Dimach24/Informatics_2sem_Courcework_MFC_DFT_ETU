@@ -145,6 +145,13 @@ void Calculator::UpdateCalculatorParams() {
 
 	// if there is no empty fields
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
+		
+		//coefs
+		f *= 1e7;
+		m *= 1e7;
+		x_from *= 1e-4;
+		x_to *= 1e-4;
+
 		// set signal params
 		signal.set_a(a);	signal.set_f(f);	signal.set_m(m);
 		dft.set_a(a);		dft.set_f(f);		dft.set_m(m);
@@ -289,14 +296,14 @@ void Calculator::ResetColorPickers() {
 void Calculator::ResetInputData() {
 	// sets default input data
 	edit_a.SetWindowTextW(_T("1"));
-	edit_m.SetWindowTextW(_T("1e7"));
-	edit_f.SetWindowTextW(_T("0.2e7"));
+	edit_m.SetWindowTextW(_T("1"));
+	edit_f.SetWindowTextW(_T("0.2"));
 	edit_x_f.SetWindowTextW(_T("0"));
-	edit_x_t.SetWindowTextW(_T("1e-4"));
+	edit_x_t.SetWindowTextW(_T("1"));
 	edit_y_f.SetWindowTextW(_T("-1.5"));
 	edit_y_t.SetWindowTextW(_T("1.5"));
-	edit_y_dft_f.SetWindowTextW(_T("1e-2"));
-	edit_y_dft_t.SetWindowTextW(_T("1e4"));
+	edit_y_dft_f.SetWindowTextW(_T("0.01"));
+	edit_y_dft_t.SetWindowTextW(_T("10000"));
 	text_slider_samples.SetWindowTextW(L"Число отсчётов: 500");
 	cb_is_dft_log.SetCheck(1);
 	cb_is_log.SetCheck(0);
