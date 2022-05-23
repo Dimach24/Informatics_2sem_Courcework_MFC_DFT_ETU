@@ -2,9 +2,9 @@
 #include "pch.h"
 #include "coursework.h"
 #include "CMyGraph.h"
+#include "BeautyLib.h"
 
-
-// for run0time data
+// for run-time data
 IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 
 std::pair<double, double> CMyGraph::dotToCoords(int wx, int wy, CRect r) {
@@ -120,9 +120,8 @@ void CMyGraph::drawBg(CDC& dc) {
 		// default text
 		CString st = L"Что-то пошло не так!";
 
-		// make the string consist of x coord rounded to 4 
-		// significant digits
-		st.Format(L"%.4g", the_x);
+		// get exp (if needed) notation of the number
+		st = beautifulRepresentation(the_x, 4, 2);
 
 		// set text align
 		dc.SetTextAlign(TA_CENTER);
@@ -142,7 +141,7 @@ void CMyGraph::drawBg(CDC& dc) {
 			dc.LineTo(sp);
 			sp.Offset(-40, -1);
 			CString st = L"Что-то пошло не так!";
-			st.Format(L"%.4g", the_y);
+			st = beautifulRepresentation(the_y, 3, 2);
 			dc.SetTextAlign(TA_TOP);
 			dc.TextOutW(sp.x, sp.y, st);
 		}

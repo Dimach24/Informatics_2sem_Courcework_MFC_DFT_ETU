@@ -152,9 +152,13 @@ bool SignalFunction::set_f(double f) {
 }
 
 bool SignalFunction::set_samples_amount(size_t N) {
+	// check if not changed
 	if (samples_amount == N) { return false; }
+	// mark as irrelevant
 	setNotCalculated();
-	samples_amount=N;
+	// set
+	samples_amount = N;
+	// return that there was difference
 	return true;
 }
 
@@ -167,33 +171,53 @@ const std::vector<double>& SignalFunction::getData() {
 }
 
 void SignalFunction::calculate() {
-	// calculating scope calculating
+	// calculating scope of the calculating
 	double start = max(scale.x_from, from);
 	double stop = min(scale.x_to, to);
-	if (step < samples_step) {
-		step = samples_step;
-	}
-	// memory reserving for data and points
-	points.resize(samples_amount + ceil((stop - start - samples_amount*samples_step) / step));
+
+
+	// memory reserving for the samples data 
 	samples.resize(samples_amount);
-	double x = start;
-	for (size_t i = 0; i<points.size(); i++) {
-		double y = f(x);				// calculating y of the point
-		if (i < samples_amount) {
-			samples[i] = y;					// saving the y value
-		}
-		if (is_log) {					// if log scale enabled
-			y = log10(abs(y));			// calculate log
-		}
-		points[i] = coordsToDot(x, y);	// coord conversion
-		x += i < samples_amount ? samples_step : step;
+
+	// repeat for each i = 0, 1, ..., samples_amount
+	for (int i = 0; i < samples_amount; i++) {
+		// calculate x (like an arithmetic progression)
+		// calculate f(x)
+		// write f(x) to the samples vector
+		samples[i] = f(i * samples_step + start);
 	}
-	is_calculated = true;				// mark as calculated
+
+	// amount of dots on the graph calculation
+	int N = ceil((stop - start) / step);
+
+	// memory reserving for the points vector
+	points.resize(N);
+
+	// repeat for each i = 0, 1, ..., N
+	for (int i = 0; i < N; i++) {
+
+		// calculate x (like an arithmetic progression)
+		double x = i * step + start;
+		// calculate f(x)
+		double y = f(x);
+
+		// use logarythm if needed
+		if (is_log) { y = log10(y); }
+
+		// converse coords and write 
+		// the point to the vector
+		points[i] = coordsToDot(x, y);
+	}
+
+
+	// mark as calculated
+	is_calculated = true;
 
 }
 
 DFTFunction::DFTFunction(SignalFunction* s) {
-	signal = s;		// asign the pointer to signal function 
+	// asign the pointer to signal function 
+	signal = s;
 }
 
 double DFTFunction::f(int m) {
@@ -229,8 +253,8 @@ void DFTFunction::calculate() {
 	// for each point with the step
 	for (size_t i = 0; i < samples_amount; i++) {
 		// fixme, daddy : D.mon24 22-05-19 22:20
-		double x = 1./samples_step*i/samples_amount;	
-										// calculating f=Fд*k/N 
+		double x = 1. / samples_step * i / samples_amount;
+		// calculating f=Fд*k/N 
 		double y = f(i);				// calculating y of the point abs(DFT)
 		if (is_log) {					// if log scale enabled
 			y = log10(abs(y));			// calculate log

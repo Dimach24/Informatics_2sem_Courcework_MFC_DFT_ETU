@@ -7,6 +7,7 @@
 #include <initguid.h>	// for guids
 #include <cassert>		// for asserts 
 #include <cmath>		// for math functions as log, pow, etc
+#include "BeautyLib.h"
 
 // guids for image codecs
 DEFINE_GUID(ImageFormatBMP, 0xb96b3cab, 0x0728, 0x11d3, 0x9d,
@@ -145,6 +146,13 @@ void Calculator::UpdateCalculatorParams() {
 
 	// if there is no empty fields
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
+		
+		//coefs
+		f *= 1e7;
+		m *= 1e7;
+		x_from *= 1e-4;
+		x_to *= 1e-4;
+
 		// set signal params
 		signal.set_a(a);	signal.set_f(f);	signal.set_m(m);
 		dft.set_a(a);		dft.set_f(f);		dft.set_m(m);
@@ -289,18 +297,18 @@ void Calculator::ResetColorPickers() {
 void Calculator::ResetInputData() {
 	// sets default input data
 	edit_a.SetWindowTextW(_T("1"));
-	edit_m.SetWindowTextW(_T("1e7"));
-	edit_f.SetWindowTextW(_T("0.2e7"));
+	edit_m.SetWindowTextW(_T("1"));
+	edit_f.SetWindowTextW(_T("0.2"));
 	edit_x_f.SetWindowTextW(_T("0"));
-	edit_x_t.SetWindowTextW(_T("1e-4"));
+	edit_x_t.SetWindowTextW(_T("1"));
 	edit_y_f.SetWindowTextW(_T("-1.5"));
 	edit_y_t.SetWindowTextW(_T("1.5"));
-	edit_y_dft_f.SetWindowTextW(_T("1e-2"));
-	edit_y_dft_t.SetWindowTextW(_T("1e4"));
+	edit_y_dft_f.SetWindowTextW(_T("0.01"));
+	edit_y_dft_t.SetWindowTextW(_T("10000"));
 	text_slider_samples.SetWindowTextW(L"Число отсчётов: 500");
 	cb_is_dft_log.SetCheck(1);
 	cb_is_log.SetCheck(0);
-	slider_step.SetPos(3);
+	slider_step.SetPos(1);
 	slider_samples.SetPos(500);
 }
 
@@ -479,20 +487,26 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 		auto dot = graph_signal.dotToCoords(p.x, p.y, rs);
 		// format string according to scale type
 		if (!cb_is_log.GetCheck() == 1) {
-			s.Format(L"x:%.4g; y:%.4g", dot.first, dot.second);
+			s.Format(L"x:%s; y:%s",
+				beautifulRepresentation(dot.first, 2,4),
+				beautifulRepresentation(dot.second, 2,4));
 		} else {
-			s.Format(L"x:%.4g; y:%.4g", dot.first, pow(10, dot.second));
-
+			s.Format(L"x:%s; y:%s",
+				beautifulRepresentation(dot.first, 2,4),
+				beautifulRepresentation(pow(10, dot.second), 2,4));
 		}
 	} else	if (rd.PtInRect(p)) {	//same but with 2nd graph
 		p.Offset(-rd.left, -rd.top);
 		rd = { 0,0,rd.Width(),rd.Height() };
 		auto dot = graph_DFT.dotToCoords(p.x, p.y, rd);
 		if (!cb_is_dft_log.GetCheck() == 1) {
-			s.Format(L"x:%.4g; y:%.4g", dot.first, dot.second);
+			s.Format(L"x:%s; y:%s", 
+				beautifulRepresentation(dot.first,2,4), 
+				beautifulRepresentation(dot.second,2,4));
 		} else {
-			s.Format(L"x:%.4g; y:%.4g", dot.first, pow(10, dot.second));
-
+			s.Format(L"x:%s; y:%s",
+				beautifulRepresentation(dot.first, 2,4),
+				beautifulRepresentation(pow(10, dot.second), 2,4));
 		}
 	}//else{;}
 
