@@ -152,9 +152,13 @@ bool SignalFunction::set_f(double f) {
 }
 
 bool SignalFunction::set_samples_amount(size_t N) {
+	// check if not changed
 	if (samples_amount == N) { return false; }
+	// mark as irrelevant
 	setNotCalculated();
-	samples_amount=N;
+	// set
+	samples_amount = N;
+	// return that there was difference
 	return true;
 }
 
@@ -174,7 +178,7 @@ void SignalFunction::calculate() {
 
 	// memory reserving for the samples data 
 	samples.resize(samples_amount);
-	
+
 	// repeat for each i = 0, 1, ..., samples_amount
 	for (int i = 0; i < samples_amount; i++) {
 		// calculate x (like an arithmetic progression)
@@ -204,16 +208,16 @@ void SignalFunction::calculate() {
 		// the point to the vector
 		points[i] = coordsToDot(x, y);
 	}
-	
-	
 
 
-	is_calculated = true;				// mark as calculated
+	// mark as calculated
+	is_calculated = true;
 
 }
 
 DFTFunction::DFTFunction(SignalFunction* s) {
-	signal = s;		// asign the pointer to signal function 
+	// asign the pointer to signal function 
+	signal = s;
 }
 
 double DFTFunction::f(int m) {
@@ -249,8 +253,8 @@ void DFTFunction::calculate() {
 	// for each point with the step
 	for (size_t i = 0; i < samples_amount; i++) {
 		// fixme, daddy : D.mon24 22-05-19 22:20
-		double x = 1./samples_step*i/samples_amount;	
-										// calculating f=Fд*k/N 
+		double x = 1. / samples_step * i / samples_amount;
+		// calculating f=Fд*k/N 
 		double y = f(i);				// calculating y of the point abs(DFT)
 		if (is_log) {					// if log scale enabled
 			y = log10(abs(y));			// calculate log
