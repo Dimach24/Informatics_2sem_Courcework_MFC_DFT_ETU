@@ -307,7 +307,7 @@ void Calculator::ResetInputData() {
 	text_slider_samples.SetWindowTextW(L"Число отсчётов: 500");
 	cb_is_dft_log.SetCheck(1);
 	cb_is_log.SetCheck(0);
-	slider_step.SetPos(3);
+	slider_step.SetPos(1);
 	slider_samples.SetPos(500);
 }
 

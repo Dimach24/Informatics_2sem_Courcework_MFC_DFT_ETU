@@ -6,7 +6,7 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="CAboutDlg::__unnamed_enum_0002_1">
+      <Enum Name="CAboutDlg::__unnamed_enum_0007_1">
         <TypeIdentifier>
           <NewMemberFileName>courseworkDlg.cpp</NewMemberFileName>
         </TypeIdentifier>
@@ -23,14 +23,14 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="Calculator::__unnamed_enum_0371_1">
+      <Enum Name="Calculator::__unnamed_enum_0002_1">
         <TypeIdentifier>
           <NewMemberFileName>Calculator.h</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>BCJAgAEAiAAAJQEoAJACAEICABAABAhCAgAEAAwAAEA=</HashCode>
+      <HashCode>FCJAgAEEiAAAJQEoAJACAEICABAABAhCAgAEAAwAgkA=</HashCode>
       <FileName>Calculator.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -40,19 +40,19 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Struct Name="CMyGraph::__unnamed_struct_028b_1">
+      <Struct Name="CMyGraph::__unnamed_struct_0004_1">
         <TypeIdentifier>
           <NewMemberFileName>CMyGraph.h</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
-      <Struct Name="CMyGraph::__unnamed_struct_028b_2">
+      <Struct Name="CMyGraph::__unnamed_struct_0004_2">
         <TypeIdentifier>
           <NewMemberFileName>CMyGraph.h</NewMemberFileName>
         </TypeIdentifier>
       </Struct>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AACACAABCECAQiBRAwIBAIgBLAUoAAAOAgCGIIAhAAA=</HashCode>
+      <HashCode>AICACAABCECAQiBRAwoBAIgBDAUoACAOAhCGIIAhAAA=</HashCode>
       <FileName>CMyGraph.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -62,7 +62,7 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Struct Name="MathFunction::__unnamed_struct_0372_1">
+      <Struct Name="MathFunction::__unnamed_struct_000b_1">
         <TypeIdentifier>
           <NewMemberFileName>MathFunction.h</NewMemberFileName>
         </TypeIdentifier>
@@ -76,12 +76,12 @@
   <Class Name="SignalFunction">
     <Position X="0.75" Y="8.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAQQAAAAAAAAAAAAAAAAIAAAAAgAAAQyAgAQAAAAAAA=</HashCode>
+      <HashCode>AAQQAAAAAAAAAAAAAAAEIAAAACgAAAQ6AgAAAAAAAAA=</HashCode>
       <FileName>MathFunction.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DFTFunction">
-    <Position X="0.75" Y="12.5" Width="2.75" />
+    <Position X="0.75" Y="13" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAIIgAAAAAAAAASAAAAAAAAAAA=</HashCode>
       <FileName>MathFunction.h</FileName>
@@ -100,7 +100,7 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="CcourseworkDlg::__unnamed_enum_0005_1">
+      <Enum Name="CcourseworkDlg::__unnamed_enum_0008_1">
         <TypeIdentifier>
           <NewMemberFileName>courseworkDlg.h</NewMemberFileName>
         </TypeIdentifier>
