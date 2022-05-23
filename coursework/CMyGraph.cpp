@@ -240,14 +240,14 @@ void CMyGraph::drawGraph(CDC& dc) {
 			// current dot from the dots
 			CPoint dot(dots[i]);
 
-			if (hist) {
+			if (is_hist) {
 				if (animation_in_process) {
 					// recalc coords according to phase
 					dot = recalcDotForAnimation(dot, rforf);
 				}
 
 				// hist column calculating and drawing
-				RECT rect = { dot.x,dot.y,dot.x + step,rforf.bottom };
+				RECT rect = { dot.x,dot.y,dot.x + hist_width,rforf.bottom };
 				dc.FillSolidRect(&rect, f->color);
 			} else {// not hist
 				if (is_first) {
@@ -416,6 +416,15 @@ void CMyGraph::setBgColor(COLORREF col) {
 void CMyGraph::setAnimState(bool state) {
 	current_animation_phase = 0;
 	animation_in_process = state;
+}
+
+void CMyGraph::setColumnsCount(int N) {
+	CRect r;
+	GetClientRect(r);
+	int w = ceil((float)(r.Width() - shift.x)/N);
+	if (w == hist_width) { return; }
+	graph_is_done = false;
+	hist_width = w;
 }
 
 // just a getter

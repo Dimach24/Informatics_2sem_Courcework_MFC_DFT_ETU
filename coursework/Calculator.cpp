@@ -39,6 +39,8 @@ BOOL Calculator::OnInitDialog() {
 	signal_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_SIGNAL, this);
 	dft_cp.SubclassDlgItem(IDC_MFCCOLORBUTTON_DCF, this);
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
+	slider_samples.SubclassDlgItem(IDC_SLIDER_SAMPLES, this);
+	text_slider_samples.SubclassDlgItem(IDC_STATIC_SAMPLES, this);
 	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
 	cb_is_dft_log.SubclassDlgItem(IDC_CHECK_is_log_scale2, this);
 	cb_anim.SubclassDlgItem(IDC_CHECK_ANIM, this);
@@ -55,6 +57,8 @@ BOOL Calculator::OnInitDialog() {
 	// setting range of the slider
 	slider_step.SetRangeMin(1);
 	slider_step.SetRangeMax(10);
+	slider_samples.SetRangeMin(100);
+	slider_samples.SetRangeMax(1000);
 
 	// turn animation on
 	cb_anim.SetCheck(1);
@@ -75,10 +79,10 @@ BOOL Calculator::OnInitDialog() {
 	// and add it to graph drawer
 	signal.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_signal.functions.push_back(&signal);
-	graph_signal.hist = false;
+	graph_signal.is_hist = false;
 	dft.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
 	graph_DFT.functions.push_back(&dft);
-	graph_DFT.hist = true;
+	graph_DFT.is_hist = true;
 
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != nullptr) {
@@ -141,6 +145,13 @@ void Calculator::UpdateCalculatorParams() {
 
 	// if there is no empty fields
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
+		
+		//coefs
+		f *= 1e7;
+		m *= 1e7;
+		x_from *= 1e-4;
+		x_to *= 1e-4;
+
 		// set signal params
 		signal.set_a(a);	signal.set_f(f);	signal.set_m(m);
 		dft.set_a(a);		dft.set_f(f);		dft.set_m(m);
@@ -158,22 +169,24 @@ void Calculator::UpdateCalculatorParams() {
 			// set scale
 			graph_signal.setScale(x_from, x_to, y_from, y_to);
 		}
-
+		double 
+			x_from_dft= 0, 
+			x_to_dft=1e7;
 		// same but with DFT
 		if (cb_is_dft_log.GetCheck() == 1) {
 			if (y_from2 < 0) {
 				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
 				return;
 			}
-			graph_DFT.setScale(x_from, x_to, log10(y_from2), log10(y_to2));
+			graph_DFT.setScale(x_from_dft, x_to_dft, log10(y_from2), log10(y_to2));
 		} else {
-			graph_DFT.setScale(x_from, x_to, y_from2, y_to2);
+			graph_DFT.setScale(x_from_dft, x_to_dft, y_from2, y_to2);
 		}
 
 		// declare rectangular
-		RECT r;
+		CRect r;
 		// write client region to it
-		graph_signal.GetClientRect(&r);
+		graph_signal.GetClientRect(r);
 
 		// get step (amount of pixels between two nearest points along the abscissa axis)
 		int step = slider_step.GetPos();
@@ -182,8 +195,13 @@ void Calculator::UpdateCalculatorParams() {
 		graph_signal.setStep(step);
 		graph_DFT.setStep(step);
 		graph_signal.setRect(r);
-		graph_DFT.GetClientRect(&r);
+		graph_DFT.GetClientRect(r);
 		graph_DFT.setRect(r);
+
+		int N = slider_samples.GetPos();
+		dft.set_samples_amount(N);
+		signal.set_samples_amount(N);
+		graph_DFT.setColumnsCount(N);
 
 		// set log scale
 		graph_signal.setLog(cb_is_log.GetCheck() == 1);
@@ -200,7 +218,7 @@ void Calculator::UpdateCalculatorParams() {
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) {
 			CString signal;
-			signal.Format(L"x(t) = %.2F*sin(2π(%.2F + %.2Ft)*t)", a, f, m);
+			signal.Format(L"x(t) = %.2g*sin(2π(%.2g + %.2gt)*t)", a, f, m);
 			p->SetWindowTextW(signal);
 		}
 
@@ -215,7 +233,7 @@ void Calculator::UpdateCalculatorParams() {
 
 void Calculator::DoDataExchange(CDataExchange* pDX) {
 	CDialogEx::DoDataExchange(pDX);								// base data exchange
-	// controls data exchange
+																// controls data exchange
 	DDX_Control(pDX, IDC_STATIC_graph, graph_signal);
 	DDX_Control(pDX, IDC_SLIDER_STEP, slider_step);
 	DDX_Control(pDX, IDC_CHECK_is_log_scale, cb_is_log);
@@ -231,6 +249,8 @@ void Calculator::DoDataExchange(CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_EDIT_yscale_from2, edit_y_dft_f);
 	DDX_Control(pDX, IDC_EDIT_yscale_to2, edit_y_dft_t);
 	DDX_Control(pDX, IDC_CHECK_ANIM, cb_anim);
+	DDX_Control(pDX, IDC_SLIDER_SAMPLES, slider_samples);
+	DDX_Control(pDX, IDC_STATIC_SAMPLES, text_slider_samples);
 }
 
 
@@ -244,6 +264,7 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_WM_MOUSEMOVE()
 	ON_WM_TIMER()
 	ON_WM_SYSCOMMAND()
+	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -275,17 +296,19 @@ void Calculator::ResetColorPickers() {
 void Calculator::ResetInputData() {
 	// sets default input data
 	edit_a.SetWindowTextW(_T("1"));
-	edit_m.SetWindowTextW(_T("0"));
-	edit_f.SetWindowTextW(_T("0.1592"));
-	edit_x_f.SetWindowTextW(_T("-6.2832"));
-	edit_x_t.SetWindowTextW(_T("6.2832"));
+	edit_m.SetWindowTextW(_T("1"));
+	edit_f.SetWindowTextW(_T("0.2"));
+	edit_x_f.SetWindowTextW(_T("0"));
+	edit_x_t.SetWindowTextW(_T("1"));
 	edit_y_f.SetWindowTextW(_T("-1.5"));
 	edit_y_t.SetWindowTextW(_T("1.5"));
-	edit_y_dft_f.SetWindowTextW(_T("0"));
-	edit_y_dft_t.SetWindowTextW(_T("200"));
-	cb_is_dft_log.SetCheck(0);
+	edit_y_dft_f.SetWindowTextW(_T("0.01"));
+	edit_y_dft_t.SetWindowTextW(_T("10000"));
+	text_slider_samples.SetWindowTextW(L"Число отсчётов: 500");
+	cb_is_dft_log.SetCheck(1);
 	cb_is_log.SetCheck(0);
 	slider_step.SetPos(3);
+	slider_samples.SetPos(500);
 }
 
 void Calculator::OnBnClickedButtonSaveGr() {
@@ -513,4 +536,15 @@ void Calculator::OnSysCommand(UINT nID, LPARAM lParam) {
 	} else {
 		CDialogEx::OnSysCommand(nID, lParam);
 	}
+}
+
+
+void Calculator::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
+	if (pScrollBar == reinterpret_cast<CScrollBar*>(&slider_samples)) {
+		CString str;
+		str.Format(L"Число отсчётов: %d", slider_samples.GetPos());
+		text_slider_samples.SetWindowTextW(str);
+	}
+
+	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
