@@ -124,9 +124,9 @@ public:
 	/// indicates if it is histogram
 	/// </summary>
 	bool is_hist = false;
-	
+
 	/// <summary>
-	/// hist column width
+	/// widths of hist columns
 	/// </summary>
 	int hist_width = 1;
 
