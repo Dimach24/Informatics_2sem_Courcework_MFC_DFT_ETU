@@ -7,6 +7,7 @@
 #include <initguid.h>	// for guids
 #include <cassert>		// for asserts 
 #include <cmath>		// for math functions as log, pow, etc
+#include "BeautyLib.h"
 
 // guids for image codecs
 DEFINE_GUID(ImageFormatBMP, 0xb96b3cab, 0x0728, 0x11d3, 0x9d,
@@ -486,20 +487,26 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 		auto dot = graph_signal.dotToCoords(p.x, p.y, rs);
 		// format string according to scale type
 		if (!cb_is_log.GetCheck() == 1) {
-			s.Format(L"x:%.4g; y:%.4g", dot.first, dot.second);
+			s.Format(L"x:%s; y:%s",
+				beautifulRepresentation(dot.first, 2,4),
+				beautifulRepresentation(dot.second, 2,4));
 		} else {
-			s.Format(L"x:%.4g; y:%.4g", dot.first, pow(10, dot.second));
-
+			s.Format(L"x:%s; y:%s",
+				beautifulRepresentation(dot.first, 2,4),
+				beautifulRepresentation(pow(10, dot.second), 2,4));
 		}
 	} else	if (rd.PtInRect(p)) {	//same but with 2nd graph
 		p.Offset(-rd.left, -rd.top);
 		rd = { 0,0,rd.Width(),rd.Height() };
 		auto dot = graph_DFT.dotToCoords(p.x, p.y, rd);
 		if (!cb_is_dft_log.GetCheck() == 1) {
-			s.Format(L"x:%.4g; y:%.4g", dot.first, dot.second);
+			s.Format(L"x:%s; y:%s", 
+				beautifulRepresentation(dot.first,2,4), 
+				beautifulRepresentation(dot.second,2,4));
 		} else {
-			s.Format(L"x:%.4g; y:%.4g", dot.first, pow(10, dot.second));
-
+			s.Format(L"x:%s; y:%s",
+				beautifulRepresentation(dot.first, 2,4),
+				beautifulRepresentation(pow(10, dot.second), 2,4));
 		}
 	}//else{;}
 
