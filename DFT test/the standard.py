@@ -1,4 +1,8 @@
-﻿# including lib for dft
+﻿#
+# the standard.py
+#
+
+# including lib for dft
 import numpy as np
 # including lib for generating pseudo random numbers
 from random import random as rnd
