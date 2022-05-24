@@ -252,9 +252,8 @@ void DFTFunction::calculate() {
 
 	// for each point with the step
 	for (size_t i = 0; i < samples_amount; i++) {
-		// fixme, daddy : D.mon24 22-05-19 22:20
-		double x = 1. / samples_step * i / samples_amount;
 		// calculating f=Fд*k/N 
+		double x = 1. / samples_step * i / samples_amount;
 		double y = f(i);				// calculating y of the point abs(DFT)
 		if (is_log) {					// if log scale enabled
 			y = log10(abs(y));			// calculate log
