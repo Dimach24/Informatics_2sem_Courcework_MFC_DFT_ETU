@@ -121,7 +121,7 @@ void CMyGraph::drawBg(CDC& dc) {
 		CString st = L"Что-то пошло не так!";
 
 		// get exp (if needed) notation of the number
-		st = beautifulRepresentation(the_x, 4, 2);
+		st = beautifulRepresentation(the_x, 2, 4);
 
 		// set text align
 		dc.SetTextAlign(TA_CENTER);
