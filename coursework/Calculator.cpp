@@ -219,7 +219,10 @@ void Calculator::UpdateCalculatorParams() {
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) {
 			CString signal;
-			signal.Format(L"x(t) = %.2g*sin(2π(%.2g + %.2gt)*t)", a, f, m);
+			signal.Format(L"x(t) = %s*sin(2π(%s + %st)*t)",
+				beautifulRepresentation(a,2,2),
+				beautifulRepresentation(m,2,2),
+				beautifulRepresentation(f,2,2));
 			p->SetWindowTextW(signal);
 		}
 
