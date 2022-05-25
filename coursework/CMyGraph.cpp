@@ -137,7 +137,7 @@ void CMyGraph::drawBg(CDC& dc) {
 			// offset the point for text
 			sp.Offset(30, 0);
 			// write the number to the string
-			st.Format(L"%.4f*10", number.first);
+			st.Format(L"%.4f\u221910", number.first);
 			// set text align
 			dc.SetTextAlign(TA_RIGHT);
 			// show the text
@@ -180,7 +180,7 @@ void CMyGraph::drawBg(CDC& dc) {
 				dc.TextOutW(sp.x, sp.y, st);
 			} else {// if number is large
 				sp.Offset(-10, 0);
-				st.Format(L"%.4f*10", number.first);
+				st.Format(L"%.4f\u221910", number.first);
 				dc.SetTextAlign(TA_RIGHT);
 				dc.TextOutW(sp.x, sp.y, st);
 
