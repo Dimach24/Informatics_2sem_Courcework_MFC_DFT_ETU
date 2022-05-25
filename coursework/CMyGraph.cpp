@@ -378,7 +378,7 @@ void CMyGraph::setStep(int step_) {
 }
 
 void CMyGraph::setRect(RECT r) {
-	r.bottom -= shift.x;
+	r.bottom -= shift.y;
 	r.left += shift.x;
 	for (MathFunction* f : functions) {
 		f->setRect(r);
