@@ -12,7 +12,7 @@ std::pair<double, double> CMyGraph::dotToCoords(int wx, int wy, CRect r) {
 	r.bottom -= shift.y;
 	r.left += shift.x;
 
-	double x,y;
+	double x, y;
 	// moving axis to ↑→ and shifting to the zero (in pixels)
 	x = wx - r.left;
 	y = r.bottom - wy;
@@ -117,19 +117,49 @@ void CMyGraph::drawBg(CDC& dc) {
 		dc.LineTo(sp);
 		sp.Offset(0, 4);
 
+
+
+		// get exp notation of the number
+		auto number = getME(the_x);
+
 		// default text
 		CString st = L"Что-то пошло не так!";
 
-		// get exp (if needed) notation of the number
-		st = beautifulRepresentation(the_x, 4, 2);
+		// if number ain't too long
+		if (abs(number.second) <= 3) {
+			// write the number to the string
+			st.Format(L"%.4f", the_x);
+			// set text align
+			dc.SetTextAlign(TA_CENTER);
+			//show the text
+			dc.TextOutW(sp.x, sp.y, st);
+		} else {// if number is large
+			// offset the point for text
+			sp.Offset(30, 0);
+			// write the number to the string
+			st.Format(L"%.4f\u221910", number.first);
+			// set text align
+			dc.SetTextAlign(TA_RIGHT);
+			// show the text
+			dc.TextOutW(sp.x, sp.y, st);
 
-		// set text align
-		dc.SetTextAlign(TA_CENTER);
 
-		//show the text
-		dc.TextOutW(sp.x, sp.y, st);
+			// offset point for exponent label
+			sp.Offset(1, -5);
+			// set text align
+			dc.SetTextAlign(TA_LEFT);
+			// select font for exponent
+			dc.SelectObject(pfont);
+			// write exp to the string
+			st.Format(L"%d", number.second);
+			// show the text
+			dc.TextOutW(sp.x, sp.y, st);
+			// select usual font
+			dc.SelectObject(font);
+		}
 	}
 
+	// if isn't log scale
 	if (!is_log) { // same as with x axis
 		step = (scale_y.to - scale_y.from) / (serifs.y);
 		for (int i = 0; i <= serifs.y; i++) {
@@ -139,11 +169,28 @@ void CMyGraph::drawBg(CDC& dc) {
 			dc.MoveTo(sp);
 			sp.Offset(-serifsize, 0);
 			dc.LineTo(sp);
-			sp.Offset(-40, -1);
+			sp.Offset(0, -3);
 			CString st = L"Что-то пошло не так!";
-			st = beautifulRepresentation(the_y, 3, 2);
-			dc.SetTextAlign(TA_TOP);
-			dc.TextOutW(sp.x, sp.y, st);
+			auto number = getME(the_y);
+
+			// if number ain't too long
+			if (abs(number.second) <= 3) {
+				st.Format(L"%.4f", the_y);
+				dc.SetTextAlign(TA_RIGHT);
+				dc.TextOutW(sp.x, sp.y, st);
+			} else {// if number is large
+				sp.Offset(-10, 0);
+				st.Format(L"%.4f\u221910", number.first);
+				dc.SetTextAlign(TA_RIGHT);
+				dc.TextOutW(sp.x, sp.y, st);
+
+				sp.Offset(1, -5);
+				dc.SetTextAlign(TA_LEFT);
+				dc.SelectObject(pfont);
+				st.Format(L"%d", number.second);
+				dc.TextOutW(sp.x, sp.y, st);
+				dc.SelectObject(font);
+			}
 		}
 	} else {	// log scale
 		// progresiion with powers of 10
@@ -378,7 +425,7 @@ void CMyGraph::setStep(int step_) {
 }
 
 void CMyGraph::setRect(RECT r) {
-	r.bottom -= shift.x;
+	r.bottom -= shift.y;
 	r.left += shift.x;
 	for (MathFunction* f : functions) {
 		f->setRect(r);
@@ -420,7 +467,7 @@ void CMyGraph::setAnimState(bool state) {
 void CMyGraph::setColumnsCount(int N) {
 	CRect r;
 	GetClientRect(r);
-	int w = ceil((float)(r.Width() - shift.x)/N);
+	int w = ceil((float)(r.Width() - shift.x) / N);
 	if (w == hist_width) { return; }
 	graph_is_done = false;
 	hist_width = w;

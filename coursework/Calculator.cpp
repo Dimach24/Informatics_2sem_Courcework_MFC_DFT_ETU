@@ -67,7 +67,7 @@ BOOL Calculator::OnInitDialog() {
 	// find element
 	CWnd* p = GetDlgItem(IDC_STATIC_signal);
 	//set default text
-	if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
+	if (p) { p->SetWindowTextW(_T("x(t) = a\u2219sin(2\u03c0(f + mt)\u2219t")); }
 
 	// set focus to the first input element
 	edit_a.SetFocus();
@@ -219,14 +219,17 @@ void Calculator::UpdateCalculatorParams() {
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) {
 			CString signal;
-			signal.Format(L"x(t) = %.2g*sin(2π(%.2g + %.2gt)*t)", a, f, m);
+			signal.Format(L"x(t) = %s\u2219sin(2π(%s + %st)\u2219t)",
+				beautifulRepresentation(a,2,2),
+				beautifulRepresentation(m,2,2),
+				beautifulRepresentation(f,2,2));
 			p->SetWindowTextW(signal);
 		}
 
 	} else { // empty elements were found
 		// find the static element and put formetted string to it
 		CWnd* p = GetDlgItem(IDC_STATIC_signal);
-		if (p) { p->SetWindowTextW(_T("x(t) = a*sin(2\u03c0(f + mt)*t")); }
+		if (p) { p->SetWindowTextW(_T("x(t) = a\u2219sin(2\u03c0(f + mt)\u2219t")); }
 		// send message to the user
 		AfxMessageBox(_T("Недостаточно параметров"), MB_OK | MB_ICONERROR);
 	}
