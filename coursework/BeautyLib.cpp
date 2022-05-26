@@ -19,9 +19,9 @@ CString beautifulRepresentation(double number, int exponent /* = 3 */, int after
 	if (abs(me.second) > exponent) {
 		// setting brackets for negative
 		if (me.second < 0) {
-			format += L"*10^(%d)";
+			format += L"\u221910^(%d)";
 		} else {
-			format += L"*10^%d";
+			format += L"\u221910^%d";
 		}
 		// formatting result in exp mode
 		res.Format(format, me.first, me.second);

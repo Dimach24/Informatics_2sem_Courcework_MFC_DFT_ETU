@@ -108,7 +108,7 @@ public:
 	/// <summary>
 	/// shifting of the graph from the left bottom corner of the element
 	/// </summary>
-	POINT shift = { 60,30 };
+	POINT shift = { 80,30 };
 
 	/// <summary>
 	/// represents amount of serifs on axes
