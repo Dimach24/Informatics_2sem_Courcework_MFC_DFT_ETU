@@ -6,13 +6,13 @@
 // including project files
 #include "pch.h"
 #include "coursework.h"
+#include "BeautyLib.h"
 #include "Calculator.h"
 #include "afxdialogex.h"
 
 #include <initguid.h>	// for guids
 #include <cassert>		// for asserts 
 #include <cmath>		// for math functions as log, pow, etc
-#include "BeautyLib.h"
 
 // guids for image codecs
 DEFINE_GUID(ImageFormatBMP, 0xb96b3cab, 0x0728, 0x11d3, 0x9d,
@@ -90,6 +90,8 @@ BOOL Calculator::OnInitDialog() {
 	graph_DFT.functions.push_back(&dft);
 	graph_DFT.is_hist = true;
 
+
+	// adding 'save' to the sys menu
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != nullptr) {
 		CString strSaveMenu = L"Сохранить как";
@@ -141,7 +143,7 @@ void Calculator::UpdateCalculatorParams() {
 	edit_y_dft_t.GetWindowTextW(y_to2_s);
 	double y_to2 = _wtof(y_to2_s);
 
-	// if lower bound is less then high one
+	// if lower bound is more then high one
 	if (x_from >= x_to || y_from > y_to) {
 		// send message to the user
 		AfxMessageBox(_T("Невозможный масштаб"), MB_OK | MB_ICONERROR);
@@ -151,7 +153,7 @@ void Calculator::UpdateCalculatorParams() {
 
 	// if there is no empty fields
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
-		
+
 		//coefs
 		f *= 1e7;
 		m *= 1e7;
@@ -175,9 +177,9 @@ void Calculator::UpdateCalculatorParams() {
 			// set scale
 			graph_signal.setScale(x_from, x_to, y_from, y_to);
 		}
-		double 
-			x_from_dft= 0, 
-			x_to_dft=1e7;
+		double
+			x_from_dft = 0,
+			x_to_dft = 1e7;
 		// same but with DFT
 		if (cb_is_dft_log.GetCheck() == 1) {
 			if (y_from2 < 0) {
@@ -194,7 +196,8 @@ void Calculator::UpdateCalculatorParams() {
 		// write client region to it
 		graph_signal.GetClientRect(r);
 
-		// get step (amount of pixels between two nearest points along the abscissa axis)
+		// get graph step (amount of pixels between two nearest
+		// graph points along the abscissa axis)
 		int step = slider_step.GetPos();
 
 		// setting the step and region
@@ -204,6 +207,7 @@ void Calculator::UpdateCalculatorParams() {
 		graph_DFT.GetClientRect(r);
 		graph_DFT.setRect(r);
 
+		// setting samples amount
 		int N = slider_samples.GetPos();
 		dft.set_samples_amount(N);
 		signal.set_samples_amount(N);
@@ -219,15 +223,16 @@ void Calculator::UpdateCalculatorParams() {
 		graph_signal.functions[0]->setColor(signal_cp.GetColor());
 		graph_DFT.functions[0]->setColor(dft_cp.GetColor());
 
-		// find the static element and put formetted string to it
+		// find the static element and put formatted string to it
 		CWnd* p;
 		p = GetDlgItem(IDC_STATIC_signal);
 		if (p) {
 			CString signal;
-			signal.Format(L"x(t) = %s\u2219sin(2π(%s + %st)\u2219t)",
-				beautifulRepresentation(a,2,2),
-				beautifulRepresentation(m,2,2),
-				beautifulRepresentation(f,2,2));
+			signal.Format(L"x(t) = %s\u2219sin(2π(%s + %s\u2219t)\u2219t)",
+				beautifulRepresentation(a, 2, 2),
+				beautifulRepresentation(f, 2, 2),
+				beautifulRepresentation(m, 2, 2)
+			);
 			p->SetWindowTextW(signal);
 		}
 
@@ -326,39 +331,39 @@ void Calculator::OnBnClickedButtonSaveGr() {
 
 	// offset between pics
 	const int offset = 20;
-	
+
 	// getting areas
 	graph_signal.GetClientRect(r1);
 	graph_DFT.GetClientRect(r2);
 
 	//calculating the area
 	rr = { 0,0,r1.Width(),r1.Height() + r2.Height() + offset };
-	
+
 	CBitmap bmp;		// bitmap for the picture
 	CDC bmdc;			// dc for drawing
 
 	// existing dc to create own bmdc
 	CWindowDC wdc(&graph_signal);
-	
+
 	// creating dc and bitmap
 	bmdc.CreateCompatibleDC(&wdc);
 	bmp.CreateCompatibleBitmap(&wdc, rr.Width(), rr.Height());
-	
+
 	// selecting bitmap
 	HGDIOBJ olddc = bmdc.SelectObject(&bmp);
 
 	// copying pic from CWindowDC(&graph_signal)
 	bmdc.BitBlt(0, 0, r1.Width(), r1.Height(), &wdc, 0, 0, SRCCOPY);
-	
+
 	// filling space between pics
 	bmdc.FillSolidRect(
-		CRect({ 0,r1.Height(),r1.Width(),r1.Height() + offset }), 
+		CRect({ 0,r1.Height(),r1.Width(),r1.Height() + offset }),
 		graph_signal.getBgColor()
 	);
-	
+
 	// copying pic from CWindowDC(&graph_DFT)
 	bmdc.BitBlt(0, r1.Height() + offset, r2.Width(), r2.Height(), &CWindowDC(&graph_DFT), 0, 0, SRCCOPY);
-	
+
 	// dc restoring
 	bmdc.SelectObject(olddc);
 
@@ -376,12 +381,12 @@ void Calculator::OnBnClickedButtonSaveGr() {
 	short i = path.ReverseFind(L'.');
 
 	// file extension
-	CString extension;	
+	CString extension;
 	if (i == -1) {
 		// there is no dot
 		path += ".bmp";			// default
 		extension = _T(".bmp");	// default
-	} else {					
+	} else {
 		// calculating lenght of the 
 		// path after last dot
 		i = path.GetLength() - i;
@@ -408,7 +413,7 @@ void Calculator::OnBnClickedButtonSaveGr() {
 	} else if (extension == _T(".bmp")) {
 		saving = img.Save(path, ImageFormatBMP);
 	} else {	// default
-		// not found correct img formats
+		// if not found correct img formats
 		// add ".bmp" to the end of path
 		//		file.myexten -> file.myexten.bmp
 		// to avoid mistakes with replacing extension
@@ -422,7 +427,7 @@ void Calculator::OnBnClickedButtonSaveGr() {
 }
 
 void Calculator::OnBnClickedCheckislogscale() {
-	CString fromStr, toStr;				// strings for f=data
+	CString fromStr, toStr;				// strings for scale data
 	edit_y_f.GetWindowTextW(fromStr);	// getting data
 	edit_y_t.GetWindowTextW(toStr);		// same
 	double
@@ -430,12 +435,13 @@ void Calculator::OnBnClickedCheckislogscale() {
 		to = _wtof(toStr);
 	if (cb_is_log.GetCheck() == 1) {
 		//turned to log
-// exponentiation
+		// exponentiation
 		fromStr.Format(L"%f", pow(10, from));
 		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", pow(10, to));
 		edit_y_t.SetWindowTextW(toStr);
-	} else {			//turned to the normal
+	} else {
+		//turned to the normal
 		// logarithm
 		if (from <= 0 || to <= 0) { return; }
 		fromStr.Format(L"%f", log10(from));
@@ -496,25 +502,25 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 		// format string according to scale type
 		if (!cb_is_log.GetCheck() == 1) {
 			s.Format(L"x:%s; y:%s",
-				beautifulRepresentation(dot.first, 2,4),
-				beautifulRepresentation(dot.second, 2,4));
+				beautifulRepresentation(dot.first, 2, 4),
+				beautifulRepresentation(dot.second, 2, 4));
 		} else {
 			s.Format(L"x:%s; y:%s",
-				beautifulRepresentation(dot.first, 2,4),
-				beautifulRepresentation(pow(10, dot.second), 2,4));
+				beautifulRepresentation(dot.first, 2, 4),
+				beautifulRepresentation(pow(10, dot.second), 2, 4));
 		}
 	} else	if (rd.PtInRect(p)) {	//same but with 2nd graph
 		p.Offset(-rd.left, -rd.top);
 		rd = { 0,0,rd.Width(),rd.Height() };
 		auto dot = graph_DFT.dotToCoords(p.x, p.y, rd);
 		if (!cb_is_dft_log.GetCheck() == 1) {
-			s.Format(L"x:%s; y:%s", 
-				beautifulRepresentation(dot.first,2,4), 
-				beautifulRepresentation(dot.second,2,4));
+			s.Format(L"x:%s; y:%s",
+				beautifulRepresentation(dot.first, 2, 4),
+				beautifulRepresentation(dot.second, 2, 4));
 		} else {
 			s.Format(L"x:%s; y:%s",
-				beautifulRepresentation(dot.first, 2,4),
-				beautifulRepresentation(pow(10, dot.second), 2,4));
+				beautifulRepresentation(dot.first, 2, 4),
+				beautifulRepresentation(pow(10, dot.second), 2, 4));
 		}
 	}//else{;}
 
@@ -527,10 +533,11 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 
 void Calculator::OnTimer(UINT_PTR nIDEvent) {
 	if (nIDEvent == timer_id) { // if it is animation timer
-		//tick and check is it the last tick in the animation for both graphs
+		// tick and check is it the last tick 
+		// in the animation for both graphs
 		bool end = graph_signal.timerTick();
 		end = graph_DFT.timerTick() && end;
-		//P.S. move operands if you want to draw one by one
+		// P.S. move operands if you want to draw one by one
 
 		if (end) { // if it is the last tick in both graphs
 			// stop the timer
@@ -544,22 +551,27 @@ void Calculator::OnTimer(UINT_PTR nIDEvent) {
 	CDialogEx::OnTimer(nIDEvent);	// base timer processing
 }
 
+// on sytem menu called
 void Calculator::OnSysCommand(UINT nID, LPARAM lParam) {
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
+	// if action is 'save'
 	if (nID == IDD_Calculator) {
 		OnBnClickedButtonSaveGr();
-	} else {
+	} else {// base case
 		CDialogEx::OnSysCommand(nID, lParam);
 	}
 }
 
-
+// updates CStatic with number of samples
 void Calculator::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
+	// check if it's slider for number of samples
 	if (pScrollBar == reinterpret_cast<CScrollBar*>(&slider_samples)) {
+		// create string
 		CString str;
+		// format the string
 		str.Format(L"Число отсчётов: %d", slider_samples.GetPos());
+		// update CStatic text
 		text_slider_samples.SetWindowTextW(str);
 	}
-
+	// base action
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }

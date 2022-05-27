@@ -23,7 +23,7 @@ END_MESSAGE_MAP()
 
 
 CcourseworkApp::CcourseworkApp() {
-	// поддержка диспетчера перезагрузки
+	// restart manager supporting
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
 }
 
