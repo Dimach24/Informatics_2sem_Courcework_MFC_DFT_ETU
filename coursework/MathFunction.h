@@ -6,8 +6,6 @@
 
 #include <vector>	// vector of dots/points
 
-// the pi
-#define PI 3.141592653589793238463
 
 /// <summary>
 /// class defines type of object that will be
