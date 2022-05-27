@@ -10,8 +10,9 @@
 #define IDS_VERSION                     102
 #define IDS_COMMIT                      103
 #define IDD_Calculator                  104
-#define IDS_STRING104                   104
 #define IDS_SHORT_TASK_INFO             104
+#define IDS_STRING105                   105
+#define IDS_MORE_TASK_INFO              105
 #define IDR_MAINFRAME                   128
 #define ID_LOGO_ICO                     133
 #define IDC_STATIC_TASK                 1000
