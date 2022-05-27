@@ -54,7 +54,7 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX) { // call constructor of the ba
 BOOL CAboutDlg::OnInitDialog() {
 	// set the title, commit index - the index of 
 	// the last git commit (defined in string table coursework.rc')
-	CString 
+	CString
 		app_v, // app version
 		app_ci;	// last commit index
 	app_v.LoadStringW(IDS_VERSION);
@@ -77,15 +77,9 @@ END_MESSAGE_MAP()
 
 CcourseworkDlg::CcourseworkDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_COURSEWORK_DIALOG, pParent) //base constructor
-	, theTask(	//task text init
-		L"Для сигнала заданного вида вычислить дискретное "
-		L"преобразование Фурье(ДПФ), нарисовать график сигнальной "
-		L"функции и график модуля  ее ДПФ, предоставить возможность "
-		L"изменять масштаб графика по Х и по У, выбор линейного или "
-		L"логарифмического масштаба по У для графика ДПФ, интерактивный "
-		L"режим изменения параметров сигнала, запись в файл графиков "
-		L"сигнала и ДПФ в формате BMP."
-	) {
+{
+	// load task text from the string table
+	theTask.LoadStringW(IDS_SHORT_TASK_INFO);
 	// set icon
 	m_hIcon = AfxGetApp()->LoadIcon(ID_LOGO_ICO);
 }

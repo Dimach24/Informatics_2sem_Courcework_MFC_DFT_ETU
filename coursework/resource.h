@@ -1,7 +1,4 @@
-﻿//
-// Resource.h
-// 
-//{{NO_DEPENDENCIES}}
+﻿//{{NO_DEPENDENCIES}}
 // Включаемый файл, созданный в Microsoft Visual C++.
 // Используется coursework.rc
 //
@@ -13,6 +10,8 @@
 #define IDS_VERSION                     102
 #define IDS_COMMIT                      103
 #define IDD_Calculator                  104
+#define IDS_STRING104                   104
+#define IDS_SHORT_TASK_INFO             104
 #define IDR_MAINFRAME                   128
 #define ID_LOGO_ICO                     133
 #define IDC_STATIC_TASK                 1000
