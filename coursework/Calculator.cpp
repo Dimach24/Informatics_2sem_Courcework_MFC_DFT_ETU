@@ -482,7 +482,7 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 	pWnd = GetDlgItem(IDC_STATIC_CPOS);
 
 	// default text
-	CString s = L"Наведите курсор на график, чтобы посмотреть координаты точки";
+	CString s = L"Для трассировки наведите курсор на график";
 	assert(pWnd);
 
 	// get client rects of the graphs
@@ -500,12 +500,12 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 		// coord back conversion
 		auto dot = graph_signal.dotToCoords(p.x, p.y, rs);
 		// format string according to scale type
-		if (!cb_is_log.GetCheck() == 1) {
-			s.Format(L"x:%s; y:%s",
+		if (!graph_signal.is_log) {
+			s.Format(L"t:%s; x:%s",
 				beautifulRepresentation(dot.first, 2, 4),
 				beautifulRepresentation(dot.second, 2, 4));
 		} else {
-			s.Format(L"x:%s; y:%s",
+			s.Format(L"t:%s; x:%s",
 				beautifulRepresentation(dot.first, 2, 4),
 				beautifulRepresentation(pow(10, dot.second), 2, 4));
 		}
@@ -513,12 +513,12 @@ void Calculator::OnMouseMove(UINT nFlags, CPoint point) {
 		p.Offset(-rd.left, -rd.top);
 		rd = { 0,0,rd.Width(),rd.Height() };
 		auto dot = graph_DFT.dotToCoords(p.x, p.y, rd);
-		if (!cb_is_dft_log.GetCheck() == 1) {
-			s.Format(L"x:%s; y:%s",
+		if (!graph_DFT.is_log) {
+			s.Format(L"\u03c9:%s; X:%s",
 				beautifulRepresentation(dot.first, 2, 4),
 				beautifulRepresentation(dot.second, 2, 4));
 		} else {
-			s.Format(L"x:%s; y:%s",
+			s.Format(L"\u03c9:%s; X:%s",
 				beautifulRepresentation(dot.first, 2, 4),
 				beautifulRepresentation(pow(10, dot.second), 2, 4));
 		}
