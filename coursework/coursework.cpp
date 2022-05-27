@@ -1,4 +1,8 @@
-﻿// including project files
+﻿//
+// coursework.h
+//
+
+// including project files
 #include "pch.h"
 #include "framework.h"
 #include "coursework.h"

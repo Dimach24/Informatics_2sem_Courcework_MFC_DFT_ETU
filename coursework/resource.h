@@ -1,4 +1,7 @@
-﻿//{{NO_DEPENDENCIES}}
+﻿//
+// Resource.h
+// 
+//{{NO_DEPENDENCIES}}
 // Включаемый файл, созданный в Microsoft Visual C++.
 // Используется coursework.rc
 //

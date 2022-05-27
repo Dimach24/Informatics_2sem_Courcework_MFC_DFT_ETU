@@ -1,3 +1,7 @@
+//
+// MathFunction.cpp
+//
+
 #pragma once		// include this file once
 
 #include <vector>	// vector of dots/points

@@ -1,4 +1,8 @@
-﻿#include <cmath> // for math like sin, log, etc
+﻿//
+// MathFunction.cpp
+//
+
+#include <cmath> // for math like sin, log, etc
 #include <cassert>
 
 // including project files

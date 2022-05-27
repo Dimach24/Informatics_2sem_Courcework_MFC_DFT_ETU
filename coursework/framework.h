@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿//
+// framework.h
+//
+
+#pragma once
 
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN            // Исключите редко используемые компоненты из заголовков Windows
@@ -6,9 +10,9 @@
 
 #include "targetver.h"
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // некоторые конструкторы CString будут явными
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // конструкторы CString будут явными
 
-// отключает функцию скрытия некоторых общих и часто пропускаемых предупреждений MFC
+// отключает функцию скрытия предупреждений MFC
 #define _AFX_ALL_WARNINGS
 
 #include <afxwin.h>         // основные и стандартные компоненты MFC

@@ -1,4 +1,8 @@
-﻿// including project  files 
+﻿//
+// courseworkDlg.cpp
+//
+
+// including project  files 
 
 #include "pch.h"
 #include "framework.h"

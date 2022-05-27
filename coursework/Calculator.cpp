@@ -1,4 +1,9 @@
-﻿// including project files
+﻿//
+// Calculator.cpp
+//
+
+
+// including project files
 #include "pch.h"
 #include "coursework.h"
 #include "Calculator.h"

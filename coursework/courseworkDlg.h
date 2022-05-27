@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿//
+// courseworkDlg.cpp
+//
+
+#pragma once
 
 /// <summary>
 /// Class that defines exterior and behaviour
