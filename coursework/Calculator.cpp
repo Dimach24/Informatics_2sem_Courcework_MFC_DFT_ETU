@@ -47,7 +47,6 @@ BOOL Calculator::OnInitDialog() {
 	slider_step.SubclassDlgItem(IDC_SLIDER_STEP, this);
 	slider_samples.SubclassDlgItem(IDC_SLIDER_SAMPLES, this);
 	text_slider_samples.SubclassDlgItem(IDC_STATIC_SAMPLES, this);
-	cb_is_log.SubclassDlgItem(IDC_CHECK_is_log_scale, this);
 	cb_is_dft_log.SubclassDlgItem(IDC_CHECK_is_log_scale2, this);
 	cb_anim.SubclassDlgItem(IDC_CHECK_ANIM, this);
 	edit_a.SubclassDlgItem(IDC_EDIT_param_a, this);
@@ -84,6 +83,8 @@ BOOL Calculator::OnInitDialog() {
 	// set default for the MathFunction s
 	// and add it to graph drawer
 	signal.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
+	signal.setLog(0);
+	graph_signal.setLog(0);
 	graph_signal.functions.push_back(&signal);
 	graph_signal.is_hist = false;
 	dft.setDefinitionScope(-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity());
@@ -144,7 +145,7 @@ void Calculator::UpdateCalculatorParams() {
 	double y_to2 = _wtof(y_to2_s);
 
 	// if lower bound is more then high one
-	if (x_from >= x_to || y_from > y_to) {
+	if (x_from >= x_to || y_from > y_to || y_from2 > y_to2) {
 		// send message to the user
 		AfxMessageBox(_T("Невозможный масштаб"), MB_OK | MB_ICONERROR);
 		// end (do not update info)
@@ -164,33 +165,24 @@ void Calculator::UpdateCalculatorParams() {
 		signal.set_a(a);	signal.set_f(f);	signal.set_m(m);
 		dft.set_a(a);		dft.set_f(f);		dft.set_m(m);
 
-		// if log (signal function)
-		if (cb_is_log.GetCheck() == 1) {
-			if (y_from <= 0) {
-				// send message to the user
-				AfxMessageBox(_T("Неверные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
-				return;
-			}
-			// set scale
-			graph_signal.setScale(x_from, x_to, log10(y_from), log10(y_to));
-		} else {
-			// set scale
-			graph_signal.setScale(x_from, x_to, y_from, y_to);
-		}
+
 		double
 			x_from_dft = 0,
 			x_to_dft = 1e7;
-		// same but with DFT
+		// if log 
 		if (cb_is_dft_log.GetCheck() == 1) {
-			if (y_from2 < 0) {
+			if (y_from2 < 0) {	// negative log scale
+				// send message to the user
 				AfxMessageBox(_T("Отрицательные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
 				return;
 			}
+			// set log scale
 			graph_DFT.setScale(x_from_dft, x_to_dft, log10(y_from2), log10(y_to2));
 		} else {
+			// set scale
 			graph_DFT.setScale(x_from_dft, x_to_dft, y_from2, y_to2);
 		}
-
+		graph_signal.setScale(x_from, x_to, y_from, y_to);
 		// declare rectangular
 		CRect r;
 		// write client region to it
@@ -214,7 +206,6 @@ void Calculator::UpdateCalculatorParams() {
 		graph_DFT.setColumnsCount(N);
 
 		// set log scale
-		graph_signal.setLog(cb_is_log.GetCheck() == 1);
 		graph_DFT.setLog(cb_is_dft_log.GetCheck() == 1);
 
 		// set colors
@@ -250,7 +241,6 @@ void Calculator::DoDataExchange(CDataExchange* pDX) {
 																// controls data exchange
 	DDX_Control(pDX, IDC_STATIC_graph, graph_signal);
 	DDX_Control(pDX, IDC_SLIDER_STEP, slider_step);
-	DDX_Control(pDX, IDC_CHECK_is_log_scale, cb_is_log);
 	DDX_Control(pDX, IDC_EDIT_param_a, edit_a);
 	DDX_Control(pDX, IDC_EDIT_param_m, edit_m);
 	DDX_Control(pDX, IDC_EDIT_param_f, edit_f);
@@ -273,7 +263,6 @@ BEGIN_MESSAGE_MAP(Calculator, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_UPDATE_graph, &Calculator::OnBnClickedButtonUpdate)
 	ON_BN_CLICKED(IDC_BUTTON_reset, &Calculator::OnBnClickedButtonreset)
 	ON_BN_CLICKED(IDC_BUTTON_SAVE_GR, &Calculator::OnBnClickedButtonSaveGr)
-	ON_BN_CLICKED(IDC_CHECK_is_log_scale, &Calculator::OnBnClickedCheckislogscale)
 	ON_BN_CLICKED(IDC_CHECK_is_log_scale2, &Calculator::OnBnClickedCheckislogscale2)
 	ON_WM_MOUSEMOVE()
 	ON_WM_TIMER()
@@ -320,7 +309,6 @@ void Calculator::ResetInputData() {
 	edit_y_dft_t.SetWindowTextW(_T("10000"));
 	text_slider_samples.SetWindowTextW(L"Число отсчётов: 500");
 	cb_is_dft_log.SetCheck(1);
-	cb_is_log.SetCheck(0);
 	slider_step.SetPos(1);
 	slider_samples.SetPos(500);
 }
@@ -426,30 +414,6 @@ void Calculator::OnBnClickedButtonSaveGr() {
 	}
 }
 
-void Calculator::OnBnClickedCheckislogscale() {
-	CString fromStr, toStr;				// strings for scale data
-	edit_y_f.GetWindowTextW(fromStr);	// getting data
-	edit_y_t.GetWindowTextW(toStr);		// same
-	double
-		from = _wtof(fromStr),			// converting to the double
-		to = _wtof(toStr);
-	if (cb_is_log.GetCheck() == 1) {
-		// turned to log
-		// exponentiation
-		fromStr.Format(L"%f", pow(10, from));
-		edit_y_f.SetWindowTextW(fromStr);
-		toStr.Format(L"%f", pow(10, to));
-		edit_y_t.SetWindowTextW(toStr);
-	} else {
-		// turned to the normal
-		// logarithm
-		if (from <= 0 || to <= 0) { return; }
-		fromStr.Format(L"%f", log10(from));
-		edit_y_f.SetWindowTextW(fromStr);
-		toStr.Format(L"%f", log10(to));
-		edit_y_t.SetWindowTextW(toStr);
-	}
-}
 
 void Calculator::OnBnClickedCheckislogscale2() {
 	// same but with another controls

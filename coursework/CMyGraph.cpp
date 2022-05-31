@@ -108,7 +108,7 @@ void CMyGraph::drawBg(CDC& dc) {
 	// (because back conv can give uncomfortable numbers)
 	double step = (scale_x.to - scale_x.from) / (serifs.x);
 
-	// for the serif
+	// for serifs
 	for (int i = 0; i <= serifs.x; i++) {
 		// calculate position (in math coords)
 		// (arithmetic progression)
