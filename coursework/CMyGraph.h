@@ -171,7 +171,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	/// <summary>
-	/// defines on message WM_PAINT behaviour
+	/// defines on message WM_PAINT behavior
 	/// </summary>
 	afx_msg void OnPaint();
 
@@ -206,7 +206,7 @@ public:
 	POINT coordsToDot(double x, double y, CRect rect);
 
 	/// <summary>
-	/// Defines behaviour on timer tick (it is not connected to the timer)
+	/// Defines behavior on timer tick (it is not connected to the timer)
 	/// you should call it if you think that it's time to draw next frame
 	/// </summary>
 	/// <returns>returns if animation ended</returns>

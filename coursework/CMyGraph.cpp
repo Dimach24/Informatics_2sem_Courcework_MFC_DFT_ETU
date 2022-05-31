@@ -197,7 +197,7 @@ void CMyGraph::drawBg(CDC& dc) {
 			}
 		}
 	} else {	// log scale
-		// progresiion with powers of 10
+		// progression with powers of 10
 		int start_power = floor(scale_y.from),
 			stop_power = ceil(scale_y.to),
 			step_power = ceil(((double)stop_power - start_power) / (serifs.y));
@@ -330,7 +330,7 @@ void CMyGraph::draw(CDC& dc) {
 	if (!graph_is_done) {
 		// if bgdc doesn't exist
 		if (!bgdc) {
-			// create dc and prepare it to drawing in bitmap
+			// create dc and prepare it for drawing in bitmap
 			bgdc.CreateCompatibleDC(&dc);
 			bg_bmp.CreateCompatibleBitmap(&dc, r.Width(), r.Height());
 			old_bmp = bgdc.SelectObject(bg_bmp);
@@ -343,7 +343,7 @@ void CMyGraph::draw(CDC& dc) {
 		}
 		// if graph_dc doesn't exist
 		if (!graph_dc) {
-			// create dc and prepare it to drawing in bitmap
+			// create dc and prepare it for drawing in bitmap
 			graph_dc.CreateCompatibleDC(&dc);
 			graph.CreateCompatibleBitmap(&dc, r.Width(), r.Height());
 			old_g_bmp = graph_dc.SelectObject(graph);

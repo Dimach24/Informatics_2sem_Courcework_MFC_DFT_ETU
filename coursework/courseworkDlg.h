@@ -1,11 +1,11 @@
 ﻿//
-// courseworkDlg.cpp
+// courseworkDlg.h
 //
 
 #pragma once
 
 /// <summary>
-/// Class that defines exterior and behaviour
+/// Class that defines exterior and behavior
 /// of the main dialog - child of CDialogEx
 /// </summary>
 class CcourseworkDlg : public CDialogEx

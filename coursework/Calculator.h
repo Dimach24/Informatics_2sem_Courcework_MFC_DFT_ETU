@@ -22,7 +22,7 @@ public:
 	/// <summary>
 	/// Standard constructor
 	/// </summary>
-	/// <param name="pParent">a pointer to rhe parent window</param>
+	/// <param name="pParent">a pointer to the parent window</param>
 	Calculator(CWnd* pParent = nullptr);
 
 	/// <summary>
@@ -31,7 +31,7 @@ public:
 	virtual ~Calculator();
 
 	/// <summary>
-	/// defines init behaviour
+	/// defines init behavior
 	/// </summary>
 	BOOL OnInitDialog();
 
