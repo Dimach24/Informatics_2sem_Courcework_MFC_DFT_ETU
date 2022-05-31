@@ -31,7 +31,7 @@ public:
 	CAboutDlg();
 
 	/// <summary>
-	/// Defines on dlg initialization behaviour
+	/// Defines on dlg initialization behavior
 	/// </summary>
 	BOOL OnInitDialog();
 
@@ -166,7 +166,7 @@ void CcourseworkDlg::OnBnClickedTaskAboutBn() {
 	// create and show messagebox with theoretical information
 	AfxMessageBox(str, MB_OK | MB_ICONINFORMATION);
 }
-// button 'calculate' has been clicked action
+// on button 'calculate' has been clicked message
 void CcourseworkDlg::OnBnClickedCalculateButton() {
 	// create and show calculator dlg
 	Calculator dlg;

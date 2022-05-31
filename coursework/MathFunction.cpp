@@ -4,14 +4,11 @@
 
 
 #include <math.h> // for math like sin, log, etc
-#include <cassert>
+#include <cassert>// for asserts
 
 // including project files
 #include "pch.h"
 #include "MathFunction.h"
-
-// the pi
-//constexpr double M_PI = 3.141592653589793238463;
 
 void MathFunction::setNotCalculated() {
 	// turn is calculated indicator to false
@@ -126,7 +123,7 @@ void MathFunction::calculate() {
 	is_calculated = true;				// set calculated
 }
 
-const double SignalFunction::samples_step = 1e-7;
+const double SignalFunction::samples_step = 1e-7;	// const initialization
 
 double SignalFunction::f(double t) {
 	// signal function ↓
@@ -187,7 +184,7 @@ void SignalFunction::calculate() {
 	// memory reserving for the samples data 
 	samples.resize(samples_amount);
 
-	// repeat for each i = 0, 1, ..., samples_amount
+	// repeat for each i = 0, 1, ..., samples_amount-1
 	for (int i = 0; i < samples_amount; i++) {
 		// calculate x (like an arithmetic progression)
 		// calculate f(x)
@@ -209,7 +206,7 @@ void SignalFunction::calculate() {
 		// calculate f(x)
 		double y = f(x);
 
-		// use logarythm if needed
+		// use logarithm if needed
 		if (is_log) { y = log10(y); }
 
 		// converse coords and write 
@@ -224,7 +221,7 @@ void SignalFunction::calculate() {
 }
 
 DFTFunction::DFTFunction(SignalFunction* s) {
-	// asign the pointer to signal function 
+	// assign the pointer to signal function 
 	signal = s;
 }
 

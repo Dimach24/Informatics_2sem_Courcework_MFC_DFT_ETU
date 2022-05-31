@@ -1,5 +1,5 @@
 //
-// MathFunction.cpp
+// MathFunction.h
 //
 
 #pragma once		// include this file once
@@ -21,7 +21,7 @@ protected:
 	/// <param name="x">argument</param>
 	/// <returns>function value in the x</returns>
 	virtual  double f(double x) = 0;
-	// pure virual function (must be defined in subclasses)
+	// pure virtual function (must be defined in subclasses)
 
 	// definition scope
 	double from, to;
@@ -40,7 +40,7 @@ protected:
 		double y_from, y_to;
 	}scale;
 
-	// indicates if vector 
+	// indicates if vector is ready
 	bool is_calculated = false;
 
 	// drawing area
@@ -68,6 +68,7 @@ protected:
 	/// calculates vector of the points
 	/// </summary>
 	virtual void calculate();
+
 	/// <summary>
 	/// math coords to the element coords conversion
 	/// </summary>

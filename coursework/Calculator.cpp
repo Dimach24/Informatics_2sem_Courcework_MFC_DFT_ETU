@@ -154,7 +154,7 @@ void Calculator::UpdateCalculatorParams() {
 	// if there is no empty fields
 	if (a_s != "" && m_s != "" && f_s != "" && x_from_s != "" && x_to_s != "" && y_from_s != "" && y_to_s != "") {
 
-		//coefs
+		// coefs
 		f *= 1e7;
 		m *= 1e7;
 		x_from *= 1e-4;
@@ -168,7 +168,7 @@ void Calculator::UpdateCalculatorParams() {
 		if (cb_is_log.GetCheck() == 1) {
 			if (y_from <= 0) {
 				// send message to the user
-				AfxMessageBox(_T("Неприемлимые границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
+				AfxMessageBox(_T("Неверные границы логарифмического масштаба"), MB_OK | MB_ICONERROR);
 				return;
 			}
 			// set scale
@@ -387,7 +387,7 @@ void Calculator::OnBnClickedButtonSaveGr() {
 		path += ".bmp";			// default
 		extension = _T(".bmp");	// default
 	} else {
-		// calculating lenght of the 
+		// calculating length of the 
 		// path after last dot
 		i = path.GetLength() - i;
 
@@ -403,7 +403,7 @@ void Calculator::OnBnClickedButtonSaveGr() {
 
 	HRESULT saving;	// place for the error code
 
-	// switch-calse like block (choosing the file format)
+	// switch-case like block (choosing the file format)
 	if (extension == _T(".jpg")) {
 		saving = img.Save(path, ImageFormatJPEG);
 	} else if (extension == _T(".png")) {
@@ -434,14 +434,14 @@ void Calculator::OnBnClickedCheckislogscale() {
 		from = _wtof(fromStr),			// converting to the double
 		to = _wtof(toStr);
 	if (cb_is_log.GetCheck() == 1) {
-		//turned to log
+		// turned to log
 		// exponentiation
 		fromStr.Format(L"%f", pow(10, from));
 		edit_y_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", pow(10, to));
 		edit_y_t.SetWindowTextW(toStr);
 	} else {
-		//turned to the normal
+		// turned to the normal
 		// logarithm
 		if (from <= 0 || to <= 0) { return; }
 		fromStr.Format(L"%f", log10(from));
@@ -459,13 +459,13 @@ void Calculator::OnBnClickedCheckislogscale2() {
 	double
 		from = _wtof(fromStr),
 		to = _wtof(toStr);
-	if (cb_is_dft_log.GetCheck() == 1) { //turned to log
+	if (cb_is_dft_log.GetCheck() == 1) { // turned to log
 		// exponentiating
 		fromStr.Format(L"%f", pow(10, from));
 		edit_y_dft_f.SetWindowTextW(fromStr);
 		toStr.Format(L"%f", pow(10, to));
 		edit_y_dft_t.SetWindowTextW(toStr);
-	} else {						//turned to the normal
+	} else {						// turned to the normal
 		if (from <= 0 || to <= 0) { return; }
 		fromStr.Format(L"%f", log10(from));
 		edit_y_dft_f.SetWindowTextW(fromStr);
@@ -551,7 +551,7 @@ void Calculator::OnTimer(UINT_PTR nIDEvent) {
 	CDialogEx::OnTimer(nIDEvent);	// base timer processing
 }
 
-// on sytem menu called
+// on system menu called
 void Calculator::OnSysCommand(UINT nID, LPARAM lParam) {
 	// if action is 'save'
 	if (nID == IDD_Calculator) {
