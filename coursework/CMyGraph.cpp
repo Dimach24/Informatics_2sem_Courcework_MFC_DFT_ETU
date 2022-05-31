@@ -7,7 +7,6 @@
 #include "coursework.h"
 #include "CMyGraph.h"
 #include "BeautyLib.h"
-
 // for run-time data
 IMPLEMENT_DYNAMIC(CMyGraph, CStatic)
 
@@ -34,6 +33,10 @@ std::pair<double, double> CMyGraph::dotToCoords(int wx, int wy, CRect r) {
 }
 
 POINT CMyGraph::coordsToDot(double x, double y, CRect rect) {
+	// log checking
+	if (is_log) {
+		y = log10(abs(y));
+	}
 	// shifting bounds to get calculating area
 	rect.left += shift.x;
 	rect.bottom -= shift.y;
@@ -113,7 +116,9 @@ void CMyGraph::drawBg(CDC& dc) {
 
 		// calculate position (in element coords)
 		CPoint sp = coordsToDot(the_x, scale_y.from, r);
-
+		
+		// changing the y 
+		sp.y = r.bottom - shift.y;
 		// some moves to draw the serif with length=serifsize
 		sp.Offset(0, -serifsize / 2);
 		dc.MoveTo(sp);
@@ -209,7 +214,7 @@ void CMyGraph::drawBg(CDC& dc) {
 			double the_y = pow(10, (double)current_power);
 
 			// calculate in element coords
-			CPoint sp = coordsToDot(scale_x.from, log10(the_y), r);
+			CPoint sp = coordsToDot(scale_x.from, the_y, r);
 
 			// moves to draw serif
 			sp.Offset(serifsize / 2, 0);
@@ -291,13 +296,26 @@ void CMyGraph::drawGraph(CDC& dc) {
 			CPoint dot(dots[i]);
 
 			if (is_hist) {
+				// hist column right bottom corner
+				CPoint rb;
+				// if log scale enabled
+				if (is_log) {
+					// use bottom bound as a start
+					rb.y = rforf.bottom;
+				} else {
+					// use line y = 0 as a start
+					rb = coordsToDot(0, 0, r);
+				}
+				// calculate right bound
+				rb.x = dot.x + hist_width;
+
 				if (animation_in_process) {
 					// recalc coords according to phase
-					dot = recalcDotForAnimation(dot, rforf);
+					dot.y = rb.y-recalcDotForAnimation(rb.y-dot.y);
 				}
-
-				// hist column calculating and drawing
-				RECT rect = { dot.x,dot.y,dot.x + hist_width,rforf.bottom };
+				
+				// column drawing
+				RECT rect = { dot.x,dot.y,rb.x,rb.y };
 				dc.FillSolidRect(&rect, f->color);
 			} else {// not hist
 				if (is_first) {
@@ -355,17 +373,13 @@ void CMyGraph::draw(CDC& dc) {
 	dc.BitBlt(0, 0, r.Width(), r.Height(), &graph_dc, 0, 0, SRCCOPY);
 }
 
-CPoint CMyGraph::recalcDotForAnimation(CPoint p, const CRect& r) {
-	// shift and reverse
-	double y = r.bottom - p.y;
-
-	// protection from small numbers
-	if (y < 1) { p.y = r.bottom - y * current_animation_phase; return p; }
-
-	//recalcing
-	p.y = r.bottom - y * pow(y, current_animation_phase - 1);
-
-	return p;
+int CMyGraph::recalcDotForAnimation(int h) {
+	// check invalid values
+	if (h < 0) { return 0; }
+	if (h == 0) { return h; }
+	// calculate new h
+	h *= pow(h, current_animation_phase - 1);
+	return h;
 }
 
 CMyGraph::CMyGraph()	// default constructors call

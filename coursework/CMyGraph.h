@@ -102,12 +102,11 @@ protected:
 	float animation_speed = 5e-2;
 
 	/// <summary>
-	/// Function that returns dot coordinates in animation phase
+	/// Recalculates column according to the phase
 	/// </summary>
-	/// <param name="point">A point on the graph to recalculate</param>
-	/// <param name="r">rectangular border of the calculating region</param>
-	/// <returns>New point as CPoint</returns>
-	CPoint recalcDotForAnimation(CPoint point, const CRect& r);
+	/// <param name="column_h">true height</param>
+	/// <returns>new column height</returns>
+	int recalcDotForAnimation(int h);
 public:
 	/// <summary>
 	/// shifting of the graph from the left bottom corner of the element
