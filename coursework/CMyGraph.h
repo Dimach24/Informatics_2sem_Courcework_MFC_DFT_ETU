@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿//
+// CMyGraph.h
+//
+
+#pragma once
 #include <vector>			// for the vector
 #include  <utility>			// for std::pair
 #include "MathFunction.h"	// functions to draw

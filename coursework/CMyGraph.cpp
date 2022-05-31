@@ -1,4 +1,8 @@
-﻿// including project files
+﻿//
+// CMyGraph.cpp
+//
+
+// including project files
 #include "pch.h"
 #include "coursework.h"
 #include "CMyGraph.h"

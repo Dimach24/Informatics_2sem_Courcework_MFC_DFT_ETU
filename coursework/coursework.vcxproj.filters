@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Исходные файлы\+-готово">
-      <UniqueIdentifier>{81a239cd-c1af-4377-88c6-8252c0ae5b47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\+-готово">
-      <UniqueIdentifier>{50ba01e5-5ac3-49e6-a076-9d11c58c2c58}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -26,21 +20,6 @@
     </ClInclude>
     <ClInclude Include="CMyGraph.h">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="coursework.h">
-      <Filter>Файлы заголовков\+-готово</Filter>
-    </ClInclude>
-    <ClInclude Include="courseworkDlg.h">
-      <Filter>Файлы заголовков\+-готово</Filter>
-    </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>Файлы заголовков\+-готово</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Файлы заголовков\+-готово</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Файлы заголовков\+-готово</Filter>
     </ClInclude>
     <ClInclude Include="Calculator.h">
       <Filter>Файлы заголовков</Filter>
@@ -51,19 +30,25 @@
     <ClInclude Include="BeautyLib.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="coursework.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="courseworkDlg.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMyGraph.cpp">
       <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="coursework.cpp">
-      <Filter>Исходные файлы\+-готово</Filter>
-    </ClCompile>
-    <ClCompile Include="courseworkDlg.cpp">
-      <Filter>Исходные файлы\+-готово</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Исходные файлы\+-готово</Filter>
     </ClCompile>
     <ClCompile Include="Calculator.cpp">
       <Filter>Исходные файлы</Filter>
@@ -72,6 +57,15 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="BeautyLib.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="coursework.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="courseworkDlg.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

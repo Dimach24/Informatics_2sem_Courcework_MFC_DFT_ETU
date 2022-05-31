@@ -1,9 +1,17 @@
-﻿#include <cmath> // for math like sin, log, etc
+﻿//
+// MathFunction.cpp
+//
+
+
+#include <math.h> // for math like sin, log, etc
 #include <cassert>
 
 // including project files
 #include "pch.h"
 #include "MathFunction.h"
+
+// the pi
+//constexpr double M_PI = 3.141592653589793238463;
 
 void MathFunction::setNotCalculated() {
 	// turn is calculated indicator to false
@@ -122,7 +130,7 @@ const double SignalFunction::samples_step = 1e-7;
 
 double SignalFunction::f(double t) {
 	// signal function ↓
-	return a * sin(2 * PI * (f_ + m * t) * t);
+	return a * sin(2 * M_PI * (f_ + m * t) * t);
 }
 
 bool SignalFunction::set_a(double a) {
@@ -236,8 +244,8 @@ double DFTFunction::f(int m) {
 	// for each sample
 	for (size_t n = 0; n < N; n++) {
 		// summing
-		re += samples[n] * cos(2 * PI * m * n / N);
-		im += samples[n] * sin(-2 * PI * m * n / N);
+		re += samples[n] * cos(2 * M_PI * m * n / N);
+		im += samples[n] * sin(-2 * M_PI * m * n / N);
 	}
 	// return the abs(X)
 	return sqrt(re * re + im * im);

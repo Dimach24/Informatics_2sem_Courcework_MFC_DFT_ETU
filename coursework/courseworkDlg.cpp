@@ -1,4 +1,8 @@
-﻿// including project  files 
+﻿//
+// courseworkDlg.cpp
+//
+
+// including project  files 
 
 #include "pch.h"
 #include "framework.h"
@@ -50,7 +54,7 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX) { // call constructor of the ba
 BOOL CAboutDlg::OnInitDialog() {
 	// set the title, commit index - the index of 
 	// the last git commit (defined in string table coursework.rc')
-	CString 
+	CString
 		app_v, // app version
 		app_ci;	// last commit index
 	app_v.LoadStringW(IDS_VERSION);
@@ -73,15 +77,9 @@ END_MESSAGE_MAP()
 
 CcourseworkDlg::CcourseworkDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_COURSEWORK_DIALOG, pParent) //base constructor
-	, theTask(	//task text init
-		L"Для сигнала заданного вида вычислить дискретное "
-		L"преобразование Фурье(ДПФ), нарисовать график сигнальной "
-		L"функции и график модуля  ее ДПФ, предоставить возможность "
-		L"изменять масштаб графика по Х и по У, выбор линейного или "
-		L"логарифмического масштаба по У для графика ДПФ, интерактивный "
-		L"режим изменения параметров сигнала, запись в файл графиков "
-		L"сигнала и ДПФ в формате BMP."
-	) {
+{
+	// load task text from the string table
+	theTask.LoadStringW(IDS_SHORT_TASK_INFO);
 	// set icon
 	m_hIcon = AfxGetApp()->LoadIcon(ID_LOGO_ICO);
 }
@@ -161,20 +159,13 @@ void CcourseworkDlg::OnBnClickedOk() {
 
 // on button 'about the task' clicked message
 void CcourseworkDlg::OnBnClickedTaskAboutBn() {
+	// create string
+	CString str;
+	// load info string
+	str.LoadStringW(IDS_MORE_TASK_INFO);
 	// create and show messagebox with theoretical information
-	AfxMessageBox(
-		L"Дискретное преобразование Фурье является линейным преобразованием, "
-		L"которое переводит 𝖭-мерный комплексный вектор временных отсчётов 𝘅 в 𝖭-мерный "
-		L"комплексный вектор спектральных (частотных) отсчётов 𝗫 той же длины. Таким "
-		L"образом преобразование может быть реализовано как умножение квадратной матрицы "
-		L"на вектор 𝗫=𝖠\u2219𝘅 , где матрица 𝖠 – некая унитарная матрица, которую можно рассматривать "
-		L"как матрицу преобразования (поворота) системы координат некоторого 𝖭-мерного пространства.\n"
-		L"Формула преобразования для 𝗄-того компонента ДПФ:\n"
-		L"𝖷𝗄=Σ𝗑𝗇\u2219𝖾𝗑𝗉(-2π𝗂𝗄𝗇/𝖭)\n"
-		L"Эту формулу можно преобразовать с помощью формулы Эйлера.\n "
-		L"Квадрат модуля отсчета равен |𝖷𝗄|²=𝖱𝖾²(𝖷𝗄)+𝖨𝗆²(𝖷𝗄)", MB_OK | MB_ICONINFORMATION);
+	AfxMessageBox(str, MB_OK | MB_ICONINFORMATION);
 }
-
 // button 'calculate' has been clicked action
 void CcourseworkDlg::OnBnClickedCalculateButton() {
 	// create and show calculator dlg

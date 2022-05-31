@@ -1,3 +1,7 @@
+//
+// BeautyLib.h
+//
+
 #pragma once
 #include <atlstr.h> // for CString
 #include <utility>	// for std::pair

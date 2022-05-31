@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿//
+// Calculator.h
+//
+
+#pragma once
 
 #include "CMyGraph.h" // for graphs
 
