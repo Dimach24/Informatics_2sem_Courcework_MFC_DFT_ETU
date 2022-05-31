@@ -82,7 +82,6 @@ protected:
 	CEdit edit_y_dft_t;
 
 	CButton cb_is_dft_log;
-	CButton cb_is_log;
 	CButton cb_anim;
 
 	CMFCColorButton bg_cp;

@@ -21,7 +21,6 @@
 #define IDC_STATIC_graph                1020
 #define IDC_STATIC_graph2               1021
 #define IDC_EDIT_param_a                1028
-#define IDC_CHECK_is_log_scale          1029
 #define IDC_BUTTON_UPDATE_graph         1030
 #define IDC_STATIC_signal               1031
 #define IDC_CHECK_is_log_scale2         1032
